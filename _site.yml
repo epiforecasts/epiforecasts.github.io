@@ -2,7 +2,6 @@ name: "epiforecasts-distill"
 title: "EpiForecasts"
 description: |
   EpiForecasts
-output_dir: "docs"
 navbar:
   right:
     - text: "About us"
