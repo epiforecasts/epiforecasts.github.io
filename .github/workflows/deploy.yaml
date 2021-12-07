@@ -27,8 +27,10 @@ jobs:
           rmarkdown::render_site()
         shell: Rscript {0}
 
-      - name: Deploy to GitHub Pages
-        uses: maxheld83/ghpages@v0.2.0
-        env:
-          BUILD_DIR: _site
-          GH_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - name: Deploy to GitHub pages 🚀
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: _site
+          single-commit: true
+          clean: true
