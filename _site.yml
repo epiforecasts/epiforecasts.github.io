@@ -1,0 +1,30 @@
+name: "epiforecasts-distill"
+title: "EpiForecasts"
+description: |
+  EpiForecasts
+output_dir: "docs"
+navbar:
+  right:
+    - text: "About us"
+      href: aboutus.html
+    - text: "Covid-19"
+      menu:
+        - text: "Global Rt Tracking and Forecasting"
+          href: https://epiforecasts.io/covid
+        - text: "European Covid-19 Forecast Hub"
+          href: https://covid19forecasthub.eu/
+        - text: "Expert/Corw Forecasting"
+          href: https://www.crowdforecastr.org/
+    - text: "Previous Projects"
+      menu:
+        - text: "Ebola West Africa (2014-16)"
+          href: http://ntncmch.github.io/ebola/weekly_forecast.html
+        - text: "Diphtheria 2018"
+          href: https://epiforecasts.io/dip
+        - text: "Ebola DRC 2019"
+          href: https://epiforecasts.io/ebola-drc
+    - text: "Software"
+      href: software.html
+    - text: "Publications"
+      href: pubs.html
+output: distill::distill_article

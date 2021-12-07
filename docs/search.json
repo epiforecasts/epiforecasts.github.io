@@ -1,0 +1,29 @@
+{
+  "articles": [
+    {
+      "path": "aboutus.html",
+      "title": "About us",
+      "description": "Who we are and what we do",
+      "author": [],
+      "contents": "\nThe gist\nWe are a team based at the London School of Hygiene & Tropical Medicine who focus on real-time modelling and forecasting of infectious disease outbreaks. We are funded by the Wellcome Trust and work in collaboration with a number of other research groups, public health agencies and non-governmental organisations. Our main aim is to develop and use modelling methodology that makes the most of available resources to provide insights useful for outbreak response, control and prevention.\nThe team\nSebastian Funk (Group leader) · Akira Endo · Alexis Robert · Hugo Gruson · James Munday · Katharine Sherratt · Nikos Bosse · Sam Abbott · Sophie Meakin\nFormer team members\nFlavio Finger · Joe Palmer · Robin Thompson · Joel Hellewell\n\n\n\n",
+      "last_modified": "2021-12-07T17:58:18+01:00"
+    },
+    {
+      "path": "index.html",
+      "title": "EpiForecasts",
+      "description": "Real-time modelling and forecasting of infectious disease dynamics\n",
+      "author": [],
+      "contents": "\nWe are a research group based at the London School of Hygiene & Tropical Medicine working on real-time modelling of infectious disease outbreaks. On this site you can find links to regularly updated forecasts of some ongoing outbreaks as well as some posts about forecasts we have made during previous outbreaks. To find out more about the team visit our about us page.\n\n\n\n",
+      "last_modified": "2021-12-07T18:25:11+01:00"
+    },
+    {
+      "path": "software.html",
+      "title": "Software",
+      "description": "R packages and other software developed by the group",
+      "author": [],
+      "contents": "\nReal-time infection dynamics and forecasting\nEpiNow2 estimates the time-varying reproduction number, growth rate, and doubling time using a range of open-source tools, and current best practices.\nCovid-19 data\ncovidregionaldata is an interface to subnational and national level COVID-19 data.\ncovid19.nhs.data is an R package that contains a many-to-many mapping between local authority districts and NHS Acute Trusts in England.\nForecast evaluation\nscoringutils is an R package to evaluate forecasts. It provides a collection of metrics and proper scoring rules that make it simple to score forecasts against the true observed values.\nSocial contact patterns\nsocialmixr is an R package to estimate contact matrices from diary data such as collected in the POLYMOD study.\nepimixr is an R package to conduct epidemiological analysis using these contact matrices.\nBayesian inference using state-space models with high-performance hardware\nrbi is an R interface to LibBi, or Library for Bayesian Inference. It performs fast Bayesian inference with parallelised Sequential Monte Carlo, on CPUs or GPUs.\nrbi.helpers is a supporting package for rbi, especially for constructing proposal distributions and determining the number of particles.\n\n\n\n",
+      "last_modified": "2021-12-07T18:20:51+01:00"
+    }
+  ],
+  "collections": []
+}
