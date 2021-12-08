@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
-      LANG: ${{ en_US.UTF-8 }}
-      LC_ALL: ${{ en_US.UTF-8 }}
+      LANG: "en_US.UTF-8"
+      LC_ALL: "en_US.UTF-8"
     steps:
       - uses: actions/checkout@v2
 
