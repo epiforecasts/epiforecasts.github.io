@@ -5,7 +5,6 @@ author:
     url: https://www.lshtm.ac.uk/aboutus/people/finger.flavio
   - name: Adam Kucharski
     url: https://www.lshtm.ac.uk/aboutus/people/kucharski.adam
-lang: english
 date: 2019-08-21
 bibliography: dip.bib
 description: |
