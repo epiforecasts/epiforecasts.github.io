@@ -3,6 +3,7 @@ title: "EpiForecasts"
 description: |
   EpiForecasts
 navbar:
+  source_url: https://github.com/epiforecasts/epiforecasts.github.io
   right:
     - text: "About us"
       href: aboutus.html
