@@ -22,7 +22,14 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v1
 
-      - name: Render Rmarkdown
+      - name: Render blog posts
+        run: |
+          for (f in list.files("_posts", pattern = "\\.Rmd$", recursive = TRUE, full.names = TRUE)) {
+              rmarkdown::render(f)
+          }
+        shell: Rscript {0}
+
+      - name: Render site
         run: |
           rmarkdown::render_site()
         shell: Rscript {0}
