@@ -21,8 +21,6 @@ navbar:
       menu:
         - text: "Ebola West Africa (2014-16)"
           href: http://ntncmch.github.io/ebola/weekly_forecast.html
-        - text: "Diphtheria 2018"
-          href: https://epiforecasts.io/dip
         - text: "Ebola DRC 2019"
           href: https://epiforecasts.io/ebola-drc
     - text: "Software"
