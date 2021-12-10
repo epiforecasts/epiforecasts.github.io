@@ -1,18 +1,20 @@
 ---
 title: "About us"
 description: |
-  Who we are and what we do
+  We are a team based at the 
+  [London School of Hygiene & Tropical Medicine](https://www.lshtm.ac.uk) who 
+  focus on real-time modelling and forecasting of infectious disease outbreaks. 
+  We are funded by the Wellcome Trust and work in collaboration with a number of
+  other research groups, public health agencies and non-governmental
+  organisations. Our main aim is to develop and use modelling methodology that
+  makes the most of available resources to provide insights useful for outbreak
+  response, control and prevention. 
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
 library(dplyr)
 ```
-
-
-## The gist 
-
-We are a team based at the [London School of Hygiene & Tropical Medicine](https://www.lshtm.ac.uk) who focus on real-time modelling and forecasting of infectious disease outbreaks. We are funded by the Wellcome Trust and work in collaboration with a number of other research groups, public health agencies and non-governmental organisations. Our main aim is to develop and use modelling methodology that makes the most of available resources to provide insights useful for outbreak response, control and prevention. 
 
 ```{r}
 team <- fs::dir_ls("_data/team") %>%
