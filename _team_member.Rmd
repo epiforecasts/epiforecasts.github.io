@@ -43,7 +43,7 @@ if ("{{orcid}}" != "") {
 
 ::: {class=profile-pic}
 
-```{r, out.width = '200px', echo = FALSE}
+```{r, echo = FALSE}
 if ("{{github}}" != "") {
   knitr::include_graphics("https://avatars.githubusercontent.com/{{github}}")
 }
