@@ -1,0 +1,55 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/",
+  echo = FALSE
+)
+library(magrittr)
+```
+
+## How to create or edit a team member ID card
+
+This folder contains all the (current and former) team member ID cards. 
+
+When a new person join the team, they should create a new ID card. When a person
+leaves the team, they should switch the `current-member` flag to `false` (but
+not delete their card as it is used to list the former team members).
+
+```{r}
+schema <- yaml::read_yaml("_schema.yml")
+```
+
+The validity of the yaml file is automatically checked with a [GitHub Action](https://github.com/epiforecasts/epiforecasts-distill/blob/main/.github/workflows/validate-team-member-id.yaml)
+on pushes and pull requests.
+
+### Mandatory fields
+
+```{r, results='asis'}
+schema %>% 
+  purrr::pluck("properties") %>%
+  purrr::keep(names(.) %in% schema$required) %>%
+  purrr::imap(~ c("value" = .y, .x)) %>%
+  purrr::map(~ knitr::knit_expand(text = "#### `{{.x$value}}`\n `{{.x$type}}`\n\n{{.x$description}}\n")) %>%
+  { knitr::knit_child(text = unlist(.), quiet = TRUE) } %>%
+  cat(sep = "\n")
+```
+
+### Optional fields
+
+```{r, results='asis'}
+schema %>% 
+  purrr::pluck("properties") %>%
+  purrr::keep(!names(.) %in% schema$required) %>%
+  purrr::imap(~ c("value" = .y, .x)) %>%
+  purrr::map(~ knitr::knit_expand(text = "#### `{{.x$value}}`\n `{{.x$type}}`\n\n{{.x$description}}\n")) %>%
+  { knitr::knit_child(text = unlist(.), quiet = TRUE) } %>%
+  cat(sep = "\n")
+```
+
