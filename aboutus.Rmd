@@ -6,6 +6,7 @@ description: |
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(dplyr)
 ```
 
 
@@ -13,9 +14,34 @@ knitr::opts_chunk$set(echo = FALSE)
 
 We are a team based at the [London School of Hygiene & Tropical Medicine](https://www.lshtm.ac.uk) who focus on real-time modelling and forecasting of infectious disease outbreaks. We are funded by the Wellcome Trust and work in collaboration with a number of other research groups, public health agencies and non-governmental organisations. Our main aim is to develop and use modelling methodology that makes the most of available resources to provide insights useful for outbreak response, control and prevention. 
 
+```{r}
+team <- fs::dir_ls("_data/team") %>%
+  purrr::map(yaml::read_yaml)
+```
+
 ## The team
 
-[Sebastian Funk](https://www.lshtm.ac.uk/aboutus/people/funk.sebastian) (Group leader) · [Akira Endo](https://www.lshtm.ac.uk/aboutus/people/endo.akira) · [Alexis Robert](https://www.lshtm.ac.uk/aboutus/people/robert.alexis) · Hugo Gruson · [James Munday](https://www.lshtm.ac.uk/aboutus/people/munday.james) · Katharine Sherratt · Nikos Bosse · Sam Abbott · [Sophie Meakin](https://www.lshtm.ac.uk/aboutus/people/meakin.sophie)
+```{r}
+current_team <- team %>%
+  purrr::keep(function(x) x[["current-member"]])
+```
+
+```{r, results='asis'}
+current_team %>%
+  purrr::map_chr(function(e) {
+    knitr::knit_expand(
+      "_team_member.Rmd", 
+      name = e[["name"]],
+      webpage = e[["webpage"]],
+      github = e[["github"]],
+      twitter = e[["twitter"]],
+      orcid = e[["orcid"]],
+      description = e[["description"]]
+    )
+  }) %>%
+  { knitr::knit_child(text = unlist(.), quiet = TRUE) } %>%
+  cat(sep = "\n")
+```
 
 ## Former team members
 
