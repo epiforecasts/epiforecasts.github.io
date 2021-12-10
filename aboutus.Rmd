@@ -17,7 +17,7 @@ library(dplyr)
 ```
 
 ```{r}
-team <- fs::dir_ls("_data/team") %>%
+team <- fs::dir_ls("_data/team", regexp = "\\w+\\-\\w+\\.yml") %>%
   purrr::map(yaml::read_yaml)
 
 # Put Seb first (group leader)

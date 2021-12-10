@@ -1,0 +1,36 @@
+$schema: "http://json-schema.org/draft-07/schema"
+title: Team member ID card
+description: >
+  This is the schema for the team member ID cards contained in the present 
+  folder.
+type: object
+properties:
+  name: 
+    description: >
+      Your name. It is only used for display and thus doesn't have to match your
+      administrative name.
+    type: string
+  github:
+    description: Your github username (*without* the '@')
+    type: string
+    pattern: ^[^@]+
+  twitter:
+    description: Your twitter username (with and without @ both work)
+    type: string
+  orcid:
+    description: Your ORCiD
+    type: string
+    pattern: ^\d{4}\-\d{4}\-\d{4}-\d{4}$
+  current-member:
+    description: A boolean saying whether you're currently a team member or not.
+    type: boolean
+  description:
+    description: A short text about yourself and your work within the team.
+    type: string
+  webpage:
+    description: A link to your personal webpage
+    type: string
+    format: uri
+required:
+  - name
+  - current-member
