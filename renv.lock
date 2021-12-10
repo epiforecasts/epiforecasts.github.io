@@ -184,6 +184,11 @@
       "Repository": "CRAN",
       "Hash": "98138e0994d41508c7a6b84a0600cfcb"
     },
+    "jsonvalidate": {
+      "Package": "jsonvalidate",
+      "Version": "1.3.2",
+      "Source": "Repository"
+    },
     "knitr": {
       "Package": "knitr",
       "Version": "1.36",
