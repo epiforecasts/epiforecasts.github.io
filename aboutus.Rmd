@@ -17,6 +17,12 @@ We are a team based at the [London School of Hygiene & Tropical Medicine](https:
 ```{r}
 team <- fs::dir_ls("_data/team") %>%
   purrr::map(yaml::read_yaml)
+
+# Put Seb first (group leader)
+team <- c(
+  team[which(purrr::map(team, "name") == "Sebastian Funk")],
+  team[-which(purrr::map(team, "name") == "Sebastian Funk")]
+)
 ```
 
 ## The team
