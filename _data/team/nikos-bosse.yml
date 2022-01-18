@@ -4,4 +4,9 @@ orcid: 0000-0002-7750-5280
 twitter: nikosbosse
 current-member: true
 description: > 
-  Nikos is a PhD student working on infectious disease forecasting and is interested in all things related to forecasting. As part of his work he developed crowdforecastr (crwodforecastr.org) to compare human forecasts of COVID-19 against model-based predictions. He also has a strong interest in forecast evaluation and proper scoring rules and developed the scoringutils package (epiforecasts.io/scoringutils). 
+  Nikos is a PhD student working on infectious disease forecasting and is 
+  interested in all things related to forecasting. As part of his work he 
+  developed [crowdforecastr](https://www.crowdforecastr.org/) to compare human 
+  forecasts of COVID-19 against model-based predictions. He also has a strong 
+  interest in forecast evaluation and proper scoring rules and developed the 
+  [scoringutils package](https://epiforecasts.io/scoringutils). 
