@@ -20,7 +20,7 @@ navbar:
     - text: "Previous Projects"
       menu:
         - text: "Ebola West Africa (2014-16)"
-          href: http://ntncmch.github.io/ebola/weekly_forecast.html
+          href: https://ntncmch.github.io/ebola/weekly_forecast.html
         - text: "Ebola DRC 2019"
           href: https://epiforecasts.io/ebola-drc
     - text: "Software"
