@@ -1,0 +1,101 @@
+on:
+  schedule:
+    - cron:  '0 5 1 * *'
+    
+name: Update publications
+    
+jobs:
+  update-bibtex:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          use-public-rspm: true
+
+      - name: Install system dependencies
+        run: sudo apt-get install libcurl4-openssl-dev
+
+      - uses: r-lib/actions/setup-renv@v1
+
+      - uses: actions/download-artifact@v2
+        with:
+          name: bibentries-previous-month
+          
+      - name: Create bibtex file with selected entries
+        run: |
+          bibentries_previous_month <- readRDS("bibentries_previous_month.rds")
+          
+          library(magrittr)
+          selected <- gh::gh(
+            "/repos/{gh_repo}/issues/{issue_number}/comments",
+            gh_repo = "${{ github.repository }}",
+            issue_number = 3
+          ) %>% 
+            purrr::keep(~ .x$user$login == "epiforecasts-bot") %>%
+            tail(1) %>%
+            purrr::map_chr("body") %>%
+            strsplit("\r?\n\r?") %>%
+            unlist() %>%
+            startsWith("- [x]") %>%
+            tail(length(.)-1)
+          
+          selected_bibentries <- bibentries_previous_month[selected]
+          
+          bib_new <- vapply(selected_bibentries, format, style = "Bibtex", character(1))
+          
+          bib_old <- readLines("_data/papers.bib")
+          
+          bib <- paste(c(bib_old, bib_new), collapse = "\n")
+            
+          write(bib, "_data/papers.bib")
+        shell: Rscript {0}
+      
+      - name: Submit PR
+      
+  fetch-new-papers:
+    needs: update-bibtex
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          use-public-rspm: true
+          
+      - name: Install system dependencies
+        run: sudo apt-get install libcurl4-openssl-dev
+
+      - uses: r-lib/actions/setup-renv@v1
+      
+      - name: Post a comment listing new papers
+        run: |
+          options(width = 10000) # do not hard-wrap formatted citations
+        
+          source("_automation/get_new_papers.R")
+          month_1st <- format(lubridate::floor_date(lubridate::today()-1, "month"))
+          new_papers <- get_new_papers_team(from_date = month_1st)
+          
+          bibentries_new <- create_bibentries(new_papers)
+          saveRDS(bibentries_new, paste0("bibentries_previous_month.rds"))
+          
+          bibentries_new_checklist <- paste("- [ ]", vapply(bibentries_new, format, character(1)))
+          bibentries_new_checklist <- paste(
+            c("Papers published last month:", bibentries_new_checklist), 
+            collapse = "\n"
+          )
+          
+          gh::gh(
+            "POST /repos/{gh_repo}/issues/{issue_number}/comments",
+            gh_repo = "${{ github.repository }}",
+            issue_number = 3,
+            body = bibentries_new_checklist
+          )
+        shell: Rscript {0}
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: bibentries-previous-month
+          path: bibentries_previous_month.rds
