@@ -52,7 +52,18 @@ jobs:
           write(bib, "_data/papers.bib")
         shell: Rscript {0}
       
-      - name: Submit PR
+      - uses: peter-evans/create-pull-request@67df31e08a133c6a77008b89689677067fef169e
+        id: cpr
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Automated update of team publications
+          committer: epiforecasts-bot <epiforecasts-bot@users.noreply.github.com>
+          author: epiforecasts-bot <epiforecasts-bot@users.noreply.github.com>
+          branch: pubs
+          branch-suffix: timestamp
+          add-paths: _data/papers.bib
+          title: Automated update of team publications
+          delete-branch: true
       
   fetch-new-papers:
     needs: update-bibtex
