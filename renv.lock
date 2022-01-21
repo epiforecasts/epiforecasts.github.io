@@ -271,6 +271,11 @@
       "Repository": "CRAN",
       "Hash": "97def703420c8ab10d8f0e6c72101e02"
     },
+    "rcrossref": {
+      "Package": "rcrossref",
+      "Version": "1.1.0.99",
+      "Source": "Repository"
+    },
     "renv": {
       "Package": "renv",
       "Version": "0.14.0",
