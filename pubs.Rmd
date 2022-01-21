@@ -1,8 +1,5 @@
 ---
 title: "Publications"
-bibliography: _data/papers.bib
-csl: _data/elsevier-harvard.csl
-nocite: '@*'
 ---
 
 ```{r setup, include=FALSE}
@@ -10,3 +7,24 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 Below is a list of selected publications (sorted by year) illustrating the type of work conducted by our team.
+
+```{r}
+bibfile <- "_data/papers.bib"
+```
+
+```{r, results='asis'}
+library(magrittr)
+b <- tools::bibstyle(
+  "by_year", 
+  fmtPrefix = function(paper) "-", 
+  .init = TRUE, 
+  sortKeys = function(refs) rank(purrr::map_chr(unclass(refs), "year"))
+)
+
+bibtex::read.bib(bibfile) %>%
+  purrr::keep(~ attr(unclass(.x)[[1]], "bibtype") == "Article") %>%
+  sort(.bibstyle = "by_year", decreasing = TRUE) %>%
+  purrr::map_chr(format, "html", .bibstyle = "by_year") %>%
+  paste(collapse = "") %>%
+  cat()
+```
