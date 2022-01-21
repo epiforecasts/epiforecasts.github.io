@@ -30,6 +30,13 @@
       "Repository": "RSPM",
       "Hash": "dab19adae4440ae55aa8a9d238b246bb"
     },
+    "V8": {
+      "Package": "V8",
+      "Version": "3.6.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "075e000b3f9f5eb05f22e3d7bef9f016"
+    },
     "askpass": {
       "Package": "askpass",
       "Version": "1.1",
@@ -267,6 +274,13 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "98138e0994d41508c7a6b84a0600cfcb"
+    },
+    "jsonvalidate": {
+      "Package": "jsonvalidate",
+      "Version": "1.3.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "cdc2843ef7f44f157198bb99aea7552d"
     },
     "knitr": {
       "Package": "knitr",
