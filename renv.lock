@@ -30,6 +30,11 @@
       "Repository": "CRAN",
       "Hash": "543776ae6848fde2f48ff3816d0628bc"
     },
+    "bibtex": {
+      "Package": "bibtex",
+      "Version": "0.4.2.3",
+      "Source": "Repository"
+    },
     "bookdown": {
       "Package": "bookdown",
       "Version": "0.24",
