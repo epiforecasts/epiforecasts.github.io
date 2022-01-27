@@ -1,9 +1,10 @@
+repository_url: https://github.com/epiforecast/epiforecasts.github.io
 name: "epiforecasts-distill"
 title: "EpiForecasts"
 description: |
   EpiForecasts
 navbar:
-  source_url: https://github.com/epiforecasts/epiforecasts.github.io
+  source_url: https://github.com/epiforecasts/
   right:
     - text: "About us"
       href: aboutus.html
