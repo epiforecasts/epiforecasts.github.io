@@ -10,7 +10,18 @@ library(magrittr)
 ```
 
 ```{r, results='asis'}
-jsonlite::stream_in(url("https://epiforecasts.r-universe.dev/stats/descriptions"), verbose = FALSE) %>%
+pkg_descriptions <- jsonlite::stream_in(url("https://epiforecasts.r-universe.dev/stats/descriptions"), verbose = FALSE)
+extra_metadata <- jsonlite::read_json("https://github.com/epiforecasts/universe/raw/main/packages.json") %>%
+  dplyr::bind_rows() %>%
+  dplyr::mutate(
+    Package = package, 
+    display_website = display_website & !is.na(display_website),
+    .keep = "unused"
+  )
+
+pkg_descriptions %>%
+  dplyr::left_join(extra_metadata) %>%
+  dplyr::filter(display_website) %>%
   dplyr::arrange(Package) %>%
   split(rownames(.)) %>%
   purrr::map(unlist) %>%
