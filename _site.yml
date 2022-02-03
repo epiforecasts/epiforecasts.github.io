@@ -22,4 +22,7 @@ navbar:
       href: software.html
     - text: "Publications"
       href: pubs.html
-output: distill::distill_article
+output:
+  distill::distill_article:
+    includes:
+      after_body: blank.html
