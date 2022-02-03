@@ -1,14 +1,5 @@
 ---
-title: "About us"
-description: |
-  We are a team based at the 
-  [London School of Hygiene & Tropical Medicine](https://www.lshtm.ac.uk) who 
-  focus on real-time modelling and forecasting of infectious disease outbreaks. 
-  We are funded by the Wellcome Trust and work in collaboration with a number of
-  other research groups, public health agencies and non-governmental
-  organisations. Our main aim is to develop and use modelling methodology that
-  makes the most of available resources to provide insights useful for outbreak
-  response, control and prevention. 
+title: "People"
 ---
 
 ```{r setup, include=FALSE}
@@ -26,8 +17,6 @@ team <- c(
   team[-which(purrr::map(team, "name") == "Sebastian Funk")]
 )
 ```
-
-## The team
 
 ```{r}
 current_team <- team %>%
