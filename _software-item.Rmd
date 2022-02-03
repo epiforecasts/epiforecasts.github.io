@@ -1,1 +1,20 @@
-- [{{Package}}]({{github_url}}): {{Title}}
+### [{{Package}}]({{github_url}}): {{Title}}.
+
+
+```{r, results='asis'}
+desc <- tempfile()
+
+download.file(
+  "https://raw.githubusercontent.com/{{owner}}/{{Package}}/HEAD/DESCRIPTION",
+  desc
+)
+
+desc::desc_get(
+  "Description", 
+  desc
+) %>%
+  stringr::str_squish() %>%
+  cat()
+```
+
+
