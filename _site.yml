@@ -10,7 +10,7 @@ navbar:
       href: people.html
     - text: "Blog"
       href: blog.html
-    - text: "Covid-19"
+    - text: "Current projects"
       menu:
         - text: "Global Rt Tracking and Forecasting"
           href: https://epiforecasts.io/covid
@@ -18,12 +18,6 @@ navbar:
           href: https://covid19forecasthub.eu/
         - text: "Expert/Crowd Forecasting"
           href: https://www.crowdforecastr.org/
-    - text: "Previous Projects"
-      menu:
-        - text: "Ebola West Africa (2014-16)"
-          href: https://ntncmch.github.io/ebola/weekly_forecast.html
-        - text: "Ebola DRC 2019"
-          href: https://epiforecasts.io/ebola-drc
     - text: "Software"
       href: software.html
     - text: "Publications"
