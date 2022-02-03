@@ -17,8 +17,8 @@ extra_metadata <- jsonlite::read_json("https://github.com/epiforecasts/universe/
     Package = package, 
     display_website = display_website & !is.na(display_website),
     .keep = "unused"
-  )
-
+  ) 
+  
 pkg_descriptions %>%
   dplyr::left_join(extra_metadata) %>%
   dplyr::filter(display_website) %>%
@@ -29,8 +29,9 @@ pkg_descriptions %>%
     knitr::knit_expand(
       "_software-item.Rmd", 
       Package = e[["Package"]],
-      Title = e[["Title"]],
-      github_url = e[["_builder.upstream"]]
+      Title = stringr::str_squish(e[["Title"]]),
+      github_url = e[["RemoteUrl"]],
+      owner = e[["_owner"]]
     )
   }) %>%
   { knitr::knit_child(text = unlist(.), quiet = TRUE) } %>%
