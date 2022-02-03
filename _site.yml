@@ -6,8 +6,8 @@ description: |
 navbar:
   source_url: https://github.com/epiforecasts/
   right:
-    - text: "About us"
-      href: aboutus.html
+    - text: "People"
+      href: people.html
     - text: "Blog"
       href: blog.html
     - text: "Covid-19"
