@@ -9,4 +9,10 @@ site: distill::distill_website
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-We are a research group based at the [London School of Hygiene & Tropical Medicine](https://www.lshtm.ac.uk) working on real-time modelling of infectious disease outbreaks. On this site you can find links to regularly updated forecasts of some ongoing outbreaks as well as some posts about forecasts we have made during previous outbreaks. To find out more about the team visit our [about us](./aboutus) page. 
+![Illustration of a forecast made during an outbreak](images/forecast.svg)
+
+We are a research group based at the [Centre for Mathematical Modelling of Infectious Diseases](https://www.lshtm.ac.uk/research/centres/centre-mathematical-modelling-infectious-diseases) of the [London School of Hygiene & Tropical Medicine](https://www.lshtm.ac.uk) developing methodology and tools for real-time modelling and forecasting of infectious disease outbreaks. We systematically assess these methods by their predictive ability and apply them in order to improve decision making. Ultimately, our goal is to develop and use robust methodology that makes the most of available resources to provide insights useful for outbreak response, control and prevention, and to make them available as tools to others. 
+
+We are currently mainly funded by the [Wellcome Trust](https://grantnav.threesixtygiving.org/grant/360G-Wellcome-210758_Z_18_Z) and work in collaboration with a number of
+other research groups, public health agencies such as the [European Centre for Disease Control and Prevention](https://www.ecdc.europa.eu/en) and non-governmental
+organisations such as [Médecins Sans Frontières](https://www.msf.org/). 
