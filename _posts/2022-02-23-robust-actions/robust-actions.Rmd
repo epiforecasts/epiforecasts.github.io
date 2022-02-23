@@ -1,0 +1,69 @@
+---
+title: "Making your GitHub Actions more robust"
+author:
+  - name: Hugo Gruson
+date: 2022-02-23
+output:
+  distill::distill_article:
+    self_contained: false
+    toc: true
+creative_commons: CC BY
+---
+
+[Our team](../../people.html)'s work relies a lot on GitHub Actions.
+Besides the usual workflows to check our code for errors after each push [^1], we also have many workflows set up to run on a schedule.
+
+[^1]: you can visit https://github.com/r-lib/actions for a great list of such actions
+
+For example, we have scheduled workflow to:
+
+- [automatically build an ensemble forecast from weekly forecast contributed by teams in the European Covid-19 Forecast Hub](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/ba4df04e0f0454655ec1d0bd803c456cb3cf3a6d/.github/workflows/ensemble.yml)
+- [automatically build nowcasts of COVID-19 Hospital Admissions in Germany and the related documentation](https://github.com/epiforecasts/eval-germany-sp-nowcasting/blob/836fd9a8c71a085d4dd8ef1dd09168bddecef1f4/.github/workflows/build-and-publish-documentation.yaml)
+- [check that data stream in covidregionaldata are still up and running](https://github.com/epiforecasts/covidregionaldata/tree/master/.github/workflows)
+- ...
+
+However, with time, we became frustrated because these workflows were flaky and often failing for spurious reasons. In this blog post, I detail how to limit the number of false positive failures in your GitHub Action workflows.
+
+# Notify the whole team when a scheduled workflow fails
+
+While workflows set up to run on pushes or pull requests will notify the user who committed the changes, scheduled workflows will notify the latest user who modified this workflow, as indicated in [the official documentation](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule):
+
+> Notifications for scheduled workflows are sent to the user who last modified the cron syntax in the workflow file. For more information, see "[Notifications for workflow runs](https://docs.github.com/en/actions/guides/about-continuous-integration#notifications-for-workflow-runs)".
+
+This behaviour is often not desirable when working collaboratively as a team on a project. In this situation, you would like every member of team to be notified. So that everybody can contribute to fix the issue.
+
+There are many ways to circumvent this behaviour, such as adding a step to notify failures on a mailing list or a slack channel. In the Epiforecasts team, we decided to keep everything in the open and automatically open an issue when one of our scheduled workflow is failing. This is achieved by [creating a file named `action-issue-template.md` in your `.github` folder with the following content](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/c65b2b0514303834e3f072df08e44e1a03bfca9e/.github/action-issue-template.md):
+
+```{md}
+---
+title: "{{ env.GITHUB_WORKFLOW }} GitHub Action is failing"
+---
+
+See [the action log](https://github.com/{{ env.GITHUB_ACTION_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}) for more details.
+```
+
+and then appending the following instruction at the end of all your workflows:
+
+```{yaml}
+    - name: Create issue about failure
+      if: failure()
+      uses: JasonEtco/create-an-issue@v2.5.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: .github/action-issue-template.md
+```
+
+You can see an example of this used in the wild with [this issue](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/issues/1476).
+
+# Possible sources of flakiness and how to fix it
+
+## Failure during initial set up
+
+### R installation
+
+### R packages installation
+
+## Unaccessible HTTP resources
+
+## `git` repository out of sync
