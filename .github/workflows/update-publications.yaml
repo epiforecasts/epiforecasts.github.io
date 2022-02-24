@@ -8,6 +8,8 @@ name: Update publications
 jobs:
   update-bibtex:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
@@ -70,6 +72,8 @@ jobs:
     needs: update-bibtex
     if: always()
     runs-on: ubuntu-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v2
 
