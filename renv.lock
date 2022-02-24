@@ -219,6 +219,11 @@
       "Repository": "CRAN",
       "Hash": "3f6bcfb0ee5d671d9fd1893d2faa79cb"
     },
+    "gh": {
+      "Package": "gh",
+      "Version": "1.3.0",
+      "Source": "Repository"
+    },
     "glue": {
       "Package": "glue",
       "Version": "1.5.1",
