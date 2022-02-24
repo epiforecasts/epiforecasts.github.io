@@ -2,7 +2,7 @@
 
 get_new_papers_orcid <- function(orcid, from_date) {
   
-  rcrossref::cr_works(filter = list(orcid = '0000-0002-7750-5280',
+  rcrossref::cr_works(filter = list(orcid = orcid,
                                     from_deposit_date = from_date,
                                     type = "journal-article")) %>%
     purrr::pluck("data")
