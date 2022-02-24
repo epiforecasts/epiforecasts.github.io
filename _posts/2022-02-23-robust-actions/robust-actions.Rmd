@@ -1,7 +1,8 @@
 ---
-title: "Making your GitHub Actions more robust"
+title: "Dealing with flaky GitHub Actions"
 author:
   - name: Hugo Gruson
+    orcid_id: 0000-0002-4094-1476
 date: 2022-02-23
 output:
   distill::distill_article:
@@ -13,7 +14,7 @@ creative_commons: CC BY
 [Our team](../../people.html)'s work relies a lot on GitHub Actions.
 Besides the usual workflows to check our code for errors after each push [^1], we also have many workflows set up to run on a schedule.
 
-[^1]: you can visit https://github.com/r-lib/actions for a great list of such actions
+[^1]: You can visit https://github.com/r-lib/actions for a great list of such actions.
 
 For example, we have scheduled workflow to:
 
@@ -32,14 +33,17 @@ While workflows set up to run on pushes or pull requests will notify the user wh
 
 This behaviour is often not desirable when working collaboratively as a team on a project. In this situation, you would like every member of team to be notified. So that everybody can contribute to fix the issue.
 
-There are many ways to circumvent this behaviour, such as adding a step to notify failures on a mailing list or a slack channel. In the Epiforecasts team, we decided to keep everything in the open and automatically open an issue when one of our scheduled workflow is failing. This is achieved by [creating a file named `action-issue-template.md` in your `.github` folder with the following content](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/c65b2b0514303834e3f072df08e44e1a03bfca9e/.github/action-issue-template.md):
+There are many ways to circumvent this behaviour, such as adding a step to notify failures on a mailing list or a slack channel [^2]. In the Epiforecasts team, we decided to keep everything in the open and automatically open an issue when one of our scheduled workflow is failing. This is achieved by [creating a file named `action-issue-template.md` in your `.github` folder with the following content](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/c65b2b0514303834e3f072df08e44e1a03bfca9e/.github/action-issue-template.md):
+
+[^2]: Another good approach is implemented in the [cransays repository](https://github.com/r-hub/cransays/blob/ed7a844f562e84857eb2d5e72ffbaab569b502ad/.github/workflows/render-dashboard.yml#L71-L80).
 
 ```{md}
 ---
 title: "{{ env.GITHUB_WORKFLOW }} GitHub Action is failing"
 ---
 
-See [the action log](https://github.com/{{ env.GITHUB_ACTION_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}) for more details.
+See [the action log](https://github.com/{{ env.GITHUB_ACTION_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }}) 
+for more details.
 ```
 
 and then appending the following instruction at the end of all your workflows:
@@ -62,7 +66,27 @@ You can see an example of this used in the wild with [this issue](https://github
 
 ### R installation
 
+By default, `r-lib/actions/setup-r@v2` [installs R from various sources depending on the exact version and operating system](https://github.com/r-lib/actions/blob/cb37ed856450354e2e1d5b4a85275fb8755eff49/setup-r/lib/installer.js#L556-L635):
+
+- https://mac.r-project.org/
+- https://cloud.r-project.org/
+- https://cdn.rstudio.com/
+- https://api.r-hub.io/
+- etc. 
+
+Any of these URLs can fail for any reason and cause your R installation, and therefore your whole action to fail.
+
+It is possible to reduce this possible source of breakage, at the expense of some flexibility (you cannot install the R version of your choice). Setting the `install-r` to `false` will use the R version provided in the GitHub Actions container and not try to install it from external sources:
+
+```{yaml}
+      - uses: r-lib/actions/setup-r@v1
+        with:
+          install-r: false
+```
+
 ### R packages installation
+
+
 
 ## Unaccessible HTTP resources
 
