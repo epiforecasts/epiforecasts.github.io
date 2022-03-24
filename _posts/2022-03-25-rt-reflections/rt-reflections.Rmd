@@ -9,10 +9,11 @@ author:
     url: https://samabbott.co.uk
   - name: Sebastian Funk
     url: https://www.lshtm.ac.uk/aboutus/people/funk.sebastian
-date: 2022-03-24
+date: 2022-03-25
 output:
   distill::distill_article:
     self_contained: false
+creative_commons: CC BY
 ---
 
 
