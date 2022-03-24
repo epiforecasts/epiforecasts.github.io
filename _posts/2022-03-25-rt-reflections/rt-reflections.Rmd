@@ -19,6 +19,7 @@ date: 2022-03-25
 output:
   distill::distill_article:
     self_contained: false
+    toc: true
 creative_commons: CC BY
 twitter:
   site: "@epiforecasts"
@@ -33,7 +34,12 @@ bibliography: biblio.bib
 
 We started this with the aim to provide both decision makers and the general public with real-time information on how the epidemic was progressing initially in China, then in a small subset of countries, and ultimately in different parts of the world across different scales. We felt at the time that the most useful quantity to estimate was the time-varying reproduction number Rt, as it characterises the exponential behaviour of transmission, captures some of the known epidemiology of infectious diseases, and can be used to quantify both the scale of the effort required to turn over an epidemic. 
 
-In order to estimate this from the surveillance case data being published by countries around the world and collated by [@jhu](https://coronavirus.jhu.edu/data), we had to develop methods [@rtwebsite-1; @rtwebsite-2] that account for reporting artefacts and delays whilst taking into account emerging insights on the epidemiology of SARS-CoV-2, especially incubation and generation times. Our initial methodology was developed in the first few months of the pandemic (released in the `EpiNow` R package[@epinow]^[Documentation here: https://epiforecasts.io/EpiNow]), with our updated approach (released in the `EpiNow2` R package[@epinow2]^[Documentation here: https://epiforecasts.io/EpiNow2])  being developed after discussions with colleagues on the limitations of our original implementation [@Gostic2020-vw]. These packages ended up being the workhorses behind the web site and were used to provide daily updates of the estimates for almost all countries of the world, as well as several subnational geographies that we added over time.
+In order to estimate this from the surveillance case data being published by countries around the world and collated by [Johns Hopkins University](https://coronavirus.jhu.edu/data), we had to develop methods [@rtwebsite-1; @rtwebsite-2] that account for reporting artefacts and delays whilst taking into account emerging insights on the epidemiology of SARS-CoV-2, especially incubation and generation times. Our initial methodology was developed in the first few months of the pandemic (released in the `EpiNow` R package[@epinow]^[Documentation here: https://epiforecasts.io/EpiNow]), with our updated approach (released in the `EpiNow2` R package[@epinow2]^[Documentation here: https://epiforecasts.io/EpiNow2])  being developed after discussions with colleagues on the limitations of our original implementation [@Gostic2020-vw]. These packages ended up being the workhorses behind the web site and were used to provide daily updates of the estimates for almost all countries of the world, as well as several subnational geographies that we added over time.
+
+```{r, echo = FALSE, fig.cap = "An example figure showing effective reproduction number estimates over time from a subset of countries."}
+knitr::include_graphics("example-rt.png")
+```
+
 
 ## Assessing utility
 
