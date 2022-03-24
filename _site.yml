@@ -27,3 +27,4 @@ output:
     includes:
       in_header: header.html
       after_body: blank.html
+base_url: "https://epiforecasts.io/"
