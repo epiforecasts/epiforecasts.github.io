@@ -5,15 +5,25 @@ description: |
 author:
   - name: Sebastian Funk
     url: https://www.lshtm.ac.uk/aboutus/people/funk.sebastian
+    affiliation: London School of Hygiene and Tropical Medicine
+    affiliation_url: https://www.lshtm.ac.uk/
   - name: Sam Abbott
     url: https://samabbott.co.uk
+    affiliation: London School of Hygiene and Tropical Medicine
+    affiliation_url: https://www.lshtm.ac.uk/
   - name: Sebastian Funk
     url: https://www.lshtm.ac.uk/aboutus/people/funk.sebastian
+    affiliation: London School of Hygiene and Tropical Medicine
+    affiliation_url: https://www.lshtm.ac.uk/
 date: 2022-03-25
 output:
   distill::distill_article:
     self_contained: false
 creative_commons: CC BY
+twitter:
+  site: "@epiforecasts"
+  creator: "@sbfnk"
+bibliography: biblio.bib
 ---
 
 
@@ -23,7 +33,7 @@ creative_commons: CC BY
 
 We started this with the aim to provide both decision makers and the general public with real-time information on how the epidemic was progressing initially in China, then in a small subset of countries, and ultimately in different parts of the world across different scales. We felt at the time that the most useful quantity to estimate was the time-varying reproduction number Rt, as it characterises the exponential behaviour of transmission, captures some of the known epidemiology of infectious diseases, and can be used to quantify both the scale of the effort required to turn over an epidemic. 
 
-In order to estimate this from the surveillance case data being published by countries around the world and collated by [@jhu](https://coronavirus.jhu.edu/data), we had to develop [methods](https://wellcomeopenresearch.org/articles/5-112) that account for reporting artefacts and delays whilst taking into account emerging insights on the epidemiology of SARS-CoV-2, especially incubation and generation times. [@seabbs](https://samabbott.co.uk/) led the development of our initial methodology (released in the [EpiNow R package](https://epiforecasts.io/EpiNow/), and our updated approach (released in the [EpiNow2 R package](https://epiforecasts.io/EpiNow2/) developed after discussions with colleagues on the limitations of our original implementation ([Gostic et al](https://doi.org/10.1371/journal.pcbi.1009679)). These packages ended up being the workhorses behind the web site and were used to provide daily updates of the estimates for almost all countries of the world, as well as several subnational geographies that we added over time.
+In order to estimate this from the surveillance case data being published by countries around the world and collated by [@jhu](https://coronavirus.jhu.edu/data), we had to develop [methods](https://wellcomeopenresearch.org/articles/5-112) that account for reporting artefacts and delays whilst taking into account emerging insights on the epidemiology of SARS-CoV-2, especially incubation and generation times. [@seabbs](https://samabbott.co.uk/) led the development of our initial methodology (released in the EpiNow R package[@epinow]), and our updated approach (released in the EpiNow2 R package[@epinow2]) developed after discussions with colleagues on the limitations of our original implementation ([Gostic et al](https://doi.org/10.1371/journal.pcbi.1009679)). These packages ended up being the workhorses behind the web site and were used to provide daily updates of the estimates for almost all countries of the world, as well as several subnational geographies that we added over time.
 
 ## Assessing utility
 
