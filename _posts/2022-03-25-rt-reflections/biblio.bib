@@ -1,0 +1,318 @@
+@article{epinow,
+title = {EpiNow: Estimate Realtime Case Counts and Time-varying Epidemiological Parameters},
+author = {Sam Abbott and Joel Hellewell and James Munday and Robin Thompson and Sebastian Funk},
+year = {2020},
+note = {R package version 0.1.0},
+url = {https://github.com/epiforecasts/EpiNow},
+doi = {10.5281/zenodo.3746392},
+}
+
+@article{epinow2,
+title = {EpiNow2: Estimate Real-Time Case Counts and Time-Varying Epidemiological Parameters},
+author = {Sam Abbott and Joel Hellewell and Katharine Sherratt and Katelyn Gostic and Joe Hickson and Hamada S. Badr and Michael DeWitt and Robin Thompson and {EpiForecasts} and Sebastian Funk},
+year = {2020},
+url = {https://epiforecasts.io/EpiNow2},
+doi = {10.5281/zenodo.3957489},
+}
+
+
+@ARTICLE{Gostic2020-vw,
+title    = "Practical considerations for measuring the effective reproductive
+            number, Rt",
+author   = "Gostic, Katelyn M and McGough, Lauren and Baskerville, Edward B
+            and Abbott, Sam and Joshi, Keya and Tedijanto, Christine and
+            Kahn, Rebecca and Niehus, Rene and Hay, James A and Salazar,
+            Pablo M De and Hellewell, Joel and Meakin, Sophie and Munday,
+            James D and Bosse, Nikos I and Sherrat, Katharine and Thompson,
+            Robin N and White, Laura F and Huisman, Jana S and Scire,
+            J{\'e}r{\'e}mie and Bonhoeffer, Sebastian and Stadler, Tanja and
+            Wallinga, Jacco and Funk, Sebastian and Lipsitch, Marc and Cobey,
+            Sarah",
+abstract = "Estimation of the effective reproductive number Rt is important
+            for detecting changes in disease transmission over time. During
+            the Coronavirus Disease 2019 (COVID-19) pandemic, policy makers
+            and public health officials are using Rt to assess the
+            effectiveness of interventions and to inform policy. However,
+            estimation of Rt from available data presents several challenges,
+            with critical implications for the interpretation of the course
+            of the pandemic. The purpose of this document is to summarize
+            these challenges, illustrate them with examples from synthetic
+            data, and, where possible, make recommendations. For near
+            real-time estimation of Rt, we recommend the approach of Cori and
+            colleagues, which uses data from before time t and empirical
+            estimates of the distribution of time between infections. Methods
+            that require data from after time t, such as Wallinga and Teunis,
+            are conceptually and methodologically less suited for near
+            real-time estimation, but may be appropriate for retrospective
+            analyses of how individuals infected at different time points
+            contributed to the spread. We advise caution when using methods
+            derived from the approach of Bettencourt and Ribeiro, as the
+            resulting Rt estimates may be biased if the underlying structural
+            assumptions are not met. Two key challenges common to all
+            approaches are accurate specification of the generation interval
+            and reconstruction of the time series of new infections from
+            observations occurring long after the moment of transmission.
+            Naive approaches for dealing with observation delays, such as
+            subtracting delays sampled from a distribution, can introduce
+            bias. We provide suggestions for how to mitigate this and other
+            technical challenges and highlight open problems in Rt
+            estimation.",
+journal  = "PLoS Comput. Biol.",
+volume   =  16,
+number   =  12,
+pages    = "e1008409",
+year     =  2020,
+language = "en",
+issn     = "1553-734X, 1553-7358",
+doi      = "10.1371/journal.pcbi.1008409"
+}
+
+@Article{rtwebsite-1,
+author = {Abbott, S and Hellewell, J and Thompson, RN and Sherratt, K and Gibbs, HP and Bosse, NI and Munday, JD and Meakin, S and Doughty, EL and Chun, JY and Chan, YWD and Finger, F and Campbell, P and Endo, A and Pearson, CAB and Gimma, A and Russell, T and Flasche, S and Kucharski, AJ and Eggo, RM and Funk, S},
+title = {Estimating the time-varying reproduction number of SARS-CoV-2 using national and subnational case counts (version 1)},
+journal = {Wellcome Open Research},
+volume = {5},
+year = {2020},
+number = {112},
+doi = {10.12688/wellcomeopenres.16006.1}
+}
+
+
+@ARTICLE{rtwebsite-2,
+title     = "Estimating the time-varying reproduction number of {SARS-CoV-2}
+             using national and subnational case counts",
+author    = "Abbott, Sam and Hellewell, Joel and Thompson, Robin N and
+             Sherratt, Katharine and Gibbs, Hamish P and Bosse, Nikos I and
+             Munday, James D and Meakin, Sophie and Doughty, Emma L and Chun,
+             June Young and Chan, Yung-Wai Desmond and Finger, Flavio and
+             Campbell, Paul and Endo, Akira and Pearson, Carl A B and Gimma,
+             Amy and Russell, Tim and Flasche, Stefan and Kucharski, Adam J
+             and Eggo, Rosalind M and Funk, Sebastian and {CMMID COVID
+             modelling group}",
+abstract  = "Background: Assessing temporal variations in transmission in
+             different countries is essential for monitoring the epidemic,
+             evaluating the effectiveness of public health interventions and
+             estimating the impact of changes in policy. Methods: We use case
+             and death notification data to generate daily estimates of the
+             time-varying reproduction number globally, regionally,
+             nationally, and subnationally over a 12-week rolling window. Our
+             modelling framework, based on open source tooling, accounts for
+             uncertainty in reporting delays, so that the reproduction number
+             is estimated based on underlying latent infections. Results:
+             Estimates of the reproduction number, trajectories of
+             infections, and forecasts are displayed on a dedicated website
+             as both maps and time series, and made available to download in
+             tabular form. Conclusions: This decision-support tool can be
+             used to assess changes in virus transmission both globally,
+             regionally, nationally, and subnationally. This allows public
+             health officials and policymakers to track the progress of the
+             outbreak in near real-time using an epidemiologically valid
+             measure. As well as providing regular updates on our website, we
+             also provide an open source tool-set so that our approach can be
+             used directly by researchers and policymakers on confidential
+             data-sets. We hope that our tool will be used to support
+             decisions in countries worldwide throughout the ongoing COVID-19
+             pandemic.",
+journal   = "Wellcome Open Res.",
+publisher = "F1000 Research Ltd",
+volume    =  5,
+pages     = "112",
+month     =  dec,
+year      =  2020,
+language  = "en",
+issn      = "2398-502X",
+doi       = "10.12688/wellcomeopenres.16006.2"
+}
+
+@Article{covidregionaldata,
+title = {covidregionaldata: Subnational data for COVID-19 epidemiology},
+author = {Joseph Palmer and Katharine Sherratt and Richard Martin-Nielsen and Jonnie Bevan and Hamish Gibbs and Sebastian Funk and Sam Abbott},
+journal = {Journal of Open Source Software},
+year = {2021},
+volume = {6},
+number = {63},
+pages = {3290},
+doi = {10.21105/joss.03290},
+}
+
+
+@ARTICLE{Davies2021-gz,
+title    = "Estimated transmissibility and impact of {SARS-CoV-2} lineage
+            B.1.1.7 in England",
+author   = "Davies, Nicholas G and Abbott, Sam and Barnard, Rosanna C and
+            Jarvis, Christopher I and Kucharski, Adam J and Munday, James D
+            and Pearson, Carl A B and Russell, Timothy W and Tully, Damien C
+            and Washburne, Alex D and Wenseleers, Tom and Gimma, Amy and
+            Waites, William and Wong, Kerry L M and van Zandvoort, Kevin and
+            Silverman, Justin D and {CMMID COVID-19 Working Group} and
+            {COVID-19 Genomics UK (COG-UK) Consortium} and Diaz-Ordaz, Karla
+            and Keogh, Ruth and Eggo, Rosalind M and Funk, Sebastian and Jit,
+            Mark and Atkins, Katherine E and Edmunds, W John",
+abstract = "A severe acute respiratory syndrome coronavirus 2 (SARS-CoV-2)
+            variant, VOC 202012/01 (lineage B.1.1.7), emerged in southeast
+            England in September 2020 and is rapidly spreading toward
+            fixation. Using a variety of statistical and dynamic modeling
+            approaches, we estimate that this variant has a 43 to 90\% (range
+            of 95\% credible intervals, 38 to 130\%) higher reproduction
+            number than preexisting variants. A fitted two-strain dynamic
+            transmission model shows that VOC 202012/01 will lead to large
+            resurgences of COVID-19 cases. Without stringent control
+            measures, including limited closure of educational institutions
+            and a greatly accelerated vaccine rollout, COVID-19
+            hospitalizations and deaths across England in the first 6 months
+            of 2021 were projected to exceed those in 2020. VOC 202012/01 has
+            spread globally and exhibits a similar transmission increase (59
+            to 74\%) in Denmark, Switzerland, and the United States.",
+journal  = "Science",
+volume   =  372,
+number   =  6538,
+month    =  apr,
+year     =  2021,
+language = "en",
+issn     = "0036-8075, 1095-9203",
+pmid     = "33658326",
+doi      = "10.1126/science.abg3055",
+pmc      = "PMC8128288"
+}
+
+
+@ARTICLE{Vohringer2021-ib,
+title    = "Genomic reconstruction of the {SARS-CoV-2} epidemic in England",
+author   = "V{\"o}hringer, Harald S and Sanderson, Theo and Sinnott, Matthew
+            and De Maio, Nicola and Nguyen, Thuy and Goater, Richard and
+            Schwach, Frank and Harrison, Ian and Hellewell, Joel and Ariani,
+            Cristina V and Gon{\c c}alves, Sonia and Jackson, David K and
+            Johnston, Ian and Jung, Alexander W and Saint, Callum and
+            Sillitoe, John and Suciu, Maria and Goldman, Nick and
+            Panovska-Griffiths, Jasmina and {Wellcome Sanger Institute
+            COVID-19 Surveillance Team} and {COVID-19 Genomics UK (COG-UK)
+            Consortium*} and Birney, Ewan and Volz, Erik and Funk, Sebastian
+            and Kwiatkowski, Dominic and Chand, Meera and Martincorena, Inigo
+            and Barrett, Jeffrey C and Gerstung, Moritz",
+abstract = "The evolution of the severe acute respiratory syndrome
+            coronavirus 2 (SARS-CoV-2) virus leads to new variants that
+            warrant timely epidemiological characterization. Here we use the
+            dense genomic surveillance data generated by the COVID-19
+            Genomics UK Consortium to reconstruct the dynamics of 71
+            different lineages in each of 315 English local authorities
+            between September 2020 and June 2021. This analysis reveals a
+            series of subepidemics that peaked in early autumn 2020, followed
+            by a jump in transmissibility of the B.1.1.7/Alpha lineage. The
+            Alpha variant grew when other lineages declined during the second
+            national lockdown and regionally tiered restrictions between
+            November and December 2020. A third more stringent national
+            lockdown suppressed the Alpha variant and eliminated nearly all
+            other lineages in early 2021. Yet a series of variants (most of
+            which contained the spike E484K mutation) defied these trends and
+            persisted at moderately increasing proportions. However, by
+            accounting for sustained introductions, we found that the
+            transmissibility of these variants is unlikely to have exceeded
+            the transmissibility of the Alpha variant. Finally,
+            B.1.617.2/Delta was repeatedly introduced in England and grew
+            rapidly in early summer 2021, constituting approximately 98\% of
+            sampled SARS-CoV-2 genomes on 26 June 2021.",
+journal  = "Nature",
+volume   =  600,
+number   =  7889,
+pages    = "506--511",
+month    =  dec,
+year     =  2021,
+language = "en",
+issn     = "0028-0836, 1476-4687",
+pmid     = "34649268",
+doi      = "10.1038/s41586-021-04069-y",
+pmc      = "PMC8674138"
+}
+
+
+@article{Abbott2021-df,
+title    = "Estimating the increase in reproduction number associated with
+            the Delta variant using local area dynamics in England",
+author   = "Abbott, Sam and Kucharski, Adam J and Funk, Sebastian and {CMMID
+            COVID-19 Working Group}",
+abstract = "AbstractBackgroundLocal estimates of the time-varying effective
+            reproduction number (Rt) of COVID-19 in England became
+            increasingly heterogeneous during April and May 2021. This may
+            have been attributable to the spread of the Delta SARS-CoV-2
+            variant. This paper documents real-time analysis that aimed to
+            investigate the association between changes in the proportion of
+            positive cases that were S-gene positive, an indicator of the
+            Delta variant against a background of the previously predominant
+            Alpha variant, and the estimated time-varying Rt at the level of
+            upper-tier local authorities (UTLA).MethodWe explored the
+            relationship between the proportion of samples that were S-gene
+            positive and the Rt of test-positive cases over time from the 23
+            February 2021 to the 25 May 2021. Effective reproduction numbers
+            were estimated using the EpiNow2 R package independently for each
+            local authority using two different estimates of the generation
+            time. We then fit a range of regression models to estimate a
+            multiplicative relationship between S-gene positivity and weekly
+            mean Rt estimate.ResultsWe found evidence of an association
+            between increased mean Rt estimates and the proportion of S-gene
+            positives across all models evaluated with the magnitude of the
+            effect increasing as model flexibility was decreased. Models that
+            adjusted for either national level or NHS region level
+            time-varying residuals were found to fit the data better,
+            suggesting potential unexplained confounding.ConclusionsOur
+            results indicated that even after adjusting for time-varying
+            residuals between NHS regions, S-gene positivity was associated
+            with an increase in the effective reproduction number of
+            COVID-19. These findings were robust across a range of models and
+            generation time assumptions, though the specific effect size was
+            variable depending on the assumptions used. The lower bound of
+            the estimated effect indicated that the reproduction number of
+            Delta was above 1 in almost all local authorities throughout the
+            period of investigation.",
+journal  = "bioRxiv",
+month    =  dec,
+year     =  2021,
+doi      = "10.1101/2021.11.30.21267056"
+}
+
+
+@ARTICLE{Sherratt2021-ko,
+title    = "Exploring surveillance data biases when estimating the
+            reproduction number: with insights into subpopulation
+            transmission of {COVID-19} in England",
+author   = "Sherratt, Katharine and Abbott, Sam and Meakin, Sophie R and
+            Hellewell, Joel and Munday, James D and Bosse, Nikos and Null,
+            Null and Jit, Mark and Funk, Sebastian",
+abstract = "The time-varying reproduction number (Rt: the average number of
+            secondary infections caused by each infected person) may be used
+            to assess changes in transmission potential during an epidemic.
+            While new infections are not usually observed directly, they can
+            be estimated from data. However, data may be delayed and
+            potentially biased. We investigated the sensitivity of Rt
+            estimates to different data sources representing COVID-19 in
+            England, and we explored how this sensitivity could track
+            epidemic dynamics in population sub-groups. We sourced public
+            data on test-positive cases, hospital admissions and deaths with
+            confirmed COVID-19 in seven regions of England over March through
+            August 2020. We estimated Rt using a model that mapped unobserved
+            infections to each data source. We then compared differences in
+            Rt with the demographic and social context of surveillance data
+            over time. Our estimates of transmission potential varied for
+            each data source, with the relative inconsistency of estimates
+            varying across regions and over time. Rt estimates based on
+            hospital admissions and deaths were more spatio-temporally
+            synchronous than when compared to estimates from all test
+            positives. We found these differences may be linked to biased
+            representations of subpopulations in each data source. These
+            included spatially clustered testing, and where outbreaks in
+            hospitals, care homes, and young age groups reflected the link
+            between age and severity of the disease. We highlight that policy
+            makers could better target interventions by considering the
+            source populations of Rt estimates. Further work should clarify
+            the best way to combine and interpret Rt estimates from different
+            data sources based on the desired use. This article is part of
+            the theme issue `Modelling that shaped the early COVID-19
+            pandemic response in the UK'.",
+journal  = "Philos. Trans. R. Soc. Lond. B Biol. Sci.",
+volume   =  376,
+number   =  1829,
+pages    = "20200283",
+month    =  jul,
+year     =  2021,
+issn     = "0962-8436",
+doi      = "10.1098/rstb.2020.0283"
+}
