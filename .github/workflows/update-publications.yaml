@@ -36,7 +36,7 @@ jobs:
             gh_repo = "${{ github.repository }}",
             issue_number = 3
           ) %>% 
-            purrr::keep(~ .x$user$login == "epiforecasts-bot") %>%
+            purrr::keep(~ .x$user$login == "github-actions[bot]") %>%
             tail(1) %>%
             purrr::map_chr("body") %>%
             strsplit("\r?\n\r?") %>%
