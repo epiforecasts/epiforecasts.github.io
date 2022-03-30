@@ -39,7 +39,8 @@ create_bibentries <- function(papers) {
         journal = container.title, 
         author = author, 
         year = year,
-        doi = doi
+        doi = doi,
+        key = doi
       ))
     ) %>%
     dplyr::pull(bib)
