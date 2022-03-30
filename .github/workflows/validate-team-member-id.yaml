@@ -16,6 +16,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r@v1
         with:
+          install-r: false
           use-public-rspm: true
 
       - name: Install system dependencies
