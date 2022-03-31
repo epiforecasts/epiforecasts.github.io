@@ -11,31 +11,55 @@ output:
 creative_commons: CC BY
 ---
 
-[Our team](../../people.html)'s work relies a lot on GitHub Actions.
-Besides the usual workflows to check our code for errors after each push [^1], we also have many workflows set up to run on a schedule.
+[Our team](../../people.html)'s work relies a lot on GitHub Actions. Besides the
+usual workflows to check our code for errors after each push [^1], we also have
+many workflows set up to run on a schedule.
 
-[^1]: You can visit https://github.com/r-lib/actions for a great list of such actions.
+[^1]: You can visit <https://github.com/r-lib/actions> for a great list of such
+    actions.
 
 For example, we have scheduled workflow to:
 
-- [automatically build an ensemble forecast from weekly forecast contributed by teams in the European Covid-19 Forecast Hub](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/ba4df04e0f0454655ec1d0bd803c456cb3cf3a6d/.github/workflows/ensemble.yml)
-- [automatically build nowcasts of COVID-19 Hospital Admissions in Germany and the related documentation](https://github.com/epiforecasts/eval-germany-sp-nowcasting/blob/836fd9a8c71a085d4dd8ef1dd09168bddecef1f4/.github/workflows/build-and-publish-documentation.yaml)
-- [check that data stream in covidregionaldata are still up and running](https://github.com/epiforecasts/covidregionaldata/tree/master/.github/workflows)
-- ...
+-   [automatically build an ensemble forecast from weekly forecast contributed
+    by teams in the European Covid-19 Forecast
+    Hub](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/ba4df04e0f0454655ec1d0bd803c456cb3cf3a6d/.github/workflows/ensemble.yml)
+-   [automatically build nowcasts of COVID-19 Hospital Admissions in Germany and
+    the related
+    documentation](https://github.com/epiforecasts/eval-germany-sp-nowcasting/blob/836fd9a8c71a085d4dd8ef1dd09168bddecef1f4/.github/workflows/build-and-publish-documentation.yaml)
+-   [check that data stream in covidregionaldata are still up and
+    running](https://github.com/epiforecasts/covidregionaldata/tree/master/.github/workflows)
+-   ...
 
-However, with time, we became frustrated because these workflows were flaky and often failing for spurious reasons. In this blog post, I detail how to limit the number of false positive failures in your GitHub Action workflows.
+However, with time, we became frustrated because these workflows were flaky and
+often failing for spurious reasons. In this blog post, I detail how to limit the
+number of false positive failures in your GitHub Action workflows.
 
 # Notify the whole team when a scheduled workflow fails
 
-While workflows set up to run on pushes or pull requests will notify the user who committed the changes, scheduled workflows will notify the latest user who modified this workflow, as indicated in [the official documentation](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule):
+While workflows set up to run on pushes or pull requests will notify the user
+who committed the changes, scheduled workflows will notify the latest user who
+modified this workflow, as indicated in [the official
+documentation](https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule):
 
-> Notifications for scheduled workflows are sent to the user who last modified the cron syntax in the workflow file. For more information, see "[Notifications for workflow runs](https://docs.github.com/en/actions/guides/about-continuous-integration#notifications-for-workflow-runs)".
+> Notifications for scheduled workflows are sent to the user who last modified
+> the cron syntax in the workflow file. For more information, see
+> "[Notifications for workflow
+> runs](https://docs.github.com/en/actions/guides/about-continuous-integration#notifications-for-workflow-runs)".
 
-This behaviour is often not desirable when working collaboratively as a team on a project. In this situation, you would like every member of team to be notified. So that everybody can contribute to fix the issue.
+This behaviour is often not desirable when working collaboratively as a team on
+a project. In this situation, you would like every member of team to be
+notified. So that everybody can contribute to fix the issue.
 
-There are many ways to circumvent this behaviour, such as adding a step to notify failures on a mailing list or a slack channel [^2]. In the Epiforecasts team, we decided to keep everything in the open and automatically open an issue when one of our scheduled workflow is failing. This is achieved by [creating a file named `action-issue-template.md` in your `.github` folder with the following content](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/c65b2b0514303834e3f072df08e44e1a03bfca9e/.github/action-issue-template.md):
+There are many ways to circumvent this behaviour, such as adding a step to
+notify failures on a mailing list or a slack channel [^2]. In the Epiforecasts
+team, we decided to keep everything in the open and automatically open an issue
+when one of our scheduled workflow is failing. This is achieved by [creating a
+file named `action-issue-template.md` in your `.github` folder with the
+following
+content](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/c65b2b0514303834e3f072df08e44e1a03bfca9e/.github/action-issue-template.md):
 
-[^2]: Another good approach is implemented in the [cransays repository](https://github.com/r-hub/cransays/blob/ed7a844f562e84857eb2d5e72ffbaab569b502ad/.github/workflows/render-dashboard.yml#L71-L80).
+[^2]: Another good approach is implemented in the [cransays
+    repository](https://github.com/r-hub/cransays/blob/ed7a844f562e84857eb2d5e72ffbaab569b502ad/.github/workflows/render-dashboard.yml#L71-L80).
 
 ```{md}
 ---
@@ -58,36 +82,113 @@ and then appending the following instruction at the end of all your workflows:
         filename: .github/action-issue-template.md
 ```
 
-You can see an example of this used in the wild with [this issue](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/issues/1476).
+You can see an example of this used in the wild with [this
+issue](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/issues/1476).
 
-# Possible sources of flakiness and how to fix it
+I recommend that you always specify the reason for the failure (and the fix if
+it's not a spurious failure as detailed below) when closing the issue. It will
+serve as a log and with time, it will help you identify which parts of your
+workflows should be improved.
+
+# Running workflows manually {#running-workflows-manually}
+
+# Possible sources of flakiness and how to fix them
 
 ## Failure during initial set up
 
 ### R installation
 
-By default, `r-lib/actions/setup-r@v2` [installs R from various sources depending on the exact version and operating system](https://github.com/r-lib/actions/blob/cb37ed856450354e2e1d5b4a85275fb8755eff49/setup-r/lib/installer.js#L556-L635):
+By default, `r-lib/actions/setup-r@v2` [installs R from various sources
+depending on the exact version and operating
+system](https://github.com/r-lib/actions/blob/cb37ed856450354e2e1d5b4a85275fb8755eff49/setup-r/lib/installer.js#L556-L635):
 
-- https://mac.r-project.org/
-- https://cloud.r-project.org/
-- https://cdn.rstudio.com/
-- https://api.r-hub.io/
-- etc. 
+-   <https://mac.r-project.org/>
+-   <https://cloud.r-project.org/>
+-   <https://cdn.rstudio.com/>
+-   <https://api.r-hub.io/>
+-   etc.
 
-Any of these URLs can fail for any reason and cause your R installation, and therefore your whole action to fail.
+Any of these URLs can fail for any reason and cause your R installation, and
+therefore your whole action to fail.
 
-It is possible to reduce this possible source of breakage, at the expense of some flexibility (you cannot install the R version of your choice). Setting the `install-r` to `false` will use the R version provided in the GitHub Actions container and not try to install it from external sources:
+It is possible to reduce this possible source of breakage, at the expense of
+some flexibility (you cannot install the R version of your choice). Setting the
+`install-r` to `false` will use the R version provided in the GitHub Actions
+container and not try to install it from external sources:
 
 ```{yaml}
-      - uses: r-lib/actions/setup-r@v1
-        with:
-          install-r: false
+- uses: r-lib/actions/setup-r@v1
+  with:
+    install-r: false
 ```
 
 ### R packages installation
 
+R packages installation is a common source of failures. This can be caused by an
+incompatibility between package new versions or by intermittent failure while
+trying to reach the CRAN-like server.
 
+A good solution to both source of issues if to pin the exact version number and
+install/load packages from a local cache. This is easily achieved thanks to the
+[renv package](https://rstudio.github.io/renv/).
+
+In practice, rather than manually installing package or using the
+[`r-lib/actions/setup-r-dependencies`
+action](https://github.com/r-lib/actions/tree/v2-branch/setup-r-dependencies),
+you should create a lockfile [^3] and use the [`r-lib/actions/setup-renv`
+action](https://github.com/r-lib/actions/tree/v2-branch/setup-renv):
+
+[^3]: you can use renv directly (e.g., by calling `renv::init()`), or other
+    derived packages such as [capsule](https://github.com/MilesMcBain/capsule)
+
+```{yaml}
+- uses: r-lib/actions/setup-renv@v2
+```
 
 ## Unaccessible HTTP resources
 
+In addition to the R install & cran-like servers, you might use some internet
+resources in your script. And these resources might be unavailable for a number
+of reasons. In this case, it is good practice to retry your request. But in a
+polite way! The web server might be unavailable because it's already overloaded
+with requests. Repeatedly retrying would just make the situation worse in this
+case.
+
+The polite way to retry HTTP requests is to use exponential back off. Each time
+you one of your request fails, you increase the waiting time until you make a
+new one.
+
+Fortunately, you do not have to code the retry feature & the exponential back
+off yourself as it is already implemented in common R packages, such as
+[httr2](https://httr2.r-lib.org/), via the `req_retry()` function:
+
+```{r, error = TRUE}
+library(httr2)
+
+request("https://httpbin.org/status/500") |>
+  req_verbose() |>
+  req_retry(max_tries = 3) %>%
+  req_perform()
+```
+
 ## `git` repository out of sync
+
+If your workflow takes a long time to run, you might get the following message
+when you try to commit your results:
+
+## GitHub itself is out of service
+
+One last option is that GitHub itself, or at least one of its services, is down.
+You can check this by visiting the dedicated status page:
+<https://www.githubstatus.com/> or even be proactive by subscribing to GitHub
+status alerts.
+
+This situation should be exceptional and your best bet is probably to wait until
+everything is back to normal and [re-run your failing
+workflows](#running-workflows-manually). If the scheduled job is time sensitive,
+you can also run it locally.
+
+If this kind of service interruption happens too frequently for your taste but
+you still like the GitHub Actions syntax, you might want to try [spinning your
+own self-hosted
+runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners).
