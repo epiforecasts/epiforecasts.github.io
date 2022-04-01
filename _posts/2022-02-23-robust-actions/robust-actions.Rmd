@@ -34,6 +34,36 @@ However, with time, we became frustrated because these workflows were flaky and
 often failing for spurious reasons. In this blog post, I detail how to limit the
 number of false positive failures in your GitHub Action workflows.
 
+For demonstration purposes, let us demonstrate a simple workflow we might have
+used before reading this blog post:
+
+```{yaml}
+on:
+  schedule:
+    - cron: "0 12 * * *"
+
+jobs:
+  scheduled-job:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+    
+    - uses: r-lib/actions/setup-r@v2
+
+    - name: Install R dependencies
+      run: Rscript -e 'install.packages("tidyverse")'
+
+    - run: Rscript 'script.R'
+        
+    - name: Commit files
+      run: |
+        git config user.email "action@github.com"
+        git config user.name "GitHub Actions"
+        git add --all
+        git commit -m "New results"
+        git push 
+```
+
 # Notify the whole team when a scheduled workflow fails
 
 While workflows set up to run on pushes or pull requests will notify the user
@@ -92,6 +122,25 @@ workflows should be improved.
 
 # Running workflows manually {#running-workflows-manually}
 
+When your workflows fail, you might want to re-run them. You have two options
+here:
+
+-   [re-rerunning the workflow via GitHub dedicated re-run
+    feature](https://docs.github.com/en/actions/managing-workflow-runs/re-running-workflows-and-jobs).
+    [Since March 2022, you can even re-run failing jobs
+    only](https://github.blog/2022-03-16-save-time-partial-re-runs-github-actions/).
+    No need to re-run all jobs every time!
+
+-   adding an extra trigger to be able to start workflows manually in addition
+    to the scheduled run:
+
+    ```{yaml}
+    on:
+      workflow_dispatch:
+      schedule:
+        - cron: "0 12 * * *"
+    ```
+
 # Possible sources of flakiness and how to fix them
 
 ## Failure during initial set up
@@ -138,7 +187,7 @@ action](https://github.com/r-lib/actions/tree/v2-branch/setup-r-dependencies),
 you should create a lockfile [^3] and use the [`r-lib/actions/setup-renv`
 action](https://github.com/r-lib/actions/tree/v2-branch/setup-renv):
 
-[^3]: you can use renv directly (e.g., by calling `renv::init()`), or other
+[^3]: You can use renv directly (e.g., by calling `renv::init()`), or other
     derived packages such as [capsule](https://github.com/MilesMcBain/capsule)
 
 ```{yaml}
@@ -176,6 +225,26 @@ request("https://httpbin.org/status/500") |>
 If your workflow takes a long time to run, you might get the following message
 when you try to commit your results:
 
+```{=html}
+<pre>
+To https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe !
+[rejected] main -> main (fetch first)
+error: failed to push some refs to 'https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe'
+hint: Updates were rejected because the remote contains work that you do 
+hint: not have locally. This is usually caused by another repository pushing
+hint: to the same ref. You may want to first integrate the remote changes
+hint: (e.g., 'git pull ...') before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+Error: Process completed with exit code 1.
+</pre>
+```
+As helpfully mentioned in the error message, you need to run `git pull ...`
+before pushing to make sure your local git copy is up-to-date. However, if you
+do this while you have local commits, the default git set-up will create an ugly
+merge commit. To avoid the merge commit, instead of running a simple
+`git pull ...`, you should run `git pull --rebase ...`. Just note that this will
+not save you if you have merge conflicts.
+
 ## GitHub itself is out of service
 
 One last option is that GitHub itself, or at least one of its services, is down.
@@ -192,3 +261,44 @@ If this kind of service interruption happens too frequently for your taste but
 you still like the GitHub Actions syntax, you might want to try [spinning your
 own self-hosted
 runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners).
+
+# Final summary: the new and improved workflow
+
+```{yaml}
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 12 * * *"
+
+jobs:
+  scheduled-job:
+    runs-on: ubuntu-20.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: r-lib/actions/setup-r@v2
+      with:
+        install-r: false
+        use-public-rspm: true
+
+    - uses: r-lib/actions/setup-renv@v2
+
+    - run: Rscript 'script.R'
+
+    - name: Commit files
+      run: |
+        git config user.email "action@github.com"
+        git config user.name "GitHub Actions"
+        git add --all
+        git commit -m "New results" || echo "No changes to commit"
+        git pull --rebase origin main
+        git push
+
+    - name: Create issue about failure
+      if: failure() && github.event_name != 'workflow_dispatch'
+      uses: JasonEtco/create-an-issue@v2.5.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        filename: .github/action-issue-template.md
+```
