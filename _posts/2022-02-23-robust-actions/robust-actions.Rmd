@@ -32,9 +32,11 @@ For example, we have scheduled workflow to:
     England](https://github.com/epiforecasts/covid19.lfd.england/blob/5883ddd026d00b8f7ad066738852cac63678fad4/.github/workflows/lfd.yaml)
 -   etc.
 
-However, with time, we became frustrated because these workflows were flaky and
-often failing for spurious reasons. In this blog post, I detail how to limit the
-number of false positive failures in your GitHub Action workflows.
+However, with time, we became frustrated because these workflows were unreliable
+and [*flaky*](https://en.wiktionary.org/wiki/flaky): they were valid workflows
+but were failing from time to time for seemingly random reasons. Most of the
+time, just re-running them fixed the issue. In this blog post, I detail how to
+limit the number of false-positive failures in your GitHub Action workflows.
 
 For demonstration purposes, let's look at a simple workflow we might have used
 before reading this blog post:
