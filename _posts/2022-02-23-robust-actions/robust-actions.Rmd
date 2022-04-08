@@ -28,14 +28,16 @@ For example, we have scheduled workflow to:
     documentation](https://github.com/epiforecasts/eval-germany-sp-nowcasting/blob/836fd9a8c71a085d4dd8ef1dd09168bddecef1f4/.github/workflows/build-and-publish-documentation.yaml)
 -   [check that data stream in covidregionaldata are still up and
     running](https://github.com/epiforecasts/covidregionaldata/tree/master/.github/workflows)
--   ...
+-   [download and process weekly LFD testing data in
+    England](https://github.com/epiforecasts/covid19.lfd.england/blob/5883ddd026d00b8f7ad066738852cac63678fad4/.github/workflows/lfd.yaml)
+-   etc.
 
 However, with time, we became frustrated because these workflows were flaky and
 often failing for spurious reasons. In this blog post, I detail how to limit the
 number of false positive failures in your GitHub Action workflows.
 
-For demonstration purposes, let us demonstrate a simple workflow we might have
-used before reading this blog post:
+For demonstration purposes, let's look at a simple workflow we might have used
+before reading this blog post:
 
 ```{yaml}
 on:
