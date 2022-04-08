@@ -69,7 +69,9 @@ jobs:
         git push 
 ```
 
-# Notify the whole team when a scheduled workflow fails
+# Dealing with failing workflows in the moment
+
+## Notify the whole team when a scheduled workflow fails
 
 While workflows set up to run on pushes or pull requests will notify the user
 who committed the changes, scheduled workflows will notify the latest user who
@@ -125,7 +127,7 @@ it's not a spurious failure as detailed below) when closing the issue. It will
 serve as a log and with time, it will help you identify which parts of your
 workflows should be improved.
 
-# Running workflows manually {#running-workflows-manually}
+## Re-running workflows manually {#running-workflows-manually}
 
 When your workflows fail, you might want to re-run them. You have two options
 here:
@@ -146,7 +148,7 @@ here:
         - cron: "0 12 * * *"
     ```
 
-# Possible sources of flakiness and how to fix them
+# Dealing with flaky workflows at the root: possible sources of flakiness and how to fix them
 
 ## Failure during initial set up
 
