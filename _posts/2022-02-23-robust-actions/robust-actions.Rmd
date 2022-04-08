@@ -11,7 +11,8 @@ output:
 creative_commons: CC BY
 ---
 
-[Our team](../../people.html)'s work relies a lot on GitHub Actions. Besides the
+[Our team](../../people.html)'s work relies a lot on [GitHub
+Actions](https://hugogruson.fr/slides/2022-03-17_github-actions/). Besides the
 usual workflows to check our code for errors after each push [^1], we also have
 many workflows set up to run on a schedule.
 
