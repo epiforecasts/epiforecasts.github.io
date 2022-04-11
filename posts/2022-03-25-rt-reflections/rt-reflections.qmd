@@ -20,6 +20,7 @@ twitter:
   creator: "@sbfnk"
 bibliography: biblio.bib
 cite: true
+image: example-rt.png
 ---
 
 
