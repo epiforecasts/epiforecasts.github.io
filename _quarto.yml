@@ -5,6 +5,12 @@ website:
   title: "EpiForecasts"
   site-url: https://epiforecasts.io
   description: "EpiForecasts team website"
+  comments:
+    giscus:
+      repo: epiforecasts/epiforecasts.github.io
+      category: 'Website discussions'
+      mapping: title
+      reactions-enabled: true
   navbar:
     left:
       - text: "People"
