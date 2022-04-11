@@ -120,10 +120,12 @@ and then appending the following instruction at the end of all your workflows:
 You can see an example of this used in the wild with [this
 issue](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/issues/1476).
 
+:::{.callout-note}
 I recommend that you always specify the reason for the failure (and the fix if
 it's not a spurious failure as detailed below) when closing the issue. It will
 serve as a log and with time, it will help you identify which parts of your
 workflows should be improved.
+:::
 
 ## Re-running workflows manually {#running-workflows-manually}
 
