@@ -23,7 +23,7 @@ website:
         href: pubs.qmd
     right:
       - icon: github
-        href: https://github.com/epiforecast/epiforecasts.github.io
+        href: https://github.com/epiforecasts/epiforecasts.github.io
 
 format:
   html:
@@ -31,3 +31,5 @@ format:
       light: flatly
       dark: darkly
     css: styles.css
+    link-external-icon: true
+    link-external-newwindow: true
