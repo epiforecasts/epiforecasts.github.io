@@ -233,7 +233,6 @@ If your workflow takes a long time to run, you might get the following message
 when you try to commit your results:
 
 ``` html
-<pre>
 To https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe !
 [rejected] main -> main (fetch first)
 error: failed to push some refs to 'https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe'
@@ -243,7 +242,6 @@ hint: to the same ref. You may want to first integrate the remote changes
 hint: (e.g., 'git pull ...') before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 Error: Process completed with exit code 1.
-</pre>
 ```
 
 As helpfully mentioned in the error message, you need to run `git pull ...`
