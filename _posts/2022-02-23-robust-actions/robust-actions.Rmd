@@ -42,7 +42,7 @@ limit the number of false-positive failures in your GitHub Action workflows.
 For demonstration purposes, let's look at a simple workflow we might have used
 before reading this blog post:
 
-```{yaml}
+``` yaml
 on:
   schedule:
     - cron: "0 12 * * *"
@@ -98,7 +98,7 @@ content](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-eur
 [^2]: Another good approach is implemented in the [cransays
     repository](https://github.com/r-hub/cransays/blob/ed7a844f562e84857eb2d5e72ffbaab569b502ad/.github/workflows/render-dashboard.yml#L71-L80).
 
-```{md}
+``` md
 ---
 title: "{{ env.GITHUB_WORKFLOW }} GitHub Action is failing"
 ---
@@ -109,7 +109,7 @@ for more details.
 
 and then appending the following instruction at the end of all your workflows:
 
-```{yaml}
+``` yaml
     - name: Create issue about failure
       if: failure()
       uses: JasonEtco/create-an-issue@v2.5.0
@@ -141,7 +141,7 @@ here:
 -   adding an extra trigger to be able to start workflows manually in addition
     to the scheduled run:
 
-    ```{yaml}
+    ``` yaml
     on:
       workflow_dispatch:
       schedule:
@@ -172,7 +172,7 @@ some flexibility (you cannot install the R version of your choice). Setting the
 `install-r` to `false` will use the R version provided in the GitHub Actions
 container and not try to install it from external sources:
 
-```{yaml}
+``` yaml
 - uses: r-lib/actions/setup-r@v1
   with:
     install-r: false
@@ -197,7 +197,7 @@ action](https://github.com/r-lib/actions/tree/v2-branch/setup-renv):
 [^3]: You can use renv directly (e.g., by calling `renv::init()`), or other
     derived packages such as [capsule](https://github.com/MilesMcBain/capsule)
 
-```{yaml}
+``` yaml
 - uses: r-lib/actions/setup-renv@v2
 ```
 
@@ -232,7 +232,7 @@ request("https://httpbin.org/status/500") |>
 If your workflow takes a long time to run, you might get the following message
 when you try to commit your results:
 
-```{=html}
+``` html
 <pre>
 To https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe !
 [rejected] main -> main (fetch first)
@@ -245,6 +245,7 @@ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 Error: Process completed with exit code 1.
 </pre>
 ```
+
 As helpfully mentioned in the error message, you need to run `git pull ...`
 before pushing to make sure your local git copy is up-to-date. However, if you
 do this while you have local commits, the default git set-up will create an ugly
@@ -271,7 +272,7 @@ runner](https://docs.github.com/en/actions/hosting-your-own-runners/about-self-h
 
 # Final summary: the new and improved workflow
 
-```{yaml}
+``` yaml
 on:
   workflow_dispatch:
   schedule:
