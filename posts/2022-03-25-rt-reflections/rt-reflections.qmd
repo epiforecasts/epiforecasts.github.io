@@ -12,16 +12,14 @@ author:
     affiliation: London School of Hygiene and Tropical Medicine
     affiliation_url: https://www.lshtm.ac.uk/
 date: 2022-03-25
-output:
-  distill::distill_article:
-    self_contained: false
-    toc: true
-    toc_depth: 2
+toc: true
+toc-depth: 2
 creative_commons: CC BY
 twitter:
   site: "@epiforecasts"
   creator: "@sbfnk"
 bibliography: biblio.bib
+cite: true
 ---
 
 
