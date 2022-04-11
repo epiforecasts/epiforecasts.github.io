@@ -4,6 +4,8 @@ project:
 website:
   title: "EpiForecasts"
   site-url: https://epiforecasts.io
+  repo-url: https://github.com/epiforecasts/epiforecasts.github.io
+  repo-actions: [edit, source]
   description: "EpiForecasts team website"
   comments:
     giscus:
