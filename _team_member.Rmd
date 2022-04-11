@@ -25,7 +25,7 @@ if ("{{webpage}}" != "") {
 }
 
 if ("{{github}}" != "") {
-  title <- paste(title, icon_link("fab fa-github", url = gh::gh("/users/{{github}}")$avatar_url))
+  title <- paste(title, icon_link("fab fa-github", url = "https://github.com/{{github}}"))
 }
 
 if ("{{twitter}}" != "") {
@@ -45,7 +45,7 @@ if ("{{orcid}}" != "") {
 
 ```{r, echo = FALSE}
 if ("{{github}}" != "") {
-  knitr::include_graphics("https://avatars.githubusercontent.com/{{github}}")
+  knitr::include_graphics(gh::gh("/users/{{github}}")$avatar_url)
 }
 ```
 
