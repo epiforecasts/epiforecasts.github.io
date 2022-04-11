@@ -1,4 +1,0 @@
----
-title: "EpiForecast blog"
-listing: posts
----
