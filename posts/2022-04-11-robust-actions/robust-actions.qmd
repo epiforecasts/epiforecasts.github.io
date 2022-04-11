@@ -3,12 +3,10 @@ title: "Dealing with flaky GitHub Actions"
 author:
   - name: Hugo Gruson
     orcid_id: 0000-0002-4094-1476
-date: 2022-04-01
-output:
-  distill::distill_article:
-    self_contained: false
-    toc: true
+date: 2022-04-11
+toc: true
 creative_commons: CC BY
+citation: true
 ---
 
 [Our team](../../people.html)'s work relies a lot on [GitHub

@@ -9,9 +9,7 @@ date: 2019-08-21
 bibliography: dip.bib
 description: |
   Modelling the 2018/19 diphtheria outbreak in Cox's Bazar, Bangladesh.
-output:
-  distill::distill_article:
-    self_contained: false
+citation: true
 ---
 
 On 10th November, 2017, a suspected case of diphtheria was reported at a Médecins Sans Frontières (MSF) clinic in Cox’s Bazar district, Bangladesh [@Finger2019-iw]. A bacterial infection, diphtheria was a major cause of childhood illness and death in the early 20th Century, before a vaccine was developed in the 1920s, then included in the WHO’s Expanded Programme on Immunization in the 1970s. In the following decades cases dropped dramatically, to the point where the disease was rarely seen in many countries. Between 2004 and 2017, there were only two diphtheria cases in the United States.
