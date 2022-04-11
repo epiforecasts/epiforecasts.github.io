@@ -3,6 +3,8 @@ project:
 
 website:
   title: "EpiForecasts"
+  site-url: https://epiforecasts.io
+  description: "EpiForecasts team website"
   navbar:
     left:
       - text: "People"
