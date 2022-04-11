@@ -25,7 +25,7 @@ For example, we have scheduled workflow to:
 -   [automatically build nowcasts of COVID-19 Hospital Admissions in Germany and
     the related
     documentation](https://github.com/epiforecasts/eval-germany-sp-nowcasting/blob/836fd9a8c71a085d4dd8ef1dd09168bddecef1f4/.github/workflows/build-and-publish-documentation.yaml)
--   [check that data stream in covidregionaldata are still up and
+-   [check that data streams in covidregionaldata are still up and
     running](https://github.com/epiforecasts/covidregionaldata/tree/master/.github/workflows)
 -   [download and process weekly LFD testing data in
     England](https://github.com/epiforecasts/covid19.lfd.england/blob/5883ddd026d00b8f7ad066738852cac63678fad4/.github/workflows/lfd.yaml)
