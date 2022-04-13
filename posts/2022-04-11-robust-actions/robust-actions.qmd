@@ -7,6 +7,9 @@ date: 2022-04-11
 toc: true
 creative_commons: CC BY
 citation: true
+editor_options: 
+  markdown: 
+    wrap: 80
 ---
 
 [Our team](../../people.html)'s work relies a lot on [GitHub
@@ -120,7 +123,7 @@ and then appending the following instruction at the end of all your workflows:
 You can see an example of this used in the wild with [this
 issue](https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/issues/1476).
 
-:::{.callout-note}
+::: callout-note
 I recommend that you always specify the reason for the failure (and the fix if
 it's not a spurious failure as detailed below) when closing the issue. It will
 serve as a log and with time, it will help you identify which parts of your
@@ -177,6 +180,29 @@ container and not try to install it from external sources:
   with:
     install-r: false
 ```
+
+But this alone is not enough to remove all calls to external resources. Even
+when `install-r` is set to `false`, the `setup-r` action checks if the requested
+version matches the installed version. And, unless specified otherwise, the R
+version requested by default is `'release'`, which means an call to an external
+resource (in this case `api.r-hub.io`) is required to convert this version
+'number' into an actual number such as R 4.2.0. If you want to avoid all
+external calls, you then also have to specify a numeric version number such as:
+
+``` yaml
+- uses: r-lib/actions/setup-r@v1
+  with:
+    install-r: false
+    r-version: 4
+```
+
+::: callout-note
+You can specify a more precise version number but it might be good to only
+specify the major version number to limit the breakages due to mismatches during
+the requested and available version. R is very stable within major versions so
+you're not likely to have failure due to API changes even if you specify the
+minor or patch version number.
+:::
 
 ### R packages installation
 
@@ -285,6 +311,7 @@ jobs:
     - uses: r-lib/actions/setup-r@v2
       with:
         install-r: false
+        r-version: 4
         use-public-rspm: true
 
     - uses: r-lib/actions/setup-renv@v2
