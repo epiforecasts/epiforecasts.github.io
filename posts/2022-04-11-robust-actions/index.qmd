@@ -7,6 +7,9 @@ date: 2022-04-11
 toc: true
 creative_commons: CC BY
 citation: true
+# Fix the fact that the 'wrong' URL has already been shared
+aliases:
+  - robust-actions.html
 editor_options: 
   markdown: 
     wrap: 80

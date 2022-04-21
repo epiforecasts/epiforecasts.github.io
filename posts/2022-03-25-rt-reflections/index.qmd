@@ -2,6 +2,9 @@
 title: "Reflections on two years estimating effective reproduction numbers"
 description: |
   Over the last two years we have estimated reproduction numbers daily for several thousand locations, presented these estimates as a curated data set and visualised them at epiforecasts.io/covid. In this post we reflect on this project, summarising its utility, its integration with other projects, unanticipated challenges, and finally whether we would do it again.
+# Fix the fact that the 'wrong' URL has already been shared
+aliases:
+  - rt-reflections.html
 author:
   - name: Sam Abbott
     url: https://samabbott.co.uk
