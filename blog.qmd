@@ -4,3 +4,5 @@ listing:
   contents: posts
   feed: true
 ---
+
+Subscribe to new updates via [RSS](blog.xml).
