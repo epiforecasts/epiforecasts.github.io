@@ -2,4 +2,5 @@
 title: "EpiForecast blog"
 listing: 
   contents: posts
+  feed: true
 ---
