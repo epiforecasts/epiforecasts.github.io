@@ -1,5 +1,5 @@
 ---
-title: "EpiForecast blog"
+title: "EpiForecasts blog"
 listing: 
   contents: posts
   feed: true
