@@ -5,6 +5,8 @@ website:
   title: "EpiForecasts"
   site-url: https://epiforecasts.io
   repo-url: https://github.com/epiforecasts/epiforecasts.github.io
+  twitter-card: 
+    site: "@epiforecasts"
   repo-actions: [edit, source]
   description: "EpiForecasts team website"
   comments:
