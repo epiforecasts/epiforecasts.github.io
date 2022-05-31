@@ -40,7 +40,7 @@ create_bibentries <- function(papers) {
         author = author, 
         year = year,
         doi = doi,
-        key = doi
+        key = ids::adjective_animal()
       ))
     ) %>%
     dplyr::pull(bib)
