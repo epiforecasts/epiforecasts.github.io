@@ -25,27 +25,30 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v1
 
-      - uses: actions/download-artifact@v2
-        with:
-          name: bibentries-previous-month
-          
       - name: Create bibtex file with selected entries
         run: |
-          bibentries_previous_month <- readRDS("bibentries_previous_month.rds")
-          
-          library(magrittr)
-          selected <- gh::gh(
+          last_comment_pubs <- gh::gh(
             "/repos/{gh_repo}/issues/{issue_number}/comments",
             gh_repo = "${{ github.repository }}",
-            issue_number = 3
-          ) %>% 
-            purrr::keep(~ .x$user$login == "github-actions[bot]") %>%
-            tail(1) %>%
-            purrr::map_chr("body") %>%
-            strsplit("\r?\n\r?") %>%
-            unlist() %>%
-            startsWith("- [x]") %>%
-            tail(length(.)-1)
+            issue_number = 3,
+            .accept = "application/vnd.github.v3.full+json"
+          ) |> 
+            purrr::keep(~ .x$user$login == "github-actions[bot]") |> 
+            tail(1) |> 
+            purrr::map_chr("body_html") |> 
+            xml2::read_html()
+          
+          last_comment_pubs |> 
+            xml2::xml_find_first("//details") |> 
+            xml2::xml_text() |> 
+            write("bibentries_previous_month.bib")
+          
+          bibentries_previous_month <- bibtex::read.bib("bibentries_previous_month.bib")
+            
+          selected <- last_comment_pubs |> 
+            xml2::xml_find_first("//ul") |> 
+            xml2::xml_find_all("//input") |> 
+            xml2::xml_has_attr("checked")
           
           selected_bibentries <- bibentries_previous_month[selected]
           
@@ -54,7 +57,7 @@ jobs:
           bib_old <- readLines("_data/papers.bib")
           
           bib <- paste(c(bib_old, bib_new), collapse = "\n")
-            
+          
           write(bib, "_data/papers.bib")
         shell: Rscript {0}
       
@@ -127,8 +130,3 @@ jobs:
             )
           }
         shell: Rscript {0}
-        
-      - uses: actions/upload-artifact@v2
-        with:
-          name: bibentries-previous-month
-          path: bibentries_previous_month.rds
