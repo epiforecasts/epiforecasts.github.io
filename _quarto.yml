@@ -21,21 +21,13 @@ website:
         href: people.qmd
       - text: "Blog"
         href: blog.qmd
-      - text: "Current projects"
-        menu:
-          - text: "Global Rt Tracking and Forecasting"
-            href: https://epiforecasts.io/covid
-          - text: "European Covid-19 Forecast Hub"
-            href: https://covid19forecasthub.eu/
-          - text: "Expert/Crowd Forecasting"
-            href: https://www.crowdforecastr.org/
       - text: "Software"
         href: software.qmd
       - text: "Publications"
         href: pubs.qmd
     right:
       - icon: github
-        href: https://github.com/epiforecasts/epiforecasts.github.io
+        href: https://github.com/epiforecasts/
 
 format:
   html:
