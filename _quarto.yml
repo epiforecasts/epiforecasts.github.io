@@ -5,6 +5,7 @@ website:
   title: "EpiForecasts"
   site-url: https://epiforecasts.io
   repo-url: https://github.com/epiforecasts/epiforecasts.github.io
+  body-footer: '<script data-goatcounter="https://epiforecasts.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>'
   twitter-card: 
     site: "@epiforecasts"
   repo-actions: [edit, source]
