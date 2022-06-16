@@ -29,8 +29,6 @@ website:
     right:
       - icon: github
         href: https://github.com/epiforecasts/
-  resources: 
-    - "talks/*.html"
 
 format:
   html:
