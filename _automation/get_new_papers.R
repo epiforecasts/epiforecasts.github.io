@@ -27,6 +27,7 @@ create_bibentries <- function(papers) {
   
   papers %>%
     dplyr::mutate(
+      author = purrr::map(author, ~ filter(.x, !is.na(given) &!is.na(family))),
       author = purrr::map(author, ~ paste(.x$given, .x$family)),
       author = purrr::map(author, as.person),
       year = format(lubridate::parse_date_time(issued, c("Y-m-d", "Y-m")), "%Y")
