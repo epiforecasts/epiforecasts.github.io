@@ -1,0 +1,171 @@
+---
+title: "EpiForecasts manual"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+## EpiForecasts manual
+
+This document sets out the core aims, values and expectations of the EpiForecasts group. It was inspired by two recent articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953), and a number of publicly available other lab manuals. It is supposed to serve as a point of reference for current and future team members. All team members are invited to contribute and suggest changes, based on what the environment looks like that they would like to work in. Nothing written here is set in stone, and ideally this will turn into a dynamic document maintained by the team as a whole.
+
+Suggestions for editing this manual are welcome from any group member at any time.
+
+## Group aims
+
+We develop and use computational, statistical and mathematical techniques to improve our understanding of infectious disease outbreaks in real time. We are broadly interested in analyses that can inform ongoing decision making during acute outbreaks but have a particular focus on improving the performance of infectious disease forecasts whilst deriving general insights about both their utility and limitations. Specific questions include, but are not limited to, the following questions:
+
+1. How does the performance of forecasts depend on the model used, and the data used to inform the models?
+2. How does the performance of forecasts depend on the spatial or temporal scale used, and how should spatial interactions be modelled?
+3. What (if anything) do complex models add over simple ones, and what do models offer over human judgement without access to a computational model?
+
+We are particularly interested in analyses that are conducted in close collaboration with public-health decision makers, and in a way that maximises the utility for improving the evidence basis for relevant decisions. Whilst our analyses are usually motivated by the application at hand, we strongly believe that there is great value in developing general and re-usable tools, particularly software packages in widely used, freely and openly available languages (usually R), rather than single-use computer code.
+
+## Group principles
+
+We are aiming to maintain an inclusive environment where everyone feels valued and able to ask and answer questions and express new ideas. We recognise that each team member adds value to the group and that people have different skill sets, world views, and approaches to working. We believe that science should be open and collaborative. We treat each other, as well as our peers outside the group and their work with respect.
+
+### Expectations
+
+Everyone:
+
+* Be passionate and proud about the work you are doing within the group. Do work that others will care about. If you feel as though your work does not meet these standards, we should discuss and try to address this.
+* Support the work of other group members and offer help when you feel there is something you can help with.
+* Contribute constructively to lab meetings, journal clubs, seminars and other group events.
+* Tell someone if you are struggling or if there is a conflict within the group. We can’t thrive in an environment in which we aren’t comfortable.
+* Spend your research time on projects related to the aims of the group - you are encouraged to collaborate with people outside the group on other projects, but if these are to take a substantial amount of time this should be discussed first, and as a general rule not cover more than 20% of day-to-day work.
+* Take time off at regular intervals, and use the full holiday allowance; also take sick days off if/when needed. We do not glorify workaholic behaviour. There may be times that you have to work longer or harder to finish a time-critical piece of analysis, but this should be balanced out over time.
+* Learning / professional development…?
+
+PI (Seb): All of the above and
+
+* Support you scientifically, emotionally and financially.
+* Be available both in person and via electronic communication, including regular  meetings to discuss your work and anything else you would like to discuss.
+* Provide a broad perspective on your work within the context of the group and the general direction of science.
+* Provide timely feedback on drafts of manuscripts, talks, grant proposals, etc.
+* Help you identify the next step in your career, whether inside or outside academia, and support you towards it.
+* Identify training opportunities and conferences and support you in making the most of them.
+* Point out grant and fellowship opportunities to you and support you in applying to appropriate ones.
+* Care for your mental and physical well-being, and prioritise it above anything else.
+
+## Publications
+
+### Choice of journal
+
+All our publications must comply with [Wellcome’s Open Access Policy](https://wellcome.org/grant-funding/guidance/open-access-guidance/open-access-policy). In particular, we will post preprints of any work, and subsequently submit them to a peer-reviewed journal for publication under a CC-BY licence.
+
+We believe that the peer review and publication process should be open and transparent, and we particularly support journals that allow first submission in any format and have policies in line with our principles. We do not design our work to aim for “high-impact” but may choose to submit to them if we believe work we have done is of interest to the broadest readership. All that said, we are aware that in many instances career prospects of early career researchers may still be seen to depend on the impact factors and identities in journals in which they publish; whilst we do not think this is the case, we do not mandate any particular policy and accept if lab members feel the need to submit to particular journals. 
+
+Examples of journals that we like are:
+
+* [Wellcome Open Research](https://wellcomeopenresearch.org/) 
+* [F1000 Research](https://f1000research.com/)
+* [PeerJ](https://peerj.com/about/author-instructions/)
+* [Peer Community In](https://peercommunityin.org)
+* [Journal of Statistical Software](https://www.jstatsoft.org/index)
+* [Journal of Open Source Software](https://joss.theoj.org/)
+* [PLoS Computational Biology](https://journals.plos.org/ploscompbiol/)
+* [eLife](https://elifesciences.org/)
+
+
+### Authorship
+
+We broadly follow [University of Cambridge Guidelines on Authorship](https://www.research-integrity.admin.cam.ac.uk/research-integrity/guidance/guidelines-authorship). Specifically an author is an individual “judged to have made a substantial intellectual or practical contribution to a publication and who agrees to be accountable for that contribution”. This usually reflects:
+
+1. Making a significant contribution to the conception or design of the project or the acquisition, analysis, or interpretation of data for the work; AND/OR
+2. Drafting the work or reviewing/revising it critically for important intellectual content.
+
+We err on the side of inclusion when not sure if someone’s contributions warrant authorship, but don’t award authorship based on friendship, reciprocity or seniority. While authorship does not require writing any of the paper, we will share drafts and submitted version with all coauthors and give opportunities for critical input. If in doubt, we give more time.
+
+For any group publication, group authorship should be agreed based on the value and volume of each person’s contribution, with more supervisory roles towards the end. Where an order between co-authors cannot clearly be resolved we will randomise the order. Everyone should feel encouraged to raise any questions or misgivings they have about authorship on any particular paper.
+
+
+### Collaborative writing
+
+A paper starts with an outline (e.g., 1 sentence per paragraph) following broadly the structure suggested in [Writing for Impact: How to Prepare a Journal Article](https://static1.squarespace.com/static/5854aaa044024321a353bb0d/t/5a14af7271c10b644be97217/1511305075667/WritingForImpact.PDF), that is shared with key collaborators for feedback before engaging in the writing. If writing collaboratively, paragraphs can then be assigned to co-authors. Any finalised paper should be shared with all co-authors at least a week before preprint publication or submission to a journal.
+
+
+### Code
+
+We use github extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member.
+
+The group’s github repository is <https://github.com/epiforecasts>. Initial and exploratory work should be in personal repositories; maturing and collaborative projects should be in the group repository. Any publication should be accompanied by a github repository with a README file that allows full reproducibility of the results, reviewed by at least one other team member. Code may either be licensed to the group or licensed to the authors and contributors of that work. We suggest the use of the MIT licence as a default. 
+
+
+## Regular conferences
+
+A collaborative database of conferences and funding opportunities can be found in this spreadsheet: [EpiForecasts opportunities](https://docs.google.com/spreadsheets/d/1JjWkQbkYlke_u2HJGEoktKhD8yX2tj4SQ43wDgE6qFg/edit#gid=0).
+
+## Meetings
+
+Our meeting structure involves:
+
+### Group meetings (weekly, 1-2 hours)
+
+Weekly group meetings are there to communicate and exchange useful ideas, not to update or impress. Participation in all group meetings is expected of all group members - if you can’t make it, send an advance notice. The meetings should be conducted in an informal, positive, and supportive environment where it is at least as interesting to present loose ideas, failures, negative results and dead ends. Feedback from group members should aim to be helpful and constructive.
+
+Every group meeting has a chair, a presenter and a note taker, and all of these roles rotate. It is the responsibility of the chair to conduct the meeting in an inclusive manner that gives everyone the chance to contribute. The note taker leads collaborative note taking and is encouraged to synthesise any learning points from the meeting in a tweet, blog post or similar. There is no expectation that presentations are polished or slides used, and presentation of in-progress or early-stage work is very much encouraged.
+
+Usually, the presenter is expected to either
+
+1. Present some ongoing work, focusing on issues that they are stuck with, thinking about, and/or would like feedback on. 
+2. Present a new idea and analysis plan to solicit feedback.
+3. Present a paper or suggest a broader topic, for example on scientific practice, for discussion, with some bullet points inspiration to kick-start the conversation.
+
+At longer intervals we have meetings to
+
+4. Formulate and review broad goals/aims/progress
+5. Post-mortem rounds where we discuss what went good / wrong with past projects
+6. Update this manual 
+
+We also use the meetings for
+
+7. Practice talks (e.g., ahead of conferences). Everyone who presents work from the group should have the opportunity to present it to group members for feedback.
+
+Following the main part of the meeting, we have a “something interesting I have found” part. where someone takes 5-10 minutes to present a paper, talk, blog post, R package, etc., and explain why they thought it was interesting.
+
+### Individual meetings with the PI (every 2 weeks, one hour)
+
+These start within a summary of progress since the last meeting, followed by any points for discussion either of us finds worthy of raising.
+
+We will maintain a Google Doc (or similar) for ongoing notes from these meetings - this is updated every meeting with a short summary of discussion and action points.
+
+### Subproject meetings (project-dependent frequency)
+
+Where people collaborate on subprojects they are encouraged to agree on a separate meeting schedule to coordinate and update each other on progress.
+
+### Social meetings (whenever we feel like it)
+
+Regular coffee meetings
+
+Occasional curry outings
+
+Etc.
+
+## Practicalities
+
+### Communication
+
+We use Slack for most communication within the group. The @epiforecasts channel is used for general group communication, announcement of meeting topics, organising social events, reviewing coffee etc. Email is used for formal communication involving the broader community at LSHTM, and for communicating with people external to the group (except close collaborators, who are invited to Slack).
+
+We acknowledge the potential impact of push notifications on productivity and mental health. Everybody is strongly encouraged to turn off all notifications outside of standard working hours (9am-5pm), and is welcome to regularly check into communication channels rather than being alerted by them when within these hours. Generally, the expectation is that team-internal questions put via Slack are answered within 24 hours. After that, it is not considered impolite to send a reminder.
+
+### Web site
+
+The group’s web site is at <https://epiforecasts.io/>. Content can be edited via the github page at <https://github.com/epiforecasts/epiforecasts.github.io> (choose a _.md_ file and edit, or clone the github repo and do it on your own computer). An interesting and up-to-date web site that showcases good work done in the group is of benefit to everyone, but should not take too much of everyone’s time. It is everyone’s responsibility to contribute to this.
+
+### Team work
+
+Working in a team is more fun, rewarding and productive than working on one’s own. Every Monday we share our plans for any given week on Slack, and we use our weekly group meetings to exchange and discuss ideas and progress.
+
+For every project that someone is working on, another team member should be shadowing them that provides support in, e.g., review of code, drafts, analysis and ideas. Shadowing rotates roughly every 4 weeks. The focus of the team member shadowing should be outlined by the lead team member at the beginning of the shadowing period. Except in rare cases, those assigned to shadow a project would be expected to be included as an author of any resulting work.
+
+### Working hours
+
+One of the benefits of a career in academic research is that it is typically more flexible than other kinds of jobs. However, we should still treat it like a job. LSHTM employs people for 35 hours a week, typically expected to happen in 8 hours per weekday with a mandatory 1-hour break. Everybody is strongly encouraged to not work in excess of these hours.
+
+### Presence
+
+There are benefits to working together in the same building/office, particularly in facilitating informal communication. That said, the Covid-19 pandemic has shown that remote working can be managed successfully, and the same approach does not work for everyone. We are keen to find ways of working that are flexible enough for everyone to work in the way that they are most productive, whether on-site in London or remotely.
