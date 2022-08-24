@@ -120,7 +120,7 @@ We also use the meetings for
 
 7. Practice talks (e.g., ahead of conferences). Everyone who presents work from the group should have the opportunity to present it to group members for feedback.
 
-Following the main part of the meeting, we have a “something interesting I have found” part. where someone takes 5-10 minutes to present a paper, talk, blog post, R package, etc., and explain why they thought it was interesting.
+The "something else that is interesting" section follows after the main presentation - here, the designated group member takes 5-10 minutes to either present something interesting they found (e.g. a paper, talk, blog post, R package, etc.) and/or spark a discussion that is of interest to the group. This section of the meeting can be broader in scope and need not directly be aligned with the group's primary research interests.
 
 ### Individual meetings with the PI (every 2 weeks, one hour)
 
