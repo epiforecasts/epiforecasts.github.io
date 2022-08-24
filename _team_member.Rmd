@@ -25,15 +25,11 @@ if ("{{webpage}}" != "") {
 }
 
 if ("{{github}}" != "") {
-  title <- paste(title, icon_link("fab fa-github", url = "https://github.com/{{github}}"))
+  title <- paste(title, icon_link("bi bi-github", url = "https://github.com/{{github}}"))
 }
 
 if ("{{twitter}}" != "") {
-  title <- paste(title, icon_link("fab fa-twitter", url = "https://twitter.com/{{twitter}}"))
-}
-
-if ("{{orcid}}" != "") {
-  title <- paste(title, icon_link("fab fa-orcid", url = "https://orcid.org/{{orcid}}"))
+  title <- paste(title, icon_link("bi bi-twitter", url = "https://twitter.com/{{twitter}}"))
 }
 ```
 
