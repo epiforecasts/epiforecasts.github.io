@@ -9,9 +9,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## EpiForecasts manual
 
-This document sets out the core aims, values and expectations of the EpiForecasts group. It was inspired by two recent articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953), and a number of publicly available other lab manuals. It is supposed to serve as a point of reference for current and future team members. All team members are invited to contribute and suggest changes, based on what the environment looks like that they would like to work in. Nothing written here is set in stone, and ideally this will turn into a dynamic document maintained by the team as a whole.
+This document sets out the core aims, values and expectations of the EpiForecasts group. It was inspired by two articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953), and a number of publicly available other lab manuals. It is supposed to serve as a point of reference for current and future team members. All team members are invited to contribute and suggest changes, based on what the environment looks like that they would like to work in. Nothing written here is set in stone, and ideally this will turn into a dynamic document maintained by the team as a whole.
 
-Suggestions for editing this manual are welcome from any group member at any time.
+Suggestions for editing this manual via GitHub Pull Requests are welcome from any group member at any time.
 
 ## Group aims
 
@@ -21,13 +21,13 @@ We develop and use computational, statistical and mathematical techniques to imp
 2. How does the performance of forecasts depend on the spatial or temporal scale used, and how should spatial interactions be modelled?
 3. What (if anything) do complex models add over simple ones, and what do models offer over human judgement without access to a computational model?
 
-We are particularly interested in analyses that are conducted in close collaboration with public-health decision makers, and in a way that maximises the utility for improving the evidence basis for relevant decisions. Whilst our analyses are usually motivated by the application at hand, we strongly believe that there is great value in developing general and re-usable tools, particularly software packages in widely used, freely and openly available languages (usually R), rather than single-use computer code.
+We are particularly interested in analyses that are conducted in close collaboration with public-health decision makers, and in a way that maximises the utility for improving the evidence basis for relevant decisions. Whilst our analyses are usually motivated by the application at hand, we strongly believe that there is great value in developing general and re-usable tools, particularly software packages in widely used, freely and openly available languages (usually R), rather than single-use computer code. Ultimately, our goal is to develop and use robust methodology that makes the most of available resources to provide insights useful for outbreak response, control and prevention, and to make them available as tools to others
 
 ## Group principles
 
 We are aiming to maintain an inclusive environment where everyone feels valued and able to ask and answer questions and express new ideas. We recognise that each team member adds value to the group and that people have different skill sets, world views, and approaches to working. We believe that science should be open and collaborative. We treat each other, as well as our peers outside the group and their work with respect.
 
-### Expectations
+### Expectations from members
 
 Everyone:
 
@@ -39,7 +39,7 @@ Everyone:
 * Take time off at regular intervals, and use the full holiday allowance; also take sick days off if/when needed. We do not glorify workaholic behaviour. There may be times that you have to work longer or harder to finish a time-critical piece of analysis, but this should be balanced out over time.
 * Learning / professional development…?
 
-PI (Seb): All of the above and
+PI: All of the above and
 
 * Support you scientifically, emotionally and financially.
 * Be available both in person and via electronic communication, including regular  meetings to discuss your work and anything else you would like to discuss.
@@ -91,7 +91,7 @@ A paper starts with an outline (e.g., 1 sentence per paragraph) following broadl
 
 We use github extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member.
 
-The group’s github repository is <https://github.com/epiforecasts>. Initial and exploratory work should be in personal repositories; maturing and collaborative projects should be in the group repository. Any publication should be accompanied by a github repository with a README file that allows full reproducibility of the results, reviewed by at least one other team member. Code may either be licensed to the group or licensed to the authors and contributors of that work. We suggest the use of the MIT licence as a default. 
+The group’s github repository is <https://github.com/epiforecasts>. Initial and exploratory work should be in personal repositories; maturing and collaborative group projects should be in the group repository. Any publication should be accompanied by a github repository with a README file that allows full reproducibility of the results, reviewed by at least one other team member. Code may either be licensed to the group or licensed to the authors and contributors of that work. We suggest the use of the MIT licence as a default. 
 
 
 ## Regular conferences
@@ -138,11 +138,7 @@ Where people collaborate on subprojects they are encouraged to agree on a separa
 
 ### Social meetings (whenever we feel like it)
 
-Regular coffee meetings
-
-Occasional curry outings
-
-Etc.
+Regular coffee meetings (mondays), occasional curry outings and others
 
 ## Practicalities
 
