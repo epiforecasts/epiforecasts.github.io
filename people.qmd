@@ -33,6 +33,7 @@ current_team %>%
       webpage = e[["webpage"]],
       github = e[["github"]],
       twitter = e[["twitter"]],
+      orcid = e[["orcid"]],
       description = e[["description"]]
     )
   }) %>%
