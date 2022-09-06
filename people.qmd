@@ -1,5 +1,6 @@
 ---
 title: "People"
+link-external-icon: false
 ---
 
 ```{r setup, include=FALSE}
