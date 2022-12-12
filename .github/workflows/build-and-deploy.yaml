@@ -19,7 +19,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: quarto-dev/quarto-actions/setup@main
+      - uses: quarto-dev/quarto-actions/setup@85e619f04bc50394deb899d6934503c04c41ceb5
 
       - uses: r-lib/actions/setup-r@v1
         with:
