@@ -20,7 +20,7 @@ properties:
   orcid:
     description: Your ORCiD
     type: string
-    pattern: ^\d{4}\-\d{4}\-\d{4}-\d{4}$
+    pattern: ^\d{4}-\d{4}-\d{4}-\d{3}(X|\d)$
   current-member:
     description: A boolean saying whether you're currently a team member or not.
     type: boolean
