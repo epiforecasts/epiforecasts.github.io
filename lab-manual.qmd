@@ -38,7 +38,7 @@ Everyone:
 PI: All of the above and
 
 * Support you scientifically, emotionally and financially.
-* Be available both in person and via electronic communication, including regular  meetings to discuss your work and anything else you would like to discuss.
+* Be available both in person and via electronic communication, including regular meetings to discuss your work and anything else you would like to discuss.
 * Provide a broad perspective on your work within the context of the group and the general direction of science.
 * Provide timely feedback on drafts of manuscripts, talks, grant proposals, etc.
 * Help you identify the next step in your career, whether inside or outside academia, and support you towards it.
@@ -85,7 +85,7 @@ A paper starts with an outline (e.g., 1 sentence per paragraph) following broadl
 
 ### Code
 
-We use github extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member.
+We use GitHub extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member.
 
 The group’s github repository is <https://github.com/epiforecasts>. Initial and exploratory work should be in personal repositories; maturing and collaborative group projects should be in the group repository. Projects that involve multiple repositories and/or include core developers from outside the group can live within separate organisations and mention the affiliation to the group in some other way.
 
