@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## EpiForecasts manual
 
-This document sets out the core aims, values and expectations of the EpiForecasts group. It was inspired by two articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953), and a number of publicly available other lab manuals. It is supposed to serve as a point of reference for current and future team members. All team members are invited to contribute and suggest changes, based on what the environment looks like that they would like to work in. Nothing written here is set in stone, and ideally this will turn into a dynamic document maintained by the team as a whole.
+This document sets out the core aims, values and expectations of the EpiForecasts group. It was originally inspired by two articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953), and a number of publicly available other lab manuals. It is supposed to serve as a point of reference for current and future team members. All team members are invited to contribute and suggest changes, based on what the environment looks like that they would like to work in. Nothing written here is set in stone, and ideally this will turn into a dynamic document maintained by the team as a whole.
 
 Suggestions for editing this manual via GitHub Pull Requests are welcome from any group member at any time.
 
