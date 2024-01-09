@@ -150,16 +150,10 @@ We acknowledge the potential impact of push notifications on productivity and me
 
 The group’s web site is at <https://epiforecasts.io/>. Content can be edited via the github page at <https://github.com/epiforecasts/epiforecasts.github.io> (choose a _.md_ file and edit, or clone the github repo and do it on your own computer). An interesting and up-to-date web site that showcases good work done in the group is of benefit to everyone, but should not take too much of everyone’s time. It is everyone’s responsibility to contribute to this.
 
-### Team work
-
-Working in a team is more fun, rewarding and productive than working on one’s own. Every Monday we share our plans for any given week on Slack, and we use our weekly group meetings to exchange and discuss ideas and progress.
-
-For every project that someone is working on, another team member should be shadowing them that provides support in, e.g., review of code, drafts, analysis and ideas. Shadowing rotates roughly every 4 weeks. The focus of the team member shadowing should be outlined by the lead team member at the beginning of the shadowing period. Except in rare cases, those assigned to shadow a project would be expected to be included as an author of any resulting work.
-
 ### Working hours
 
-One of the benefits of a career in academic research is that it is typically more flexible than other kinds of jobs. However, we should still treat it like a job. LSHTM employs people for 35 hours a week, typically expected to happen in 8 hours per weekday with a mandatory 1-hour break. Everybody is strongly encouraged to not work in excess of these hours.
+One of the benefits of a career in academic research is that it is typically more flexible than other kinds of jobs. However, it is still a job. LSHTM employs people for 35 hours a week, typically expected to happen in 8 hours per weekday with a mandatory 1-hour break. Everybody is strongly encouraged to not work in excess of these hours.
 
 ### Presence
 
-There are benefits to working together in the same building/office, particularly in facilitating informal communication. That said, the Covid-19 pandemic has shown that remote working can be managed successfully, and the same approach does not work for everyone. We are keen to find ways of working that are flexible enough for everyone to work in the way that they are most productive, whether on-site in London or remotely.
+There are definite benefits to working together in the same building/office, particularly in facilitating informal communication. That said, the Covid-19 pandemic has shown that remote working can be managed successfully, and the same approach does not work for everyone. We are keen to find ways of working that are flexible enough for everyone to work in the way that they are most productive, whether on-site in London or remotely.
