@@ -17,7 +17,7 @@ jobs:
       LANG: "en_US.UTF-8"
       LC_ALL: "en_US.UTF-8"
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - uses: quarto-dev/quarto-actions/setup@85e619f04bc50394deb899d6934503c04c41ceb5
 
