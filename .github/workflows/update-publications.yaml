@@ -61,7 +61,7 @@ jobs:
           write(bib, "_data/papers.bib")
         shell: Rscript {0}
       
-      - uses: peter-evans/create-pull-request@10db75894f6d53fc01c3bb0995e95bd03e583a62
+      - uses: peter-evans/create-pull-request@5ac05dbaf3e4c655ed87f1cbba980b9e5c490504
         id: cpr
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
