@@ -106,6 +106,8 @@ Weekly group meetings are there to communicate and exchange useful ideas, not to
 
 Every group meeting has a chair, a presenter and a note taker, and all of these roles rotate. It is the responsibility of the chair to conduct the meeting in an inclusive manner that gives everyone the chance to contribute. The note taker leads collaborative note taking and is encouraged to synthesise any learning points from the meeting in a tweet, blog post or similar. There is no expectation that presentations are polished or slides used, and presentation of in-progress or early-stage work is very much encouraged.
 
+The group meeting starts once the chair is satisfied that people have arrived. As a first item, the chair will briefly talk about something that is not related to the work of the group - this could be a film they've seen, a book they're reading, a place they've visited, something they've been thinking about or anything else really. This is followed by the main presentation.
+
 Usually, the presenter is expected to either
 
 1. Present some ongoing work, focusing on issues that they are stuck with, thinking about, and/or would like feedback on. 
@@ -122,8 +124,6 @@ We also use the meetings for
 
 7. Practice talks (e.g., ahead of conferences). Everyone who presents work from the group should have the opportunity to present it to group members for feedback.
 
-The "something else that is interesting" section follows after the main presentation - here, the designated group member takes 5-10 minutes to either present something interesting they found (e.g. a paper, talk, blog post, R package, etc.) and/or spark a discussion that is of interest to the group. This section of the meeting can be broader in scope and need not directly be aligned with the group's primary research interests.
-
 ### Individual meetings with the PI (every 2 weeks, one hour)
 
 These start within a summary of progress since the last meeting, followed by any points for discussion either of us finds worthy of raising.
@@ -136,7 +136,7 @@ Where people collaborate on subprojects they are encouraged to agree on a separa
 
 ### Social meetings (whenever we feel like it)
 
-Regular coffee meetings (mondays), occasional curry outings and others
+Coffee meetings, occasional curry outings and others
 
 ## Practicalities
 
