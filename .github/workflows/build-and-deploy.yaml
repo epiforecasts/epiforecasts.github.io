@@ -36,7 +36,7 @@ jobs:
       - name: Render site
         run: quarto render
       
-      - run: cp -r talks _site
+      - run: cp -r slides _site
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
