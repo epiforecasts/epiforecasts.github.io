@@ -24,6 +24,10 @@ current_team <- team %>%
   purrr::keep(function(x) x[["current-member"]])
 ```
 
+Team members are staff, students and long-term visitors (3 months or more) of the group.
+
+## Current team members
+
 ```{r, results='asis'}
 current_team %>%
   purrr::map_chr(function(e) {

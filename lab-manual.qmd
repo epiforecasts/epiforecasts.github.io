@@ -9,7 +9,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## EpiForecasts manual
 
-This document sets out the core aims, values and expectations of the EpiForecasts group. It was inspired by two articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953), and a number of publicly available other lab manuals. It is supposed to serve as a point of reference for current and future team members. All team members are invited to contribute and suggest changes, based on what the environment looks like that they would like to work in. Nothing written here is set in stone, and ideally this will turn into a dynamic document maintained by the team as a whole.
+This document sets out the core aims, values and expectations of the EpiForecasts group. It was originally inspired by two articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953), and a number of publicly available other lab manuals. It is supposed to serve as a point of reference for current and future team members. All team members are invited to contribute and suggest changes, based on what the environment looks like that they would like to work in. Nothing written here is set in stone, and ideally this will turn into a dynamic document maintained by the team as a whole.
 
 Suggestions for editing this manual via GitHub Pull Requests are welcome from any group member at any time.
 
@@ -38,7 +38,7 @@ Everyone:
 PI: All of the above and
 
 * Support you scientifically, emotionally and financially.
-* Be available both in person and via electronic communication, including regular  meetings to discuss your work and anything else you would like to discuss.
+* Be available both in person and via electronic communication, including regular meetings to discuss your work and anything else you would like to discuss.
 * Provide a broad perspective on your work within the context of the group and the general direction of science.
 * Provide timely feedback on drafts of manuscripts, talks, grant proposals, etc.
 * Help you identify the next step in your career, whether inside or outside academia, and support you towards it.
@@ -85,7 +85,7 @@ A paper starts with an outline (e.g., 1 sentence per paragraph) following broadl
 
 ### Code
 
-We use github extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member.
+We use GitHub extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member.
 
 The group’s github repository is <https://github.com/epiforecasts>. Initial and exploratory work should be in personal repositories; maturing and collaborative group projects should be in the group repository. Projects that involve multiple repositories and/or include core developers from outside the group can live within separate organisations and mention the affiliation to the group in some other way.
 
@@ -106,6 +106,8 @@ Weekly group meetings are there to communicate and exchange useful ideas, not to
 
 Every group meeting has a chair, a presenter and a note taker, and all of these roles rotate. It is the responsibility of the chair to conduct the meeting in an inclusive manner that gives everyone the chance to contribute. The note taker leads collaborative note taking and is encouraged to synthesise any learning points from the meeting in a tweet, blog post or similar. There is no expectation that presentations are polished or slides used, and presentation of in-progress or early-stage work is very much encouraged.
 
+The group meeting starts once the chair is satisfied that people have arrived. As a first item, the chair will briefly talk about something that is not related to the work of the group - this could be a film they've seen, a book they're reading, a place they've visited, something they've been thinking about or anything else really. This is followed by the main presentation.
+
 Usually, the presenter is expected to either
 
 1. Present some ongoing work, focusing on issues that they are stuck with, thinking about, and/or would like feedback on. 
@@ -122,8 +124,6 @@ We also use the meetings for
 
 7. Practice talks (e.g., ahead of conferences). Everyone who presents work from the group should have the opportunity to present it to group members for feedback.
 
-The "something else that is interesting" section follows after the main presentation - here, the designated group member takes 5-10 minutes to either present something interesting they found (e.g. a paper, talk, blog post, R package, etc.) and/or spark a discussion that is of interest to the group. This section of the meeting can be broader in scope and need not directly be aligned with the group's primary research interests.
-
 ### Individual meetings with the PI (every 2 weeks, one hour)
 
 These start within a summary of progress since the last meeting, followed by any points for discussion either of us finds worthy of raising.
@@ -136,7 +136,7 @@ Where people collaborate on subprojects they are encouraged to agree on a separa
 
 ### Social meetings (whenever we feel like it)
 
-Regular coffee meetings (mondays), occasional curry outings and others
+Coffee meetings, occasional curry outings and others
 
 ## Practicalities
 
@@ -150,16 +150,10 @@ We acknowledge the potential impact of push notifications on productivity and me
 
 The group’s web site is at <https://epiforecasts.io/>. Content can be edited via the github page at <https://github.com/epiforecasts/epiforecasts.github.io> (choose a _.md_ file and edit, or clone the github repo and do it on your own computer). An interesting and up-to-date web site that showcases good work done in the group is of benefit to everyone, but should not take too much of everyone’s time. It is everyone’s responsibility to contribute to this.
 
-### Team work
-
-Working in a team is more fun, rewarding and productive than working on one’s own. Every Monday we share our plans for any given week on Slack, and we use our weekly group meetings to exchange and discuss ideas and progress.
-
-For every project that someone is working on, another team member should be shadowing them that provides support in, e.g., review of code, drafts, analysis and ideas. Shadowing rotates roughly every 4 weeks. The focus of the team member shadowing should be outlined by the lead team member at the beginning of the shadowing period. Except in rare cases, those assigned to shadow a project would be expected to be included as an author of any resulting work.
-
 ### Working hours
 
-One of the benefits of a career in academic research is that it is typically more flexible than other kinds of jobs. However, we should still treat it like a job. LSHTM employs people for 35 hours a week, typically expected to happen in 8 hours per weekday with a mandatory 1-hour break. Everybody is strongly encouraged to not work in excess of these hours.
+One of the benefits of a career in academic research is that it is typically more flexible than other kinds of jobs. However, it is still a job. LSHTM employs people for 35 hours a week, typically expected to happen in 8 hours per weekday with a mandatory 1-hour break. Everybody is strongly encouraged to not work in excess of these hours.
 
 ### Presence
 
-There are benefits to working together in the same building/office, particularly in facilitating informal communication. That said, the Covid-19 pandemic has shown that remote working can be managed successfully, and the same approach does not work for everyone. We are keen to find ways of working that are flexible enough for everyone to work in the way that they are most productive, whether on-site in London or remotely.
+There are definite benefits to working together in the same building/office, particularly in facilitating informal communication. That said, the Covid-19 pandemic has shown that remote working can be managed successfully, and the same approach does not work for everyone. We are keen to find ways of working that are flexible enough for everyone to work in the way that they are most productive, whether on-site in London or remotely.
