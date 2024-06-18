@@ -15,7 +15,8 @@ We are currently mainly funded by the [Wellcome Trust](https://grantnav.threesix
 other research groups, public health agencies such as the [European Centre for Disease Control and Prevention](https://www.ecdc.europa.eu/en) and non-governmental
 organisations such as [Médecins Sans Frontières](https://www.msf.org/).
 
-<aside>
-<a class="twitter-timeline" data-width="500" href="https://twitter.com/epiforecasts?ref_src=twsrc%5Etfw">Tweets by epiforecasts</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
-</aside>
+::: {.column-margin}
 
+<a class="twitter-timeline" data-tweet-limit="3" href="https://twitter.com/epiforecasts?ref_src=twsrc%5Etfw">Tweets by epiforecasts</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+
+:::
