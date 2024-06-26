@@ -11,12 +11,6 @@ website:
     site: "@epiforecasts"
   repo-actions: [edit, source]
   description: "EpiForecasts team website"
-  comments:
-    giscus:
-      repo: epiforecasts/epiforecasts.github.io
-      category: 'Website discussions'
-      mapping: title
-      reactions-enabled: true
   navbar:
     left:
       - text: "People"
