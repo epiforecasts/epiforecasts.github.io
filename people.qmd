@@ -8,20 +8,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(dplyr)
 ```
 
-```{r}
-team <- fs::dir_ls("_data/team", regexp = "\\w+\\-\\w+\\.yml") %>%
-  purrr::map(yaml::read_yaml)
-
-# Put Seb first (group leader)
-team <- c(
-  team[which(purrr::map(team, "name") == "Sebastian Funk")],
-  team[-which(purrr::map(team, "name") == "Sebastian Funk")]
-)
-```
-
-```{r}
-current_team <- team %>%
-  purrr::keep(function(x) x[["current-member"]])
+```{r, file = here::here("snippets", "team_members.R")}
 ```
 
 Team members are staff, students and long-term visitors (3 months or more) of the group.
