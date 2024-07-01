@@ -8,20 +8,22 @@ aliases:
 author:
   - name: Sam Abbott
     url: https://samabbott.co.uk
-    affiliation: London School of Hygiene and Tropical Medicine
+    affiliation: London School of Hygiene & Tropical Medicine
     affiliation_url: https://www.lshtm.ac.uk/
+    orcid: orcid.org/0000-0001-8057-8037
   - name: Sebastian Funk
     url: https://www.lshtm.ac.uk/aboutus/people/funk.sebastian
-    affiliation: London School of Hygiene and Tropical Medicine
+    affiliation: London School of Hygiene & Tropical Medicine
     affiliation_url: https://www.lshtm.ac.uk/
+    orcid: 0000-0002-2842-3406
 date: 2022-03-25
 doi: https://doi.org/10.59350/8apn9-8h048
 toc: true
 toc-depth: 2
 creative_commons: CC BY
 twitter:
-  site: "@epiforecasts"
-  creator: "@sbfnk"
+  site: "epiforecasts"
+  creator: "sbfnk"
 bibliography: biblio.bib
 cite: true
 image: example-rt.png
