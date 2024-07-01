@@ -90,6 +90,19 @@
       ],
       "Hash": "543776ae6848fde2f48ff3816d0628bc"
     },
+    "bib2df": {
+      "Package": "bib2df",
+      "Version": "1.1.2.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "dplyr",
+        "httr",
+        "humaniformat",
+        "stringr"
+      ],
+      "Hash": "f73a15a851cb13310bd6765c0ec97b60"
+    },
     "bibtex": {
       "Package": "bibtex",
       "Version": "0.5.1",
@@ -521,6 +534,21 @@
       ],
       "Hash": "838602f54e32c1a0f8cc80708cefcefa"
     },
+    "httr": {
+      "Package": "httr",
+      "Version": "1.4.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "R",
+        "R6",
+        "curl",
+        "jsonlite",
+        "mime",
+        "openssl"
+      ],
+      "Hash": "ac107251d9d9fd72f0ca8049988f1d7f"
+    },
     "httr2": {
       "Package": "httr2",
       "Version": "0.2.3",
@@ -539,6 +567,17 @@
         "withr"
       ],
       "Hash": "193bb297368afbbb42dc85784a46b36e"
+    },
+    "humaniformat": {
+      "Package": "humaniformat",
+      "Version": "0.6.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Requirements": [
+        "Rcpp",
+        "methods"
+      ],
+      "Hash": "d521cf9db39ca79250a00029661fb7cd"
     },
     "ids": {
       "Package": "ids",
