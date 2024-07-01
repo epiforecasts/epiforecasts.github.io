@@ -7,6 +7,7 @@ author:
     url: https://www.lshtm.ac.uk/aboutus/people/kucharski.adam
 date: 2019-08-21
 bibliography: dip.bib
+doi: https://doi.org/10.59350/h07jp-s9s54
 description: |
   Modelling the 2018/19 diphtheria outbreak in Cox's Bazar, Bangladesh.
 citation: true

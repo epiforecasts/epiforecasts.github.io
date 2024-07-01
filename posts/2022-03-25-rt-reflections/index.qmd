@@ -15,6 +15,7 @@ author:
     affiliation: London School of Hygiene and Tropical Medicine
     affiliation_url: https://www.lshtm.ac.uk/
 date: 2022-03-25
+doi: https://doi.org/10.59350/8apn9-8h048
 toc: true
 toc-depth: 2
 creative_commons: CC BY
