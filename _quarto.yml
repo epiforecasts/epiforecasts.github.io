@@ -23,6 +23,10 @@ website:
         href: software.qmd
       - text: "Publications"
         href: pubs.qmd
+      - text: "Join us"
+        href: positions.qmd
+      - text: "Contact"
+        href: contact.qmd
     right:
       - icon: github
         href: https://github.com/epiforecasts/

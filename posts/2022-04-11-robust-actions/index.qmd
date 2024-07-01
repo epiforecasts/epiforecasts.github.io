@@ -5,8 +5,6 @@ author:
     orcid_id: 0000-0002-4094-1476
 date: 2022-04-11
 toc: true
-creative_commons: CC BY
-citation: true
 doi: 10.59350/fn684-kz311
 aliases:
   - robust-actions.html
