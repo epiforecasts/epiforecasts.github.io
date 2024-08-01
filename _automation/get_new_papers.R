@@ -6,6 +6,10 @@ get_new_papers_orcid <- function(orcid, from_date) {
     purrr::pluck("data")
 
   if (nrow(refs) > 0) {
+    if (!("container.title" %in% colnames(refs))) {
+      refs <- refs |>
+        dplyr::mutate(container.title = NA_character_)
+    }
     refs <- refs |>
       dplyr::mutate(
         container.title = dplyr::if_else(
