@@ -66,5 +66,7 @@ jobs:
       - uses: r-lib/actions/setup-renv@v2
       
       - name: Post a comment listing new papers
-        run: source("snippets/post_publications.R")
+        run: |
+          gh_repository <- "${{ github.repository }}"
+          source("snippets/post_publications.R")
         shell: Rscript {0}

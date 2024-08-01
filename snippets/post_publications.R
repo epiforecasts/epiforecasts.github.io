@@ -27,7 +27,7 @@ if (nrow(new_papers) > 0) {
 
   gh::gh(
     "POST /repos/{gh_repo}/issues/{issue_number}/comments",
-    gh_repo = "${{ github.repository }}",
+    gh_repo = gh_repository,
     issue_number = 3,
     body = bibentries_comment
   )
