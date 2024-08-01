@@ -27,7 +27,7 @@ jobs:
 
       - name: Create bibtex file with selected entries
         run: |
-          gh_repository <- ${{ github.repository }}
+          gh_repository <- "${{ github.repository }}"
           source("snippets/update_publications.R")
         shell: Rscript {0}
       
