@@ -1,6 +1,6 @@
 last_comment_pubs <- gh::gh(
   "/repos/{gh_repo}/issues/{issue_number}/comments",
-  gh_repo = "${{ github.repository }}",
+  gh_repo = gh_repository,
   issue_number = 3,
   .accept = "application/vnd.github.v3.full+json"
 ) |>

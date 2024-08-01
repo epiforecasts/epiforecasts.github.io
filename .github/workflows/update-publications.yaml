@@ -26,7 +26,9 @@ jobs:
       - uses: r-lib/actions/setup-renv@v2
 
       - name: Create bibtex file with selected entries
-        run: source("snippets/update_publications.R")
+        run: |
+          gh_repository <- ${{ github.repository }}
+          source("snippets/update_publications.R")
         shell: Rscript {0}
       
       - uses: peter-evans/create-pull-request@v6
