@@ -1,0 +1,11 @@
+/* https://github.com/twbs/icons/issues/1886 */
+.bi-bluesky::before {
+    content: "";
+    background-color: currentColor;
+    -webkit-mask: url("images/bluesky.svg") no-repeat 50% 50%;
+    mask: url("images/bluesky.svg") no-repeat 50% 50%;
+    -webkit-mask-size: cover;
+    mask-size: cover;
+    height: 16px;
+    width: 16px;
+}

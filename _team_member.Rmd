@@ -35,6 +35,10 @@ if ("{{twitter}}" != "") {
 if ("{{orcid}}" != "") {
   title <- paste(title, icon_link("ai ai-orcid", url = "https://orcid.org/{{orcid}}"))
 }
+
+if ("{{bluesky}}" != "") {
+  title <- paste(title, icon_link("bi bi-bluesky", url = "https://{{bluesky}}"))
+}
 ```
 
 ### `r title`
