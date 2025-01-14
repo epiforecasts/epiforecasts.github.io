@@ -19,6 +19,6 @@ organisations such as [Médecins Sans Frontières](https://www.msf.org/).
 
 ::: {.column-margin}
 
-<a class="twitter-timeline" data-tweet-limit="3" href="https://twitter.com/epiforecasts?ref_src=twsrc%5Etfw">Tweets by epiforecasts</a> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> 
+<script async src="https://bst.heion.net/timeline.js" data-handle="epiforecasts.bsky.social" data-theme="light" data-width="420" data-height="500" data-lang="en" data-pin="0"></script>
 
 :::
