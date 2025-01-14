@@ -1,7 +1,11 @@
 ---
 title: "People"
 link-external-icon: false
+resources:
+  - "images/bluesky.svg"
 ---
+
+<script src="https://kit.fontawesome.com/52811a1d50.js" crossorigin="anonymous"></script>
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
@@ -24,6 +28,7 @@ current_team %>%
       webpage = e[["webpage"]],
       github = e[["github"]],
       twitter = e[["twitter"]],
+      bluesky = e[["bluesky"]],
       orcid = e[["orcid"]],
       description = e[["description"]]
     )
