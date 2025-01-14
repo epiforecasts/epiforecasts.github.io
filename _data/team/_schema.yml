@@ -17,6 +17,9 @@ properties:
   twitter:
     description: Your twitter username (with and without @ both work)
     type: string
+  bluesky:
+    description: Your BlueSky username (e.g. `sbfnk.bluesky.social`)
+    type: string
   orcid:
     description: Your ORCiD
     type: string
