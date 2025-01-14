@@ -43,6 +43,12 @@ Your github username (*without* the ‘@’)
 
 Your twitter username (with and without @ both work)
 
+#### `bluesky`
+
+`string`
+
+Your BlueSky username (e.g. `sbfnk.bluesky.social`)
+
 #### `orcid`
 
 `string`
