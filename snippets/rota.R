@@ -1,5 +1,6 @@
 library("lubridate")
 library("dplyr")
+library("readr")
 
 source(here::here("snippets", "team_members.R"))
 
@@ -9,23 +10,22 @@ shift <- function(x) {
 
 names <- unname(unlist((purrr::map(current_team, ~.x$name))))
 
-summer_break <- data.frame(
-  Date = ymd("2024-08-08") + 0:3 * weeks(1),
+break_time <- data.frame(
+  Date = ymd("2025-04-10") + 0:1 * weeks(1),
   Speaker = "",
-  Topic = "[OFF] Summer break"
+  Topic = "[OFF] Easter break"
 )
 
 ## fixed dates
-fixed <- data.frame(
-  Date = ymd("2024-08-01"),
-  Speaker = "Manuel Stapper",
-  Topic = ""
+fixed_speakers <- data.frame(
+  Date = ymd(character(0)),
+  Speaker = character(0),
+  Topic = character(0)
 )
-extra_meetings <- c()
+extra_meetings <- c("Seb updates", "Bring a figure", "Bring an idea")
 
-fixed <- rbind(fixed, summer_break)
-names <- setdiff(names, fixed$Speaker)
-names <- setdiff(names, c("Sebastian Funk", "Liza Hadley"))
+fixed <- rbind(fixed_speakers, break_time)
+names <- setdiff(names, c("Sebastian Funk", fixed$Speaker))
 
 pool <- data.frame(
   Speaker = c(names, rep("", length(extra_meetings))),
@@ -71,9 +71,7 @@ df <- df |>
       Speaker == "",
       Speaker,
       shift(setdiff(Speaker, ""))
-    ),
-    Notetaking = ifelse(
-      Chair == "",
-      Chair,
-      shift(setdiff(Chair, ""))
-    ))
+    )
+)
+
+write_csv(df, "rota.csv")
