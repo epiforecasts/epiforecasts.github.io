@@ -19,6 +19,6 @@ organisations such as [Médecins Sans Frontières](https://www.msf.org/).
 
 ::: {.column-margin}
 
-<script async src="https://bst.heion.net/timeline.js" data-handle="epiforecasts.bsky.social" data-theme="light" data-width="420" data-height="500" data-lang="en" data-pin="0"></script>
+<script async src="https://bst.heion.net/timeline.js" data-handle="epiforecasts.io" data-theme="light" data-width="420" data-height="500" data-lang="en" data-pin="0"></script>
 
 :::
