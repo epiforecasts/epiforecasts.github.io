@@ -66,6 +66,10 @@ We organize functions into logical groups that reflect EpiNow2's core capabiliti
    - `estimates_smoothing`: Gaussian process smoothing
    - `handlers_and_helpers`: Utility functions and parameter handlers
 
+# License
+
+We also link the license so that potential re-use and attribution are treated in an appropriate manner
+.
 ### Navigation Structure
 
 We simplified Doxygen's default navigation using:
