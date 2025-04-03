@@ -112,7 +112,12 @@ Used in a function file as follows:
  * @ingroup group_name
  */
 ```
+## Webpage Themes
 
+We use the awesome [doxygen-awesome](https://jothepro.github.io/doxygen-awesome-css/index.html) theme to override the default doxygen theme and prettify it. In short, we:
+
+- Download the relevant files, i.e., all files beginning with `doxygen-awesome-`, from the root directory of the doxygen-awesome [github repository](https://github.com/jothepro/doxygen-awesome-css) and place them in the `./inst/stan/stan_docs` directory. 
+-  Link the theme file (`doxygen-awesome.css`) to the `./inst/stan/stan_docs/doxyfile` by passing the path to the `doxygen-awesome.css` file to the `doxyfile` tag `HTML_EXTRA_STYLESHEET`.  
 ## Building Documentation
 
 ### Manually
@@ -139,6 +144,8 @@ Open `inst/stan/stan_docs/html/index.html` in your browser
 
 Visit `https://epiforecasts.github.io/EpiNow2/stan/`
 
+Note that this is only possible when it has been merged into the `main` branch and hence, rendered by the workflow. 
+
 ### Navigation
 
 The documentation provides:
@@ -146,6 +153,7 @@ The documentation provides:
 - Group listings
 - Search functionality
 - Cross-referenced source code
+- Call and caller graphs showing the relationship between functions.
 
 ## Challenges with Doxygen
 
