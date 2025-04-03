@@ -1,5 +1,5 @@
 ---
-title: "EpiForecasts"
+title: "epiForecasts"
 description: |
   Real-time modelling and forecasting of infectious disease dynamics
 site: distill::distill_website

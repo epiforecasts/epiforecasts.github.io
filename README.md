@@ -1,6 +1,6 @@
-# EpiForecasts website
+# epiForecasts website
 
-This repository contains the source code for the EpiForecasts website. 
+This repository contains the source code for the epiForecasts website. 
 This website is built with [quarto](https://quarto.org/) and relies on automation wherever possible.
 
 ## Adding a new team member
