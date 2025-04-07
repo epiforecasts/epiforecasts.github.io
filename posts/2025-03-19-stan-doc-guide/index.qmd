@@ -29,7 +29,7 @@ Note: For Mac OS Sonoma users, see installation notes [here](https://github.com/
 
 ### Directory Structure and Configuration
 
-Our Stan documentation lives in `inst/stan/stan_docs/` and consists of:
+Our Stan documentation lives in `inst/stan/docs/` and consists of:
 
 - `Doxyfile`: Main configuration file that:
   - Treats Stan as C++ code via `EXTENSION_MAPPING=stan=C++`
@@ -120,8 +120,8 @@ Used in a function file as follows:
 
 We use the awesome [doxygen-awesome](https://jothepro.github.io/doxygen-awesome-css/index.html) theme to override the default doxygen theme and prettify it. In short, we:
 
-- Download the relevant files, i.e., all files beginning with `doxygen-awesome-`, from the root directory of the doxygen-awesome [github repository](https://github.com/jothepro/doxygen-awesome-css) and place them in the `./inst/stan/stan_docs` directory. 
--  Link the theme file (`doxygen-awesome.css`) to the `./inst/stan/stan_docs/doxyfile` by passing the path to the `doxygen-awesome.css` file to the `doxyfile` tag `HTML_EXTRA_STYLESHEET`.  
+- Download the relevant files, i.e., all files beginning with `doxygen-awesome-`, from the root directory of the doxygen-awesome [github repository](https://github.com/jothepro/doxygen-awesome-css) and place them in the `./inst/stan/docs` directory. 
+-  Link the theme file (`doxygen-awesome.css`) to the `./inst/stan/docs/doxyfile` by passing the path to the `doxygen-awesome.css` file to the `doxyfile` tag `HTML_EXTRA_STYLESHEET`.  
 The default doxygen-awesome theme can be modified by modifying the css and javascript file and there are great examples [here](https://github.com/jothepro/doxygen-awesome-css/discussions/13).
 
 ## Building Documentation
@@ -130,7 +130,7 @@ The default doxygen-awesome theme can be modified by modifying the css and javas
 
 ```bash
 # Navigate to the directory with the Doxyfile
-cd inst/stan/stan_docs
+cd inst/stan/docs
 
 # Generate the documentation
 doxygen Doxyfile
@@ -144,7 +144,7 @@ Documentation can be automatically built and deployed to github pages as part of
 
 ### Local Access
 
-Open `inst/stan/stan_docs/html/index.html` in your browser
+Open `inst/stan/docs/html/index.html` in your browser
 
 ### Online Access
 
