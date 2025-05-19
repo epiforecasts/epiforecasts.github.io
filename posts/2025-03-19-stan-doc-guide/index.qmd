@@ -6,6 +6,7 @@ author:
     orcid_id: 0000-0001-5782-7330
 date: 2025-03-19
 toc: true
+doi: ""
 doi:
 aliases:
   - stan-doc-guide.html
