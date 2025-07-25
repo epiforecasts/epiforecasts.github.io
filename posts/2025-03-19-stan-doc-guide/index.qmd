@@ -1,0 +1,193 @@
+---
+title: "Guide To Documenting Stan Functions"
+subtitle: "The example of EpiNow2"
+author:
+  - name: James Mba Azam
+    orcid_id: 0000-0001-5782-7330
+date: 2025-03-19
+toc: true
+aliases:
+  - stan-doc-guide.html
+editor_options: 
+  markdown: 
+    wrap: 80
+---
+
+[Stan](https://mc-stan.org/) is a probabilistic programming language widely used for Bayesian modelling and inference. While Stan excels at expressing complex statistical models, reading and understanding Stan code involves becoming familiar with the specific way models are written down, creating a barrier to using and contributing to models written in Stan. In our group we have used Stan extensively, for example in the [EpiNow2](https://epiforecasts.io/EpiNow2/) package for modelling and forecasting infectious disease time series. 
+
+Documenting Stan functions used in packages like EpiNow2 addresses several needs in collaborative research environments. First, it enables knowledge transfer when team members join or leave, ensuring that models remain accessible and maintainable. Second, well-documented functions reduce debugging time and prevent errors by clearly explaining parameter expectations, mathematical formulations, and edge cases. Third, comprehensive documentation facilitates code review processes, allowing colleagues to verify model implementations against theoretical foundations. Finally, public documentation of research code enhances reproducibility and enables the broader scientific community to build upon and validate epidemiological methods.
+
+This guide explains how we document Stan functions in EpiNow2 using [Doxygen](https://doxygen.nl/). It covers both the technical setup and our documentation approach.
+
+## Documentation Setup
+
+### Tools and Installation
+
+We use [Doxygen](https://www.doxygen.nl/manual/install.html) to generate documentation from our Stan functions. Doxygen requires:
+
+- [CMake](https://cmake.org/)
+- A C++ compiler
+
+Note: For Mac OS Sonoma users, see installation notes [here](https://github.com/epinowcast/epinowcast/pull/500#issuecomment-2293776407).
+
+### Directory Structure and Configuration
+
+Our Stan documentation lives in `inst/stan/docs/` and consists of:
+
+- `Doxyfile`: Main configuration file that:
+  - Treats Stan as C++ code via `EXTENSION_MAPPING=stan=C++`
+  - Points to `mainpage.md` as the landing page
+  - Uses `DoxygenLayout.xml` for custom layout
+
+Generate the `Doxyfile` using the following command:
+```bash
+doxygen -g
+```
+Alternatively, you can use the [doxywizard GUI](https://www.doxygen.nl/manual/doxywizard_usage.html) to generate the `Doxyfile`.
+
+You can then edit the `Doxyfile` to change the configuration.
+
+## Documentation Organization
+
+The documentation is organized into the following files:
+
+- `common_docs.stan`: Defines function groups
+- `DoxygenLayout.xml`: Customizes navigation structure
+- `mainpage.md`: Landing page content
+
+### Function Groups
+
+We organize functions into logical groups that reflect EpiNow2's core capabilities:
+
+1. Estimation functions:
+   - `infections_estimation`: Infection trajectory estimation
+   - `rt_estimation`: Reproduction number estimation
+   - `secondary_reports_estimation`: Secondary epidemiological reports
+
+2. Model components and helpers:
+   - `observation_model`: Observation process functions
+   - `estimates_smoothing`: Gaussian process smoothing
+   - `handlers_and_helpers`: Utility functions and parameter handlers
+
+# License
+
+We also link the license so that potential re-use and attribution are treated in an appropriate manner
+.
+
+### Navigation Structure
+
+We simplified Doxygen's default navigation using:
+
+1. Custom layout in `DoxygenLayout.xml`:
+   - Main overview page
+   - Function groups organized by purpose
+
+2. Group definitions in `common_docs.stan`:
+   - Groups defined with `@defgroup`
+   - Functions linked via `@ingroup`
+
+### Groupings
+
+1. The estimation functions are grouped by purpose and treated as the main groups.
+2. The observation model functions are linked to all main groups since they are used in all estimation groups.
+3. The helper functions are grouped under handlers_and_helpers and are used in all estimation groups since they are not specific to a single estimation group.
+
+## Doxygen tags
+
+doxygen has a [comprehensive list of tags/commands](https://www.doxygen.nl/manual/commands.html) for documenting code.
+
+### Key doxygen tags
+
+Every function uses the following doxygen tags:
+
+- @brief to provide a short one-line description
+- @param to provide a description of the function's parameters
+- @return to provide a description of the function's return value
+- @ingroup to provide the group that the function belongs to
+- @see to provide a link to a related function
+- @example to provide an example of the function
+
+Used in a function file as follows:
+```stan
+/**
+ * @brief Short one-line description
+ *
+ * Detailed description of the function's purpose and behavior.
+ * Include mathematical formulas if relevant.
+ *
+ * @param x Input parameter description
+ * @return Description of return value
+ * @ingroup group_name
+ */
+```
+## Webpage Themes
+
+We use the awesome [doxygen-awesome](https://jothepro.github.io/doxygen-awesome-css/index.html) theme to override the default doxygen theme and prettify it. In short, we:
+
+- Download the relevant files, i.e., all files beginning with `doxygen-awesome-`, from the root directory of the doxygen-awesome [github repository](https://github.com/jothepro/doxygen-awesome-css) and place them in the `./inst/stan/docs` directory. 
+-  Link the theme file (`doxygen-awesome.css`) to the `./inst/stan/docs/doxyfile` by passing the path to the `doxygen-awesome.css` file to the `doxyfile` tag `HTML_EXTRA_STYLESHEET`.  
+The default doxygen-awesome theme can be modified by modifying the css and javascript file and there are great examples [here](https://github.com/jothepro/doxygen-awesome-css/discussions/13).
+
+## Building Documentation
+
+### Manually
+
+```bash
+# Navigate to the directory with the Doxyfile
+cd inst/stan/docs
+
+# Generate the documentation
+doxygen Doxyfile
+```
+
+## Automatically with GitHub Actions
+
+Documentation can be automatically built and deployed to github pages as part of the release process. This is triggered when a pull request is merged into main. See the workflow we use [here](https://github.com/mattnotmitt/doxygen-action).
+
+## Viewing the Documentation
+
+![EpiNow2's stan reference](epinow2_stan_reference.png)
+
+### Local Access
+
+Open `inst/stan/docs/html/index.html` in your browser
+
+### Online Access
+
+Visit <https://epiforecasts.github.io/EpiNow2/stan/>
+
+Note that this is only possible when it has been merged into the `main` branch and hence, rendered by the workflow. 
+
+### Navigation
+
+The documentation provides:
+
+- Function index
+- Group listings
+- Search functionality
+- Cross-referenced source code
+- Call and caller graphs showing the relationship between functions.
+
+## Challenges with Doxygen
+
+One of the neat features of R's [Roxygen2](https://roxygen2.r-lib.org/index.html) package is the ability to intelligently deduplicate documentation. For example, if you have a function that is a simple wrapper around another function, you can use the `@inheritparams` tag to inherit the documentation from the original function. Doxygen does not have this feature. It has the `@copydoc` tag which can be used to copy the documentation from another function but this does not allow for intelligent deduplication. Doxygen's `@copydoc` allows you to use shared parameter documentation but is not as smart as the Roxygen2 `@inheritparams` to order parameter names according to the function signature and to remove unused parameters. If you want the arguments in the order that they appear in the function signature, you end up with two "Parameter" headings, one coming from the documentation of specific params using @param and another coming from `@copydoc`. Unfortunately, there is no way to configure `@copydoc` to at least drop its section title. You can get one heading if you document the other parameters after the `@copydoc` call but that means the parameters are not in the order in which they appear in the function signature.
+
+## Resources
+
+Doxygen documention:
+
+- [Doxygen manual](https://www.doxygen.nl/manual/index.html)
+- [Doxygen gitHub](https://github.com/doxygen/doxygen)
+
+Style guides:
+
+- [Doxygen style guide](https://micro-os-plus.github.io/develop/doxygen-style-guide/)
+- [OpenOCD Doxygen Style Guide](https://openocd.org/doc-release/doxygen/styledoxygen.html)
+- [Carnegie Mellon Department of Computer Science Coding Style and Doxygen Documentation](https://www.cs.cmu.edu/~410/doc/doxygen.html)
+- [Apache Mesos Doxygen Style Guide](https://mesos.apache.org/documentation/latest/doxygen-style-guide/)
+
+Doxygen in action:
+
+- [Doxygen in action](https://www.doxygen.nl/examples.html)
+- [Doxygen command examples](https://github.com/doxygen/doxygen/tree/master/examples)
+- [Helpful stan functions](https://spinkney.github.io/helpful_stan_functions/)
