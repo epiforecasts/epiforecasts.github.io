@@ -13,7 +13,11 @@ editor_options:
     wrap: 80
 ---
 
-This guide explains how we document Stan functions in EpiNow2 using Doxygen. It covers both the technical setup and our documentation approach.
+[Stan](https://mc-stan.org/) is a probabilistic programming language widely used for Bayesian modelling and inference. While Stan excels at expressing complex statistical models, reading and understanding Stan code involves becoming familiar with the specific way models are written down, creating a barrier to using and contributing to models written in Stan. In our group we have used Stan extensively, for example in the [EpiNow2](https://epiforecasts.io/EpiNow2/) package for modelling and forecasting infectious disease time series. 
+
+Documenting Stan functions used in packages like EpiNow2 addresses several needs in collaborative research environments. First, it enables knowledge transfer when team members join or leave, ensuring that models remain accessible and maintainable. Second, well-documented functions reduce debugging time and prevent errors by clearly explaining parameter expectations, mathematical formulations, and edge cases. Third, comprehensive documentation facilitates code review processes, allowing colleagues to verify model implementations against theoretical foundations. Finally, public documentation of research code enhances reproducibility and enables the broader scientific community to build upon and validate epidemiological methods.
+
+This guide explains how we document Stan functions in EpiNow2 using [Doxygen](https://doxygen.nl/). It covers both the technical setup and our documentation approach.
 
 ## Documentation Setup
 
@@ -147,7 +151,7 @@ Open `inst/stan/docs/html/index.html` in your browser
 
 ### Online Access
 
-Visit `https://epiforecasts.github.io/EpiNow2/stan/`
+Visit <https://epiforecasts.github.io/EpiNow2/stan/>
 
 Note that this is only possible when it has been merged into the `main` branch and hence, rendered by the workflow. 
 
@@ -162,7 +166,7 @@ The documentation provides:
 
 ## Challenges with Doxygen
 
-One of the neat features of R's [`Roxygen2`](https://roxygen2.r-lib.org/index.html) package is the ability to intelligently deduplicate documentation. For example, if you have a function that is a simple wrapper around another function, you can use the `@inheritparams` tag to inherit the documentation from the original function. Doxygen does not have this feature. It has the `@copydoc` tag which can be used to copy the documentation from another function but this does not allow for intelligent deduplication. doxygen's @copydoc allows you to use shared parameter documentation but is not as smart as the `Roxygen2` @inheritparams to order parameter names according to the function signature and to remove unused parameters. If you want the arguments in the order that they appear in the function signature, you end up with two "Parameter" headings, one coming from the documentation of specific params using @param and another coming from @copydoc. Unfortunately, there is no way to configure @copydoc to at least drop its section title. You can get one heading if you document the other parameters after the @copydoc call but that means the parameters are not in the order in which they appear in the function signature.
+One of the neat features of R's [Roxygen2](https://roxygen2.r-lib.org/index.html) package is the ability to intelligently deduplicate documentation. For example, if you have a function that is a simple wrapper around another function, you can use the `@inheritparams` tag to inherit the documentation from the original function. Doxygen does not have this feature. It has the `@copydoc` tag which can be used to copy the documentation from another function but this does not allow for intelligent deduplication. Doxygen's `@copydoc` allows you to use shared parameter documentation but is not as smart as the Roxygen2 `@inheritparams` to order parameter names according to the function signature and to remove unused parameters. If you want the arguments in the order that they appear in the function signature, you end up with two "Parameter" headings, one coming from the documentation of specific params using @param and another coming from `@copydoc`. Unfortunately, there is no way to configure `@copydoc` to at least drop its section title. You can get one heading if you document the other parameters after the `@copydoc` call but that means the parameters are not in the order in which they appear in the function signature.
 
 ## Resources
 
