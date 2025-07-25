@@ -73,6 +73,7 @@ We organize functions into logical groups that reflect EpiNow2's core capabiliti
 
 We also link the license so that potential re-use and attribution are treated in an appropriate manner
 .
+
 ### Navigation Structure
 
 We simplified Doxygen's default navigation using:
@@ -143,7 +144,9 @@ doxygen Doxyfile
 
 Documentation can be automatically built and deployed to github pages as part of the release process. This is triggered when a pull request is merged into main. See the workflow we use [here](https://github.com/mattnotmitt/doxygen-action).
 
-## Viewing Documentation
+## Viewing the Documentation
+
+![EpiNow2's stan reference](epinow2_stan_reference.png)
 
 ### Local Access
 
@@ -158,6 +161,7 @@ Note that this is only possible when it has been merged into the `main` branch a
 ### Navigation
 
 The documentation provides:
+
 - Function index
 - Group listings
 - Search functionality
