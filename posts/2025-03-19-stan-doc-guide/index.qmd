@@ -5,6 +5,7 @@ author:
   - name: James Mba Azam
     orcid_id: 0000-0001-5782-7330
 date: 2025-03-19
+doi: 10.59350/rf7qp-vy339
 toc: true
 aliases:
   - stan-doc-guide.html
