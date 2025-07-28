@@ -3,8 +3,11 @@ webpage: https://samabbott.co.uk
 github: seabbs
 twitter: seabbs
 orcid: 0000-0001-8057-8037
-current-member: true
-description: > 
+position:
+  -
+    type: Staff
+    start: 2019-12-01
+description: >
   Sam's main interests are developing, evaluating, and applying methods for improving our understanding of infectious disease dynamics in real-time. See his [personal website](https://samabbott.co.uk)
   for more detail on his current research and interests.
  

@@ -2,7 +2,11 @@ name: Hugo Gruson
 github: bisaloo
 twitter: grusonh
 orcid: 0000-0002-4094-1476
-current-member: false
+position:
+  -
+    type: Staff
+    start: 2021-06-01
+    end: 2022-09-30
 webpage: https://hugogruson.fr/
 description: > 
   Hugo joined the team as a Research Software Engineer amidst the Covid-19 

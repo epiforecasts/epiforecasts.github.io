@@ -2,6 +2,10 @@ name: James Munday
 github: jdmunday
 twitter: jdmunday
 orcid: 0000-0002-6206-7134
-current-member: false
+position:
+  -
+    type: Staff
+    start: 2019-03-01
+    end: 2022-12-31
 description: James' research focuses on the impact of geographic and social structure on infectious disease transmission. He is currently working on methods to include spatial interaction and age-structured-mixing in epidemic forecasting and real-time analysis. 
 

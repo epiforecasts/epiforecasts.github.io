@@ -6,5 +6,11 @@ team <- c(
   team[which(purrr::map(team, "name") == "Sebastian Funk")],
   team[-which(purrr::map(team, "name") == "Sebastian Funk")]
 )
+
+## keep current team members
 current_team <- team |>
-  purrr::keep(function(x) x[["current-member"]])
+  purrr::keep(\(x) {
+    any(purrr::map_lgl(x$position, \(y) {
+      is.null(y$end) || y$end > Sys.Date()
+    }))
+  })

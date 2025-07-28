@@ -1,7 +1,10 @@
 name: Kaitlyn Johnson
 github: kaitejohnson
 orcid: 0000-0001-8011-0012
-current-member: true
 bluesky: kaitejohnson9.bsky.social
+position:
+  -
+    type: Staff
+    start: 2025-01-01
 description: > 
  Kaitlyn's work focuses on developing methods and tools for nowcasting, forecasting, and real-time analysis of infectious diseases using mathematical and statistical modeling. She previously developed methods for incorporating wastewater surveillance data into models to forecast COVID-19 hospital admissions at the U.S. CDC.

@@ -2,6 +2,10 @@ name: Sophie Meakin
 github: sophiemeakin
 twitter: sophiemeakin
 orcid: 0000-0002-6385-2652
-current-member: false
-description: > 
+position:
+  -
+    type: Staff
+    start: 2020-05-01
+    end: 2022-12-31
+description: >
   Sophie's research interests are in the application of mathematical modelling to support preparedness and decision-making during infectious disease outbreaks. Before joining CMMID, Sophie worked for the World Health Organisation as part of the 2018-2020 North-Kivu Ebola outbreak response. Sophie received her PhD in applied mathematics from the University of Warwick in 2020.

@@ -7,7 +7,6 @@ link-external-icon: false
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
-library(dplyr)
 ```
 
 ```{r, file = here::here("snippets", "team_members.R")}
@@ -18,7 +17,7 @@ Team members are staff, students and long-term visitors (3 months or more) of th
 ## Current team members
 
 ```{r, results='asis'}
-current_team %>%
+expanded <- current_team |>
   purrr::map_chr(function(e) {
     knitr::knit_expand(
       "_team_member.Rmd", 
@@ -30,22 +29,26 @@ current_team %>%
       orcid = e[["orcid"]],
       description = e[["description"]]
     )
-  }) %>%
-  { knitr::knit_child(text = unlist(.), quiet = TRUE) } %>%
+  }) |>
+  knitr::knit_child(text = _, quiet = TRUE) |>
   cat(sep = "\n")
 ```
 
 ## Former team members
 
 ```{r, results='asis'}
-former_team <- team %>%
-  purrr::keep(function(x) !x[["current-member"]]) %>%
+former_team <- team[setdiff(names(team), names(current_team))] |>
   purrr::map_chr(function(e) {
     if (is.null(e[["webpage"]]) || e[["webpage"]] == "") {
-      return(e[["name"]])
+      e[["name"]]
     } else {
-      return(glue::glue('[{e[["name"]]}]({e[["webpage"]]})'))
+      glue::glue('[{e[["name"]]}]({e[["webpage"]]})')
     }
-  }) %>%
+  }) |>
   cat(sep = " · ")
+```
+
+## Timeline
+
+```{r, file = here::here("snippets", "gantt_chart.R"), fig.height = 6, message = FALSE}
 ```

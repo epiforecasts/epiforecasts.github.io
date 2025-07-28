@@ -2,7 +2,15 @@ name: Nikos Bosse
 github: nikosbosse
 orcid: 0000-0002-7750-5280
 twitter: nikosbosse
-current-member: false
+position:
+  -
+    type: Visitor
+    start: 2019-10-01
+    end: 2020-09-30
+  -
+    type: PhD
+    start: 2020-10-01
+    end: 2024-06-01
 description: > 
   Nikos is a PhD student working on infectious disease forecasting and is 
   interested in all things related to forecasting. As part of his work he 

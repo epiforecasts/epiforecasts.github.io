@@ -2,7 +2,14 @@ name: Liza Hadley
 github: LizaHadley
 orcid: 0000-0003-1288-5080
 twitter: hadley_liza
-current-member: true
+position:
+  -
+    type: PhD
+    start: 2022-10-01
+    end: 2023-09-20
+  -
+    type: Visitor
+    start: 2023-09-21
 description: >
   Liza is a postdoc exploring the role of infectious disease modelling in outbreak response. She is interested in how mathematical modelling is used by governments, health organisations and other decision-makers during a health crisis, and whether the process can be improved. Our recent study interviewed modellers and policy and decision-makers in 13 countries that used modelling for Covid-19 response, drawing together experiences and lessons learned in time for the next crisis. Liza is now based at CU Boulder/Cambridge but is still part of the Epiforecasts team.
 webpage: https://www.vet.cam.ac.uk/directory/lh667
