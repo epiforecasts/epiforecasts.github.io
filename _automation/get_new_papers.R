@@ -35,7 +35,11 @@ get_new_papers_team <- function(from_date) {
   
   recent_papers <- fs::dir_ls("_data/team", regexp = "\\w+\\-\\w+\\.yml") |>
     purrr::map(yaml::read_yaml) |>
-    purrr::keep(function(x) x[["current-member"]]) |>
+    purrr::keep(\(x) {
+      any(purrr::map_lgl(x$position, \(y) {
+        is.null(y$end) || y$end > Sys.Date()
+      }))
+    })  |>
     purrr::map("orcid") |>
     purrr::keep(~ !is.null(.x)) |>
     purrr::map_dfr(get_new_papers_orcid, from_date = from_date) |>
