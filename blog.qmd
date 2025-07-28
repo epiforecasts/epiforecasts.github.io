@@ -2,6 +2,7 @@
 title: "epiforecasts blog"
 listing: 
   contents: posts
+  sort: "date desc"
   feed: true
 ---
 
