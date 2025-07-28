@@ -1,6 +1,6 @@
 ---
-title: "Guide To Documenting Stan Functions"
-subtitle: "The example of EpiNow2"
+title: "How we document stan functions"
+subtitle: "An example with EpiNow2"
 author:
   - name: James Mba Azam
     orcid_id: 0000-0001-5782-7330
