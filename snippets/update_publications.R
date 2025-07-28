@@ -63,3 +63,5 @@ df <- df |>
     !(n > 1 & id < max(id))
   ) |>
   dplyr::ungroup()
+
+bib2df::df2bib(df, file = "_data/papers.bib")
