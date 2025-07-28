@@ -1,3 +1,7 @@
 name: Joseph Palmer
-current-member: false
+position:
+  -
+    type: Visitor
+    start: 2021-06-01
+    end: 2021-08-31
 webpage: https://joseph-palmer.github.io/

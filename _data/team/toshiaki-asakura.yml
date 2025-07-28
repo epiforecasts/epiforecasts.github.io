@@ -2,7 +2,10 @@ name: Toshiaki Asakura
 github: toshiakiasakura 
 orcid: 0000-0001-8838-785X
 twitter: aki_asa_dove
-current-member: true
+position:
+  -
+    type: PhD
+    start: 2023-10-01
 description: > 
   Toshiaki is a PhD student working on household study data and 
   is interested in applying modelling techniques to support 

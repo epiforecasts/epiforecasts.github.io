@@ -1,6 +1,9 @@
 name: Emil Iftekhar
 webpage: https://www.linkedin.com/in/emil-iftekhar-b00371195/
 github: emilIftekhar
-current-member: true
+position:
+  -
+    type: Visitor
+    start: 2024-09-01
 description: >
   Emil Iftekhar is a guest at EpiForecasts and a researcher and epi-modeller at the Robert Koch Institute (RKI, German national public health institute) and the World Health Organization Hub for Pandemic and Epidemic Intelligence. He works on evaluating the process from epi-modelling to decisions and policies. He has a background in physics.

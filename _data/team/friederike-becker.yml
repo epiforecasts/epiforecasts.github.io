@@ -1,3 +1,7 @@
 name: Friederike Becker
-current-member: false
 webpage: https://methods.stat.kit.edu/mitarbeiter_3110.php
+position:
+  -
+    type: Visitor
+    start: 2022-03-01
+    end: 2022-09-30

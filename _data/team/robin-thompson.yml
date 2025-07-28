@@ -1,3 +1,7 @@
 name: Robin Thompson
-current-member: false
+position:
+  -
+    type: Staff
+    start: 2019-12-01
+    end: 2020-11-30
 webpage: https://www.robin-thompson.co.uk/

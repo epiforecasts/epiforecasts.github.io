@@ -1,6 +1,10 @@
 name: Manuel Stapper
 github: ManuelStapper
 orcid: 0000-0002-8762-8110
-current-member: true
-description: > 
+position:
+  -
+    type: Staff
+    start: 2024-01-01
+    end: 2025-08-31
+description: >
   Manuel's research interests are the spatio-temporal modelling and forecasting of infectious disease dynamics and development of open-source software.

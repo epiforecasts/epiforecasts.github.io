@@ -3,6 +3,14 @@ webpage: https://akira-endo.github.io
 github: akira-endo
 orcid: 0000-0001-6377-7296
 twitter: _akiraendo
-current-member: false
+position:
+  -
+    type: PhD
+    start: 2017-10-01
+    end: 2021-01-21
+  -
+    type: Staff
+    start: 2021-01-22
+    end: 2023-06-30
 description: > 
   Akira is a JSPS research fellow who completed his PhD at LSHTM on dynamics of influenza and COVID-19. His research interests include disease spread within and across households/schools/workplaces, improving vaccine evaluation methodologies and optimal control strategies.

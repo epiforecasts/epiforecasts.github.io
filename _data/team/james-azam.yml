@@ -3,6 +3,10 @@ webpage: https://www.lshtm.ac.uk/aboutus/people/azam.james
 github: jamesmbaazam
 twitter: james_azam
 orcid: 0000-0001-5782-7330
-current-member: true
-description: > 
+position:
+  -
+    type: Staff
+    start: 2022-11-01
+    end: 2025-08-31
+description: >
   James' main interests lie in developing and applying mathematical and statistical modelling to quantify the impact of outbreak response strategies in order to inform decision-making. He also develops and contributes to open-source tools and pipelines for reproducible outbreak response analytics.
