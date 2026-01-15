@@ -1,0 +1,36 @@
+:::: {.project-card}
+
+#### [{{name}}]({{url}})
+
+:::: {style="display: grid; grid-template-columns: 1fr 240px; grid-column-gap: 20px;"}
+
+::: {}
+
+{{description}}
+
+```{r, results='asis'}
+# Metadata line
+meta <- c()
+if ("{{language}}" != "" && "{{language}}" != "NA") {
+  meta <- c(meta, "{{language}}")
+}
+if ("{{updated}}" != "" && "{{updated}}" != "NA") {
+  meta <- c(meta, paste0("Updated ", format(as.Date("{{updated}}"), "%b %Y")))
+}
+if (length(meta) > 0) {
+  cat('<div class="project-meta">', paste(meta, collapse = " · "), '</div>\n')
+}
+```
+
+:::
+
+::: {.project-contributors}
+
+{{contributors_section}}
+
+:::
+
+::::
+
+::::
+

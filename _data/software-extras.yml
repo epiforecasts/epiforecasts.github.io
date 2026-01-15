@@ -1,0 +1,5 @@
+# Additional software packages not in epiforecasts r-universe
+# These are merged with the r-universe list on the software page
+
+- repo: epinowcast/epinowcast
+- repo: epinowcast/baselinenowcast
