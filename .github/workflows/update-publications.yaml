@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
   schedule:
-    - cron:  '0 5 1 * *'
+    - cron:  '0 5 * * 1'  # Every Monday at 5am UTC
     
 name: Update publications
     
