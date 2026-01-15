@@ -4,27 +4,67 @@ title: "Publications"
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE)
+library(magrittr)
 ```
 
-Below is a list of selected publications (sorted by year) illustrating the type of work conducted by our team.
+Below is a list of selected publications (sorted by year) illustrating the type of work conducted by our team. See also our [ongoing projects](projects.qmd) and [software](software.qmd).
 
 ```{r}
 bibfile <- "_data/papers.bib"
 ```
 
-```{r, results='asis'}
-library(magrittr)
-b <- tools::bibstyle(
-  "by_year", 
-  fmtPrefix = function(paper) "-", 
-  .init = TRUE, 
-  sortKeys = function(refs) rank(purrr::map_chr(unclass(refs), "year"))
-)
+::: {.publications-list}
 
-bibtex::read.bib(bibfile) %>%
-  purrr::keep(~ attr(unclass(.x), "bibtype") == "Article") %>%
-  sort(.bibstyle = "by_year", decreasing = TRUE) %>%
-  format("html", .bibstyle = "by_year") %>%
-  paste(collapse = "") %>%
-  cat()
+```{r, results='asis'}
+# Custom function to truncate author list (keep first 3 + last 3)
+truncate_authors <- function(authors) {
+  if (is.null(authors) || length(authors) == 0) return("Unknown")
+  # Handle person objects from bibtex
+  if (inherits(authors, "person")) {
+    author_list <- format(authors, include = c("given", "family"))
+  } else {
+    authors <- as.character(authors)
+    author_list <- trimws(strsplit(authors, " and ")[[1]])
+  }
+  n <- length(author_list)
+  if (n > 7) {
+    # Show first 3, ..., last 3
+    first_three <- paste(author_list[1:3], collapse = ", ")
+    last_three <- paste(author_list[(n-2):n], collapse = ", ")
+    paste0(first_three, ", ..., ", last_three)
+  } else {
+    paste(author_list, collapse = ", ")
+  }
+}
+
+bib <- bibtex::read.bib(bibfile) %>%
+  purrr::keep(~ attr(.x, "bibtype") == "Article")
+
+# Sort by year descending
+years <- purrr::map_chr(bib, ~ as.character(.x$year %||% "0"))
+bib <- bib[order(years, decreasing = TRUE)]
+
+# Render each publication
+purrr::walk(bib, function(entry) {
+  authors <- truncate_authors(entry$author)
+  title <- as.character(entry$title %||% "Untitled")
+  title <- gsub("[{}]", "", title)
+  journal <- as.character(entry$journal %||% "")
+  journal <- gsub("[{}]", "", journal)
+  year <- as.character(entry$year %||% "")
+  doi <- as.character(entry$doi %||% "")
+
+  if (doi != "" && !is.na(doi)) {
+    title_html <- sprintf('<a href="https://doi.org/%s">%s</a>', doi, title)
+  } else {
+    title_html <- title
+  }
+
+  cat(sprintf(
+    '<div class="pub-item"><strong>%s</strong> (%s). %s. <em>%s</em>.</div>\n',
+    authors, year, title_html, journal
+  ))
+})
 ```
+
+:::

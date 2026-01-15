@@ -21,6 +21,8 @@ website:
         href: blog.qmd
       - text: "Software"
         href: software.qmd
+      - text: "Projects"
+        href: projects.qmd
       - text: "Publications"
         href: pubs.qmd
       - text: "Join us"

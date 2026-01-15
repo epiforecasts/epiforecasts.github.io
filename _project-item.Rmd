@@ -1,6 +1,6 @@
 :::: {.project-card}
 
-#### [{{Package}}]({{github_url}})
+#### [{{name}}]({{url}})
 
 :::: {style="display: grid; grid-template-columns: 1fr 240px; grid-column-gap: 20px;"}
 

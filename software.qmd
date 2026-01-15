@@ -4,34 +4,125 @@ description: |
   R packages and other software developed by the group
 ---
 
+Reusable tools and packages developed by the group. See also our [ongoing projects](projects.qmd) and [publications](pubs.qmd).
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(magrittr)
+
+# Hide software not updated in this many months (set to NULL to disable)
+stale_months <- 24
+```
+
+```{r load-team}
+# Load team members and create lookup by GitHub username
+team <- fs::dir_ls("_data/team", regexp = "\\w+\\-\\w+\\.yml") |>
+  purrr::map(yaml::read_yaml)
+
+team_by_github <- team %>%
+  purrr::keep(~ !is.null(.x$github) && .x$github != "") %>%
+  purrr::set_names(purrr::map_chr(., "github"))
 ```
 
 ```{r, results='asis'}
-pkg_descriptions <- jsonlite::stream_in(url("https://epiforecasts.r-universe.dev/stats/descriptions"), verbose = FALSE)
+# Helper function to fetch package info from GitHub
+fetch_package_info <- function(repo, team_by_github) {
+  repo_info <- tryCatch(
+    gh::gh("/repos/{repo}", repo = repo),
+    error = function(err) list(
+      name = basename(repo),
+      description = "No description available",
+      html_url = paste0("https://github.com/", repo),
+      stargazers_count = 0,
+      language = NA,
+      pushed_at = NA
+    )
+  )
+
+  contributors <- tryCatch(
+    gh::gh("/repos/{repo}/contributors", repo = repo, per_page = 100),
+    error = function(err) list()
+  )
+
+  team_contributors <- contributors %>%
+    purrr::keep(~ .x$login %in% names(team_by_github)) %>%
+    purrr::map(function(c) {
+      tm <- team_by_github[[c$login]]
+      list(
+        name = tm$name,
+        github = c$login,
+        avatar_url = c$avatar_url
+      )
+    })
+
+  list(
+    Package = repo_info$name,
+    description = repo_info$description %||% "No description available",
+    github_url = repo_info$html_url,
+    stars = repo_info$stargazers_count %||% 0,
+    language = repo_info$language,
+    updated = if (!is.null(repo_info$pushed_at)) substr(repo_info$pushed_at, 1, 10) else NA,
+    team_contributors = team_contributors
+  )
+}
+
+# Get packages from r-universe
+pkg_descriptions <- jsonlite::fromJSON("https://epiforecasts.r-universe.dev/api/packages")
 extra_metadata <- jsonlite::read_json("https://github.com/epiforecasts/universe/raw/main/packages.json") %>%
   dplyr::bind_rows() %>%
   dplyr::mutate(
-    Package = package, 
+    Package = package,
     display_website = display_website & !is.na(display_website),
     .keep = "unused"
-  ) 
-  
-pkg_descriptions %>%
-  dplyr::left_join(extra_metadata) %>%
+  )
+
+universe_packages <- pkg_descriptions %>%
+  dplyr::left_join(extra_metadata, by = "Package") %>%
   dplyr::filter(display_website) %>%
-  dplyr::arrange(Package) %>%
   split(rownames(.)) %>%
   purrr::map(unlist) %>%
+  purrr::map(function(e) {
+    repo <- paste0(e[["_owner"]], "/", e[["Package"]])
+    fetch_package_info(repo, team_by_github)
+  })
+
+# Get extra packages from YAML
+extras <- yaml::read_yaml("_data/software-extras.yml")
+extra_packages <- purrr::map(extras, function(e) {
+  fetch_package_info(e$repo, team_by_github)
+})
+
+# Combine, filter stale, and sort by stars
+all_packages <- c(universe_packages, extra_packages) %>%
+  purrr::keep(~ !is.null(.x)) %>%
+  purrr::keep(~ {
+    if (is.null(stale_months) || is.na(.x$updated)) return(TRUE)
+    as.Date(.x$updated) > Sys.Date() - (stale_months * 30)
+  }) %>%
+  { .[order(purrr::map_dbl(., "stars"), decreasing = TRUE)] }
+
+# Render each package
+all_packages %>%
   purrr::map_chr(function(e) {
+    contributors_section <- ""
+    if (length(e$team_contributors) > 0) {
+      contributor_items <- purrr::map_chr(e$team_contributors, function(c) {
+        sprintf(
+          '<a href="https://github.com/%s" title="%s"><img src="%s" alt="%s" width="32" height="32"></a>',
+          c$github, c$name, c$avatar_url, c$name
+        )
+      })
+      contributors_section <- paste(contributor_items, collapse = " ")
+    }
+
     knitr::knit_expand(
-      "_software-item.Rmd", 
-      Package = e[["Package"]],
-      Title = stringr::str_squish(e[["Title"]]),
-      github_url = e[["RemoteUrl"]],
-      owner = e[["_owner"]]
+      "_software-item.Rmd",
+      Package = e$Package,
+      description = e$description,
+      github_url = e$github_url,
+      language = e$language %||% "",
+      updated = e$updated %||% "",
+      contributors_section = contributors_section
     )
   }) %>%
   { knitr::knit_child(text = unlist(.), quiet = TRUE) } %>%
