@@ -1,0 +1,58 @@
+/* Project cards */
+.project-card {
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--bs-border-color, #dee2e6);
+}
+
+.project-card h4 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.project-card h4 a {
+  text-decoration: none;
+}
+
+.project-card p {
+  margin-bottom: 0.5rem;
+}
+
+.project-meta {
+  font-size: 0.85rem;
+  color: var(--bs-secondary-color, #6c757d);
+  margin-top: 0.5rem;
+}
+
+/* Contributors column on the right - wrapping grid */
+.project-contributors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: flex-start;
+  justify-content: flex-start;
+}
+
+.project-contributors a {
+  display: inline-block;
+  margin: 2px;
+}
+
+.project-contributors img {
+  border-radius: 50%;
+  display: block;
+}
+
+/* Publications list */
+.publications-list .pub-item {
+  padding: 0.75rem 0;
+  border-top: 1px solid var(--bs-border-color, #dee2e6);
+}
+
+.publications-list .pub-item a {
+  text-decoration: none;
+}
+
+.publications-list .pub-item em {
+  color: var(--bs-secondary-color, #6c757d);
+}

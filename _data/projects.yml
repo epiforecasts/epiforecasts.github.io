@@ -1,0 +1,13 @@
+# List of GitHub repositories to display on the Projects page
+# Descriptions are pulled from GitHub repo settings
+# Add optional 'url' field to link to a project website instead of GitHub
+
+- repo: epiforecasts/delayscompare
+- repo: epiforecasts/llm-epi-composition
+- repo: epiforecasts/eval-by-method
+- repo: epiforecasts/evalwwforecasts
+- repo: EpiAware/ComposableProbabilisticIDModels
+- repo: epiforecasts/evalvariantnowcasthub
+- repo: epiforecasts/mme-review
+- repo: toshiakiasakura/sc_model_comparison
+- repo: willgreen93/attenuated-renewal
