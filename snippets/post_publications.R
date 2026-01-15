@@ -11,9 +11,10 @@ if (nrow(new_papers) > 0) {
   bibentries_new_checklist <- paste(
     "- [ ]", vapply(bibentries_new, format, character(1))
   )
-  bibentries_comment <- paste(
+  bibentries_body <- paste(
     c(
-      "Papers published last month:",
+      "Papers published last month. Check the boxes for papers to add, then the next monthly run will create a PR.",
+      "",
       bibentries_new_checklist,
       "<details>",
       "",
@@ -25,10 +26,16 @@ if (nrow(new_papers) > 0) {
     collapse = "\n"
   )
 
+  issue_title <- paste(
+    "Publications update -",
+    format(lubridate::today(), "%B %Y")
+  )
+
   gh::gh(
-    "POST /repos/{gh_repo}/issues/{issue_number}/comments",
+    "POST /repos/{gh_repo}/issues",
     gh_repo = gh_repository,
-    issue_number = 3,
-    body = bibentries_comment
+    title = issue_title,
+    body = bibentries_body,
+    labels = list("publications")
   )
 }

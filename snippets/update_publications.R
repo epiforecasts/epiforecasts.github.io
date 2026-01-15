@@ -1,13 +1,35 @@
-last_comment_pubs <- gh::gh(
-  "/repos/{gh_repo}/issues/{issue_number}/comments",
+# Find the latest open publications issue
+open_issues <- gh::gh(
+  "/repos/{gh_repo}/issues",
   gh_repo = gh_repository,
-  issue_number = 3,
-  .accept = "application/vnd.github.v3.full+json"
-) |>
-  purrr::keep(~ .x$user$login == "github-actions[bot]") |>
-  tail(1) |>
-  purrr::map_chr("body_html") |>
-  xml2::read_html()
+  state = "open",
+  labels = "publications",
+  sort = "created",
+  direction = "desc",
+  per_page = 1
+)
+
+if (length(open_issues) == 0) {
+  message("No open publications issue found")
+  quit(save = "no")
+}
+
+issue <- open_issues[[1]]
+issue_number <- issue$number
+
+last_comment_pubs <- issue$body_html
+if (is.null(last_comment_pubs)) {
+  # Fetch with HTML body
+  issue <- gh::gh(
+    "/repos/{gh_repo}/issues/{issue_number}",
+    gh_repo = gh_repository,
+    issue_number = issue_number,
+    .accept = "application/vnd.github.v3.full+json"
+  )
+  last_comment_pubs <- issue$body_html
+}
+
+last_comment_pubs <- xml2::read_html(last_comment_pubs)
 
 last_comment_pubs |>
   xml2::xml_find_first("//details") |>
@@ -20,6 +42,17 @@ selected <- last_comment_pubs |>
   xml2::xml_find_first("//ul") |>
   xml2::xml_find_all(".//input") |>
   xml2::xml_has_attr("checked")
+
+if (!any(selected)) {
+  message("No papers selected, closing issue")
+  gh::gh(
+    "PATCH /repos/{gh_repo}/issues/{issue_number}",
+    gh_repo = gh_repository,
+    issue_number = issue_number,
+    state = "closed"
+  )
+  quit(save = "no")
+}
 
 selected_bibentries <- bibentries_previous_month[selected]
 
@@ -68,3 +101,11 @@ df <- df |>
   dplyr::select(-n, -id, -n_pp)
 
 bib2df::df2bib(df, file = "_data/papers.bib")
+
+# Close the issue after processing
+gh::gh(
+  "PATCH /repos/{gh_repo}/issues/{issue_number}",
+  gh_repo = gh_repository,
+  issue_number = issue_number,
+  state = "closed"
+)
