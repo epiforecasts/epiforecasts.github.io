@@ -33,6 +33,8 @@ write(bib, "_data/papers.bib")
 
 ## filter latest version
 df <- bib2df::bib2df("_data/papers.bib") |>
+  ## remove accumulated junk columns from previous runs
+  dplyr::select(-dplyr::matches("^(N|ID|N_PP)(\\.\\d+)?$")) |>
   dplyr::mutate(
     version = dplyr::if_else(
       grepl("wellcomeopenres", DOI),
@@ -62,6 +64,7 @@ df <- df |>
   dplyr::filter(
     !(n > 1 & id < max(id))
   ) |>
-  dplyr::ungroup()
+  dplyr::ungroup() |>
+  dplyr::select(-n, -id, -n_pp)
 
 bib2df::df2bib(df, file = "_data/papers.bib")
