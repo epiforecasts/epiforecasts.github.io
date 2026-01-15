@@ -31,10 +31,28 @@ if (is.null(last_comment_pubs)) {
 
 last_comment_pubs <- xml2::read_html(last_comment_pubs)
 
-last_comment_pubs |>
-  xml2::xml_find_first("//details") |>
-  xml2::xml_text() |>
-  write("bibentries_previous_month.bib")
+# Extract BibTeX from the code block inside <details>
+# GitHub renders markdown code fences as <pre><code> elements
+bib_text <- last_comment_pubs |>
+  xml2::xml_find_first("//details//pre") |>
+  xml2::xml_text()
+
+# If no <pre> found, try the <details> element directly (fallback)
+if (is.na(bib_text) || nchar(trimws(bib_text)) == 0) {
+  bib_text <- last_comment_pubs |>
+    xml2::xml_find_first("//details") |>
+    xml2::xml_text()
+}
+
+# Clean up any leading/trailing whitespace
+bib_text <- trimws(bib_text)
+
+if (is.na(bib_text) || nchar(bib_text) == 0) {
+  message("No BibTeX content found in issue")
+  quit(save = "no")
+}
+
+write(bib_text, "bibentries_previous_month.bib")
 
 bibentries_previous_month <- bibtex::read.bib("bibentries_previous_month.bib")
 
