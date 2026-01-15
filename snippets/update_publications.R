@@ -1,68 +1,87 @@
-# Find the latest open publications issue
+# Find all open publications issues
 open_issues <- gh::gh(
   "/repos/{gh_repo}/issues",
   gh_repo = gh_repository,
   state = "open",
   labels = "publications",
   sort = "created",
-  direction = "desc",
-  per_page = 1
+  direction = "asc",
+  per_page = 100
 )
 
 if (length(open_issues) == 0) {
-  message("No open publications issue found")
+  message("No open publications issues found")
   quit(save = "no")
 }
 
-issue <- open_issues[[1]]
-issue_number <- issue$number
+message(sprintf("Found %d open publications issue(s)", length(open_issues)))
 
-last_comment_pubs <- issue$body_html
-if (is.null(last_comment_pubs)) {
-  # Fetch with HTML body
-  issue <- gh::gh(
-    "/repos/{gh_repo}/issues/{issue_number}",
-    gh_repo = gh_repository,
-    issue_number = issue_number,
-    .accept = "application/vnd.github.v3.full+json"
-  )
-  last_comment_pubs <- issue$body_html
-}
+# Process each issue and collect selected papers
+all_selected_bibs <- list()
 
-last_comment_pubs <- xml2::read_html(last_comment_pubs)
+for (issue in open_issues) {
+  issue_number <- issue$number
+  message(sprintf("Processing issue #%d", issue_number))
 
-# Extract BibTeX from the code block inside <details>
-# GitHub renders markdown code fences as <pre><code> elements
-bib_text <- last_comment_pubs |>
-  xml2::xml_find_first("//details//pre") |>
-  xml2::xml_text()
+  # Get HTML body
+  issue_html <- issue$body_html
+  if (is.null(issue_html)) {
+    issue <- gh::gh(
+      "/repos/{gh_repo}/issues/{issue_number}",
+      gh_repo = gh_repository,
+      issue_number = issue_number,
+      .accept = "application/vnd.github.v3.full+json"
+    )
+    issue_html <- issue$body_html
+  }
 
-# If no <pre> found, try the <details> element directly (fallback)
-if (is.na(bib_text) || nchar(trimws(bib_text)) == 0) {
-  bib_text <- last_comment_pubs |>
-    xml2::xml_find_first("//details") |>
+  parsed_html <- xml2::read_html(issue_html)
+
+  # Extract BibTeX from the code block inside <details>
+  bib_text <- parsed_html |>
+    xml2::xml_find_first("//details//pre") |>
     xml2::xml_text()
-}
 
-# Clean up any leading/trailing whitespace
-bib_text <- trimws(bib_text)
+  # Fallback to <details> directly
+  if (is.na(bib_text) || nchar(trimws(bib_text)) == 0) {
+    bib_text <- parsed_html |>
+      xml2::xml_find_first("//details") |>
+      xml2::xml_text()
+  }
 
-if (is.na(bib_text) || nchar(bib_text) == 0) {
-  message("No BibTeX content found in issue")
-  quit(save = "no")
-}
+  bib_text <- trimws(bib_text)
 
-write(bib_text, "bibentries_previous_month.bib")
+  if (is.na(bib_text) || nchar(bib_text) == 0) {
+    message(sprintf("  No BibTeX content found in issue #%d, closing", issue_number))
+    gh::gh(
+      "PATCH /repos/{gh_repo}/issues/{issue_number}",
+      gh_repo = gh_repository,
+      issue_number = issue_number,
+      state = "closed",
+      labels = list("publications", "processed")
+    )
+    next
+  }
 
-bibentries_previous_month <- bibtex::read.bib("bibentries_previous_month.bib")
+  # Write and read bib entries
+  write(bib_text, "bibentries_temp.bib")
+  bibentries <- bibtex::read.bib("bibentries_temp.bib")
 
-selected <- last_comment_pubs |>
-  xml2::xml_find_first("//ul") |>
-  xml2::xml_find_all(".//input") |>
-  xml2::xml_has_attr("checked")
+  # Find selected (checked) papers
+  selected <- parsed_html |>
+    xml2::xml_find_first("//ul") |>
+    xml2::xml_find_all(".//input") |>
+    xml2::xml_has_attr("checked")
 
-if (!any(selected)) {
-  message("No papers selected, closing issue")
+  if (!any(selected)) {
+    message(sprintf("  No papers selected in issue #%d, closing", issue_number))
+  } else {
+    selected_bibentries <- bibentries[selected]
+    message(sprintf("  Found %d selected paper(s)", length(selected_bibentries)))
+    all_selected_bibs <- c(all_selected_bibs, selected_bibentries)
+  }
+
+  # Close the issue and add "processed" label
   gh::gh(
     "PATCH /repos/{gh_repo}/issues/{issue_number}",
     gh_repo = gh_repository,
@@ -70,17 +89,22 @@ if (!any(selected)) {
     state = "closed",
     labels = list("publications", "processed")
   )
+}
+
+# Clean up temp file
+unlink("bibentries_temp.bib")
+
+if (length(all_selected_bibs) == 0) {
+  message("No papers selected across all issues")
   quit(save = "no")
 }
 
-selected_bibentries <- bibentries_previous_month[selected]
+message(sprintf("Adding %d paper(s) to papers.bib", length(all_selected_bibs)))
 
-bib_new <- vapply(selected_bibentries, format, style = "Bibtex", character(1))
-
+# Add all selected papers to bib file
+bib_new <- vapply(all_selected_bibs, format, style = "Bibtex", character(1))
 bib_old <- readLines("_data/papers.bib")
-
 bib <- paste(c(bib_old, bib_new), collapse = "\n")
-
 write(bib, "_data/papers.bib")
 
 ## filter latest version
@@ -120,12 +144,3 @@ df <- df |>
   dplyr::select(-n, -id, -n_pp)
 
 bib2df::df2bib(df, file = "_data/papers.bib")
-
-# Close the issue and add "processed" label
-gh::gh(
-  "PATCH /repos/{gh_repo}/issues/{issue_number}",
-  gh_repo = gh_repository,
-  issue_number = issue_number,
-  state = "closed",
-  labels = list("publications", "processed")
-)
