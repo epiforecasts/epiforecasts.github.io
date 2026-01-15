@@ -23,7 +23,15 @@ get_new_papers_orcid <- function(orcid, from_date) {
           type
         )
       ) |>
-      dplyr::filter(type == "journal-article")
+      dplyr::filter(type == "journal-article") |>
+      ## filter out old papers that were re-deposited
+      dplyr::mutate(
+        pub_year = as.numeric(format(
+          lubridate::parse_date_time(issued, c("Y-m-d", "Y-m", "Y")), "%Y"
+        ))
+      ) |>
+      dplyr::filter(pub_year >= as.numeric(format(Sys.Date(), "%Y")) - 1) |>
+      dplyr::select(-pub_year)
     existing_papers <- dois_from_bib("_data/papers.bib")
     refs <- refs |>
       dplyr::filter(!(doi %in% existing_papers))
