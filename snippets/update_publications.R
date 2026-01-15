@@ -1,20 +1,20 @@
-# Find all open publications issues
+# Find all open publications issues marked as "processed" (ready to be processed)
 open_issues <- gh::gh(
   "/repos/{gh_repo}/issues",
   gh_repo = gh_repository,
   state = "open",
-  labels = "publications",
+  labels = "publications,processed",
   sort = "created",
   direction = "asc",
   per_page = 100
 )
 
 if (length(open_issues) == 0) {
-  message("No open publications issues found")
+  message("No open publications issues marked as 'processed' found")
   quit(save = "no")
 }
 
-message(sprintf("Found %d open publications issue(s)", length(open_issues)))
+message(sprintf("Found %d issue(s) ready to process", length(open_issues)))
 
 # Process each issue and collect selected papers
 all_selected_bibs <- list()
