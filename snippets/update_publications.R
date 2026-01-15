@@ -18,7 +18,7 @@ bibentries_previous_month <- bibtex::read.bib("bibentries_previous_month.bib")
 
 selected <- last_comment_pubs |>
   xml2::xml_find_first("//ul") |>
-  xml2::xml_find_all("//input") |>
+  xml2::xml_find_all(".//input") |>
   xml2::xml_has_attr("checked")
 
 selected_bibentries <- bibentries_previous_month[selected]
