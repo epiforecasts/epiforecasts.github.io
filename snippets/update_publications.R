@@ -67,7 +67,8 @@ if (!any(selected)) {
     "PATCH /repos/{gh_repo}/issues/{issue_number}",
     gh_repo = gh_repository,
     issue_number = issue_number,
-    state = "closed"
+    state = "closed",
+    labels = list("publications", "processed")
   )
   quit(save = "no")
 }
@@ -120,10 +121,11 @@ df <- df |>
 
 bib2df::df2bib(df, file = "_data/papers.bib")
 
-# Close the issue after processing
+# Close the issue and add "processed" label
 gh::gh(
   "PATCH /repos/{gh_repo}/issues/{issue_number}",
   gh_repo = gh_repository,
   issue_number = issue_number,
-  state = "closed"
+  state = "closed",
+  labels = list("publications", "processed")
 )
