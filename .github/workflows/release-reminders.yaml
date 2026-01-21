@@ -57,10 +57,10 @@ jobs:
               continue
             fi
 
-            # Get critical issues
-            CRITICAL=$(gh issue list --repo "$repo" --label critical --state open --json number,title --jq '.[] | "- #\(.number) \(.title)"' 2>/dev/null || echo "")
-            if [ -z "$CRITICAL" ]; then
-              CRITICAL="None"
+            # Get open bugs
+            BUGS=$(gh issue list --repo "$repo" --label bug --state open --json number,title --jq '.[] | "- #\(.number) \(.title)"' 2>/dev/null || echo "")
+            if [ -z "$BUGS" ]; then
+              BUGS="None"
             fi
 
             # Create reminder issue
@@ -70,9 +70,10 @@ jobs:
               --label "release" \
               --body "**Last release:** $LAST_TAG ($DAYS_SINCE days ago)
 **Commits since:** $COMMITS ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))
+**What's new:** [NEWS.md](https://github.com/$repo/blob/HEAD/NEWS.md)
 
-**Critical issues:**
-$CRITICAL
+**Open bugs:**
+$BUGS
 
 ## Release checklist
 - [ ] \`revdepcheck::revdep_check()\` (if package has dependents)
