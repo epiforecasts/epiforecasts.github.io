@@ -1,0 +1,84 @@
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9am UTC
+  workflow_dispatch:
+
+name: Release reminders
+
+jobs:
+  release-reminders:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check packages and create reminders
+        run: |
+          # Get repos from r-universe + extras
+          REPOS=$(curl -s "https://epiforecasts.r-universe.dev/api/packages" | jq -r '.[].upstream // empty')
+          REPOS="$REPOS $(grep 'repo:' _data/software-extras.yml | sed 's/.*: //')"
+
+          for repo in $REPOS; do
+            echo "Checking $repo..."
+
+            # Get last release info
+            RELEASE_INFO=$(gh release view --repo "$repo" --json tagName,createdAt 2>/dev/null || echo '{}')
+            LAST_TAG=$(echo "$RELEASE_INFO" | jq -r '.tagName // empty')
+            LAST_DATE=$(echo "$RELEASE_INFO" | jq -r '.createdAt // empty')
+
+            # Skip if no releases yet
+            if [ -z "$LAST_TAG" ]; then
+              echo "  No releases yet, skipping"
+              continue
+            fi
+
+            # Skip if released within last 60 days
+            if [ -n "$LAST_DATE" ]; then
+              DAYS_SINCE=$(( ($(date +%s) - $(date -d "$LAST_DATE" +%s)) / 86400 ))
+              if [ "$DAYS_SINCE" -lt 60 ]; then
+                echo "  Released $DAYS_SINCE days ago, skipping"
+                continue
+              fi
+            fi
+
+            # Check commits since last release
+            COMMITS=$(gh api "repos/$repo/compare/$LAST_TAG...HEAD" --jq '.ahead_by' 2>/dev/null || echo "0")
+            if [ "$COMMITS" = "0" ]; then
+              echo "  No commits since last release, skipping"
+              continue
+            fi
+
+            # Check if reminder already exists this month
+            MONTH=$(date +'%B %Y')
+            EXISTING=$(gh issue list --repo "$repo" --search "Release reminder - $MONTH in:title" --json number --jq 'length' 2>/dev/null || echo "0")
+            if [ "$EXISTING" != "0" ]; then
+              echo "  Reminder already exists for $MONTH, skipping"
+              continue
+            fi
+
+            # Get critical issues
+            CRITICAL=$(gh issue list --repo "$repo" --label critical --state open --json number,title --jq '.[] | "- #\(.number) \(.title)"' 2>/dev/null || echo "")
+            if [ -z "$CRITICAL" ]; then
+              CRITICAL="None"
+            fi
+
+            # Create reminder issue
+            echo "  Creating reminder ($COMMITS commits since $LAST_TAG)"
+            gh issue create --repo "$repo" \
+              --title "Release reminder - $MONTH" \
+              --label "release" \
+              --body "**Last release:** $LAST_TAG ($DAYS_SINCE days ago)
+**Commits since:** $COMMITS ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))
+
+**Critical issues:**
+$CRITICAL
+
+## Release checklist
+- [ ] \`revdepcheck::revdep_check()\` (if package has dependents)
+- [ ] \`usethis::use_version()\`
+- [ ] \`devtools::submit_cran()\`
+- [ ] After acceptance: \`usethis::use_github_release()\`
+
+*Close this issue if not releasing this cycle.*"
+          done
