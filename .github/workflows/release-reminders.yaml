@@ -71,25 +71,25 @@ jobs:
 
             # Create reminder issue
             echo "  Creating reminder ($COMMITS commits since $LAST_TAG)"
-            cat > /tmp/release-body.md <<EOF
-**Last release:** $LAST_TAG ($DAYS_SINCE days ago)
-**Commits since:** $COMMITS ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))
-**What's new:** [NEWS.md](https://github.com/$repo/blob/HEAD/NEWS.md)
-
-**Open bugs:**
-$BUGS
-
-**Open PRs:**
-$PRS
-
-## Release checklist
-- [ ] \`revdepcheck::revdep_check()\` (if package has dependents)
-- [ ] \`usethis::use_version()\`
-- [ ] \`devtools::submit_cran()\`
-- [ ] After acceptance: \`usethis::use_github_release()\`
-
-*Close this issue if not releasing this cycle.*
-EOF
+            {
+              echo "**Last release:** $LAST_TAG ($DAYS_SINCE days ago)"
+              echo "**Commits since:** $COMMITS ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))"
+              echo "**What's new:** [NEWS.md](https://github.com/$repo/blob/HEAD/NEWS.md)"
+              echo ""
+              echo "**Open bugs:**"
+              echo "$BUGS"
+              echo ""
+              echo "**Open PRs:**"
+              echo "$PRS"
+              echo ""
+              echo "## Release checklist"
+              echo '- [ ] `revdepcheck::revdep_check()` (if package has dependents)'
+              echo '- [ ] `usethis::use_version()`'
+              echo '- [ ] `devtools::submit_cran()`'
+              echo '- [ ] After acceptance: `usethis::use_github_release()`'
+              echo ""
+              echo "*Close this issue if not releasing this cycle.*"
+            } > /tmp/release-body.md
             gh issue create --repo "$repo" \
               --title "Release reminder - $MONTH" \
               --label "release" \
