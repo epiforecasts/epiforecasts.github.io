@@ -16,7 +16,7 @@ jobs:
       - name: Check packages and create reminders
         run: |
           # Get repos from r-universe + extras
-          REPOS=$(curl -s "https://epiforecasts.r-universe.dev/api/packages" | jq -r '.[].upstream // empty')
+          REPOS=$(curl -s "https://epiforecasts.r-universe.dev/api/packages" | jq -r '.[]._upstream // empty' | sed 's|https://github.com/||')
           REPOS="$REPOS $(grep 'repo:' _data/software-extras.yml | sed 's/.*: //')"
 
           for repo in $REPOS; do
