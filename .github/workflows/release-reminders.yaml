@@ -9,7 +9,7 @@ jobs:
   release-reminders:
     runs-on: ubuntu-latest
     env:
-      GH_TOKEN: ${{ secrets.ORG_GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.RELEASE_REMINDER_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
