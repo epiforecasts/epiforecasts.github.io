@@ -90,8 +90,10 @@ jobs:
               echo ""
               echo "*Close this issue if not releasing this cycle.*"
             } > /tmp/release-body.md
+            # Ensure 'release' label exists
+            gh label create release --repo "$repo" --description "Release tracking" --color "0E8A16" 2>/dev/null || true
             gh issue create --repo "$repo" \
               --title "Release reminder - $MONTH" \
               --label "release" \
-              --body-file /tmp/release-body.md
+              --body-file /tmp/release-body.md || echo "  Failed to create issue for $repo"
           done
