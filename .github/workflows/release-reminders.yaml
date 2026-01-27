@@ -71,10 +71,8 @@ jobs:
 
             # Create reminder issue
             echo "  Creating reminder ($COMMITS commits since $LAST_TAG)"
-            gh issue create --repo "$repo" \
-              --title "Release reminder - $MONTH" \
-              --label "release" \
-              --body "**Last release:** $LAST_TAG ($DAYS_SINCE days ago)
+            cat > /tmp/release-body.md <<EOF
+**Last release:** $LAST_TAG ($DAYS_SINCE days ago)
 **Commits since:** $COMMITS ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))
 **What's new:** [NEWS.md](https://github.com/$repo/blob/HEAD/NEWS.md)
 
@@ -90,5 +88,10 @@ $PRS
 - [ ] \`devtools::submit_cran()\`
 - [ ] After acceptance: \`usethis::use_github_release()\`
 
-*Close this issue if not releasing this cycle.*"
+*Close this issue if not releasing this cycle.*
+EOF
+            gh issue create --repo "$repo" \
+              --title "Release reminder - $MONTH" \
+              --label "release" \
+              --body-file /tmp/release-body.md
           done
