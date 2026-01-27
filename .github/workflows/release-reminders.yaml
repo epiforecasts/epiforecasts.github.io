@@ -63,6 +63,12 @@ jobs:
               BUGS="None"
             fi
 
+            # Get open PRs
+            PRS=$(gh pr list --repo "$repo" --state open --json number,title --jq '.[] | "- #\(.number) \(.title)"' 2>/dev/null || echo "")
+            if [ -z "$PRS" ]; then
+              PRS="None"
+            fi
+
             # Create reminder issue
             echo "  Creating reminder ($COMMITS commits since $LAST_TAG)"
             gh issue create --repo "$repo" \
@@ -74,6 +80,9 @@ jobs:
 
 **Open bugs:**
 $BUGS
+
+**Open PRs:**
+$PRS
 
 ## Release checklist
 - [ ] \`revdepcheck::revdep_check()\` (if package has dependents)
