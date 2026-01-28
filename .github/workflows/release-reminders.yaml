@@ -27,26 +27,36 @@ jobs:
             LAST_TAG=$(echo "$RELEASE_INFO" | jq -r '.tagName // empty')
             LAST_DATE=$(echo "$RELEASE_INFO" | jq -r '.createdAt // empty')
 
-            # Skip if no releases yet
-            if [ -z "$LAST_TAG" ]; then
-              echo "  No releases yet, skipping"
-              continue
-            fi
+            if [ -n "$LAST_TAG" ]; then
+              # Has releases - skip if released within last 60 days
+              if [ -n "$LAST_DATE" ]; then
+                DAYS_SINCE=$(( ($(date +%s) - $(date -d "$LAST_DATE" +%s)) / 86400 ))
+                if [ "$DAYS_SINCE" -lt 60 ]; then
+                  echo "  Released $DAYS_SINCE days ago, skipping"
+                  continue
+                fi
+              fi
 
-            # Skip if released within last 60 days
-            if [ -n "$LAST_DATE" ]; then
-              DAYS_SINCE=$(( ($(date +%s) - $(date -d "$LAST_DATE" +%s)) / 86400 ))
-              if [ "$DAYS_SINCE" -lt 60 ]; then
-                echo "  Released $DAYS_SINCE days ago, skipping"
+              # Check commits since last release
+              COMMITS=$(gh api "repos/$repo/compare/$LAST_TAG...HEAD" --jq '.ahead_by' 2>/dev/null || echo "0")
+              if [ "$COMMITS" = "0" ]; then
+                echo "  No commits since last release, skipping"
                 continue
               fi
-            fi
 
-            # Check commits since last release
-            COMMITS=$(gh api "repos/$repo/compare/$LAST_TAG...HEAD" --jq '.ahead_by' 2>/dev/null || echo "0")
-            if [ "$COMMITS" = "0" ]; then
-              echo "  No commits since last release, skipping"
-              continue
+              RELEASE_LINE="**Last release:** $LAST_TAG ($DAYS_SINCE days ago)"
+              COMMITS_LINE="**Commits since:** $COMMITS ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))"
+            else
+              # No releases yet - check if repo has any commits at all
+              COMMITS=$(gh api "repos/$repo" --jq '.size' 2>/dev/null || echo "0")
+              if [ "$COMMITS" = "0" ]; then
+                echo "  Empty repo, skipping"
+                continue
+              fi
+
+              RELEASE_LINE="**Last release:** None yet"
+              COMMITS_LINE=""
+              DAYS_SINCE="N/A"
             fi
 
             # Check if reminder already exists this month
@@ -70,10 +80,10 @@ jobs:
             fi
 
             # Create reminder issue
-            echo "  Creating reminder ($COMMITS commits since $LAST_TAG)"
+            echo "  Creating reminder for $repo"
             {
-              echo "**Last release:** $LAST_TAG ($DAYS_SINCE days ago)"
-              echo "**Commits since:** $COMMITS ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))"
+              echo "$RELEASE_LINE"
+              [ -n "$COMMITS_LINE" ] && echo "$COMMITS_LINE"
               echo "**What's new:** [NEWS.md](https://github.com/$repo/blob/HEAD/NEWS.md)"
               echo ""
               echo "**Open bugs:**"
@@ -90,10 +100,14 @@ jobs:
               echo ""
               echo "*Close this issue if not releasing this cycle.*"
             } > /tmp/release-body.md
-            # Ensure 'release' label exists
+            # Ensure 'release' label exists, create issue without label if it fails
             gh label create release --repo "$repo" --description "Release tracking" --color "0E8A16" 2>/dev/null || true
             gh issue create --repo "$repo" \
               --title "Release reminder - $MONTH" \
               --label "release" \
-              --body-file /tmp/release-body.md || echo "  Failed to create issue for $repo"
+              --body-file /tmp/release-body.md 2>/dev/null \
+            || gh issue create --repo "$repo" \
+              --title "Release reminder - $MONTH" \
+              --body-file /tmp/release-body.md \
+            || echo "  Failed to create issue for $repo"
           done
