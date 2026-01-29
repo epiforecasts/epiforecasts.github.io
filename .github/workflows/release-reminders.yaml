@@ -37,10 +37,10 @@ jobs:
                 fi
               fi
 
-              # Check commits since last release
+              # Check commits since last release (need >1 because version bump after release counts as 1)
               COMMITS=$(gh api "repos/$repo/compare/$LAST_TAG...HEAD" --jq '.ahead_by' 2>/dev/null || echo "0")
-              if [ "$COMMITS" = "0" ]; then
-                echo "  No commits since last release, skipping"
+              if [ "$COMMITS" -lt 2 ]; then
+                echo "  Only $COMMITS commit(s) since last release, skipping"
                 continue
               fi
 
