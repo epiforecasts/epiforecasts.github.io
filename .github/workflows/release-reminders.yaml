@@ -8,12 +8,19 @@ name: Release reminders
 jobs:
   release-reminders:
     runs-on: ubuntu-latest
-    env:
-      GH_TOKEN: ${{ secrets.RELEASE_REMINDER_TOKEN }}
     steps:
       - uses: actions/checkout@v4
 
+      - name: Generate token from GitHub App
+        id: app-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Check packages and create reminders
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
           # Get repos from r-universe + extras
           REPOS=$(curl -s "https://epiforecasts.r-universe.dev/api/packages" | jq -r '.[]._upstream // empty' | sed 's|https://github.com/||')
