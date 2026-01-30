@@ -79,6 +79,10 @@ jobs:
               PRS="None"
             fi
 
+            # Detect package type
+            HAS_DESCRIPTION=$(gh api "repos/$repo/contents/DESCRIPTION" --jq '.name' 2>/dev/null || echo "")
+            HAS_PROJECT_TOML=$(gh api "repos/$repo/contents/Project.toml" --jq '.name' 2>/dev/null || echo "")
+
             # Create reminder issue
             echo "  Creating reminder for $repo"
             {
@@ -92,11 +96,15 @@ jobs:
               echo "**Open PRs:**"
               echo "$PRS"
               echo ""
-              echo "## Release checklist"
-              echo '- [ ] `revdepcheck::revdep_check()` (if package has dependents)'
-              echo '- [ ] `usethis::use_version()`'
-              echo '- [ ] `devtools::submit_cran()`'
-              echo '- [ ] After acceptance: `usethis::use_github_release()`'
+              echo "## To release"
+              if [ -n "$HAS_DESCRIPTION" ]; then
+                echo 'Run `usethis::use_release_issue()` for the full checklist.'
+              elif [ -n "$HAS_PROJECT_TOML" ]; then
+                echo '1. Bump version in `Project.toml`'
+                echo '2. Comment `@JuliaRegistrator register` on the commit'
+              else
+                echo 'Create a GitHub release.'
+              fi
               echo ""
               echo "*Close this issue if not releasing this cycle.*"
             } > /tmp/release-body.md
