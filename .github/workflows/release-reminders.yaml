@@ -45,14 +45,17 @@ jobs:
               fi
 
               # Check commits since last release (need >1 because version bump after release counts as 1)
-              COMMITS=$(gh api "repos/$repo/compare/$LAST_TAG...HEAD" --jq '.ahead_by' 2>/dev/null || echo "0")
-              if [ "$COMMITS" -lt 2 ]; then
-                echo "  Only $COMMITS commit(s) since last release, skipping"
+              # Filter out dependabot commits - only count real changes
+              COMMITS_DATA=$(gh api "repos/$repo/compare/$LAST_TAG...HEAD" 2>/dev/null || echo '{"ahead_by":0,"commits":[]}')
+              COMMITS=$(echo "$COMMITS_DATA" | jq '.ahead_by')
+              REAL_COMMITS=$(echo "$COMMITS_DATA" | jq '[.commits[] | select(.author.login != "dependabot[bot]")] | length')
+              if [ "$REAL_COMMITS" -lt 2 ]; then
+                echo "  Only $REAL_COMMITS non-bot commit(s) since last release (${COMMITS} total), skipping"
                 continue
               fi
 
               RELEASE_LINE="**Last release:** $LAST_TAG ($DAYS_SINCE days ago)"
-              COMMITS_LINE="**Commits since:** $COMMITS ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))"
+              COMMITS_LINE="**Commits since:** $REAL_COMMITS (excl. bot commits) ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))"
             else
               # No releases yet - check if repo has any commits at all
               COMMITS=$(gh api "repos/$repo" --jq '.size' 2>/dev/null || echo "0")
