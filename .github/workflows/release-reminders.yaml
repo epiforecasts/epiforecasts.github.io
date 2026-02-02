@@ -45,10 +45,14 @@ jobs:
               fi
 
               # Check commits since last release (need >1 because version bump after release counts as 1)
-              # Filter out dependabot commits - only count real changes
+              # Filter out dependabot commits and their merge commits - only count real changes
               COMMITS_DATA=$(gh api "repos/$repo/compare/$LAST_TAG...HEAD" 2>/dev/null || echo '{"ahead_by":0,"commits":[]}')
               COMMITS=$(echo "$COMMITS_DATA" | jq '.ahead_by')
-              REAL_COMMITS=$(echo "$COMMITS_DATA" | jq '[.commits[] | select(.author.login != "dependabot[bot]")] | length')
+              REAL_COMMITS=$(echo "$COMMITS_DATA" | jq '[.commits[] | select(
+                .author.login != "dependabot[bot]" and
+                (.commit.message | test("^Bump "; "i") | not) and
+                (.commit.message | test("dependabot"; "i") | not)
+              )] | length')
               if [ "$REAL_COMMITS" -lt 2 ]; then
                 echo "  Only $REAL_COMMITS non-bot commit(s) since last release (${COMMITS} total), skipping"
                 continue
