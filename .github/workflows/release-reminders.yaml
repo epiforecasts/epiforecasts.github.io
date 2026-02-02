@@ -73,13 +73,13 @@ jobs:
               DAYS_SINCE="N/A"
             fi
 
-            # Close any existing open release reminder issues before creating new one
+            # Skip if there's already an open release reminder issue
             MONTH=$(date +'%B %Y')
-            OLD_ISSUES=$(gh issue list --repo "$repo" --search "Release reminder in:title" --state open --json number --jq '.[].number' 2>/dev/null || echo "")
-            for old_issue in $OLD_ISSUES; do
-              echo "  Closing old reminder #$old_issue"
-              gh issue close "$old_issue" --repo "$repo" --comment "Superseded by new release reminder." 2>/dev/null || true
-            done
+            EXISTING=$(gh issue list --repo "$repo" --search "Release reminder in:title" --state open --json number --jq 'length' 2>/dev/null || echo "0")
+            if [ "$EXISTING" != "0" ]; then
+              echo "  Open release reminder already exists, skipping"
+              continue
+            fi
 
             # Get open bugs
             BUGS=$(gh issue list --repo "$repo" --label bug --state open --json number,title --jq '.[] | "- #\(.number) \(.title)"' 2>/dev/null || echo "")
