@@ -75,7 +75,7 @@ jobs:
 
             # Skip if there's already an open release reminder issue
             MONTH=$(date +'%B %Y')
-            EXISTING=$(gh issue list --repo "$repo" --search "Release reminder in:title" --state open --json number --jq 'length' 2>/dev/null || echo "0")
+            EXISTING=$(gh issue list --repo "$repo" --state open --json title --jq '[.[] | select(.title | test("Release reminder"))] | length' 2>/dev/null || echo "0")
             if [ "$EXISTING" != "0" ]; then
               echo "  Open release reminder already exists, skipping"
               continue
