@@ -121,6 +121,9 @@ jobs:
               fi
               echo ""
               echo "*Close this issue if not releasing this cycle.*"
+              echo ""
+              echo "---"
+              echo "*Created by the [release reminders workflow](https://github.com/epiforecasts/epiforecasts.github.io/blob/main/.github/workflows/release-reminders.yaml).*"
             } > /tmp/release-body.md
             # Ensure 'release' label exists, create issue without label if it fails
             gh label create release --repo "$repo" --description "Release tracking" --color "0E8A16" 2>/dev/null || true
