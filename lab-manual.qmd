@@ -96,35 +96,53 @@ Any publication should be accompanied by a github repository with a README file 
 
 Our meeting structure involves:
 
-### Group meetings (weekly, 1-2 hours)
+### Group meetings (weekly, ~60 minutes)
 
-Weekly group meetings are there to communicate and exchange useful ideas, not to update or impress. Participation in all group meetings is expected of all group members - if you can’t make it, send an advance notice. The meetings should be conducted in an informal, positive, and supportive environment where it is at least as interesting to present loose ideas, failures, negative results and dead ends. Feedback from group members should aim to be helpful and constructive.
+Weekly group meetings are there to communicate, exchange ideas and help each other, not to update or impress. Participation is expected of all group members — if you can't make it, send advance notice. Meetings should be conducted in an informal, positive and supportive environment where it is at least as interesting to present loose ideas, failures, negative results and dead ends.
 
-Every group meeting has a chair, a presenter and a note taker, and all of these roles rotate. It is the responsibility of the chair to conduct the meeting in an inclusive manner that gives everyone the chance to contribute. The note taker leads collaborative note taking and is encouraged to synthesise any learning points from the meeting in a tweet, blog post or similar. There is no expectation that presentations are polished or slides used, and presentation of in-progress or early-stage work is very much encouraged.
+Every group meeting has a rotating chair. The chair is responsible for conducting the meeting in an inclusive manner that gives everyone the chance to contribute.
 
-The group meeting starts once the chair is satisfied that people have arrived. As a first item, the chair will briefly talk about something that is not related to the work of the group - this could be a film they've seen, a book they're reading, a place they've visited, something they've been thinking about or anything else really. This is followed by the main presentation.
+#### Structure
 
-Usually, the presenter is expected to either
+The meeting starts with the chair briefly sharing something non-work-related — a film, a book, a place visited, something they've been thinking about. The chair then follows up on any commitments from the previous meeting: offers to help, resources to share, introductions to make.
 
-1. Present some ongoing work, focusing on issues that they are stuck with, thinking about, and/or would like feedback on. 
-2. Present a new idea and analysis plan to solicit feedback.
-3. Present a paper or suggest a broader topic, for example on scientific practice, for discussion, with some bullet points inspiration to kick-start the conversation.
+The main part of the meeting consists of three presentation slots of around 18 minutes each:
 
-At longer intervals we have meetings to
+- **10 minutes:** Presentation following the structure below
+- **3 minutes:** Clarifying questions
+- **5 minutes:** Silent written feedback in a shared Google Doc (named, to allow follow-up)
 
-4. Formulate and review broad goals/aims/progress
-5. Post-mortem rounds where we discuss what went good / wrong with past projects
-6. Update this manual 
+The chair reviews feedback at the end of each slot and identifies any commitments ("I'll send that paper", "I can review that code"). These are recorded and followed up at the next meeting.
 
-We also use the meetings for
+#### Presentation structure
 
-7. Practice talks (e.g., ahead of conferences). Everyone who presents work from the group should have the opportunity to present it to group members for feedback.
+1. **"Today I need help with..."** — 1-2 specific problems or questions, not "general feedback"
+2. **Your work** (max 8 slides) — focusing on what you're stuck on, thinking about or would like input on. There is no expectation that presentations are polished, and presentation of in-progress or early-stage work is very much encouraged.
+3. **"How you can get involved"** — specific tasks, links, collaboration opportunities
+4. **"What you may find useful"** — your expertise, tools or resources relevant to others' work
+
+Before the meeting, the chair and each presenter briefly discuss how the presenter would like to receive feedback and what areas they most want input on.
+
+At longer intervals we use group meetings to:
+
+- Formulate and review broad goals, aims and progress
+- Run post-mortems on past projects (what went well, what didn't)
+- Update this manual
+- Practice talks ahead of conferences — everyone who presents work from the group should have the opportunity to present it to group members for feedback
+
+### Journal club (monthly)
+
+A monthly session to discuss papers, methods or broader topics relevant to the group's work.
+
+### Coffee walks (monthly)
+
+A monthly walk to a coffee shop or similar, replacing a regular meeting. These encourage smaller 2-3 person conversations and informal relationship building.
 
 ### Individual meetings with the PI (every 2 weeks, one hour)
 
-These start within a summary of progress since the last meeting, followed by any points for discussion either of us finds worthy of raising.
+These start with a summary of progress since the last meeting, followed by any points for discussion either of us finds worthy of raising.
 
-We will maintain a Google Doc (or similar) for ongoing notes from these meetings - this is updated every meeting with a short summary of discussion and action points.
+We maintain a Google Doc (or similar) for ongoing notes — updated every meeting with a short summary of discussion and action points.
 
 ### Subproject meetings (project-dependent frequency)
 
@@ -132,7 +150,7 @@ Where people collaborate on subprojects they are encouraged to agree on a separa
 
 ### Social meetings (whenever we feel like it)
 
-Coffee meetings, occasional curry outings and others
+Occasional curry outings etc.
 
 ## Practicalities
 
