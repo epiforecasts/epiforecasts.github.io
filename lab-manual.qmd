@@ -123,6 +123,14 @@ The chair reviews feedback at the end of each slot and identifies any commitment
 
 Before the meeting, the chair and each presenter briefly discuss how the presenter would like to receive feedback and what areas they most want input on.
 
+#### Feedback
+
+Feedback should be specific, constructive and focused on what the presenter asked for help with. Frame suggestions as curiosity rather than criticism — "I'm curious about..." or "Have you considered..." rather than "Why did you do...?" or "You should...".
+
+During the 5-minute silent feedback, write in the shared Google Doc under your name. Commitments — concrete offers like "I'll send that paper" or "I can help with that analysis" — are noted by the chair and followed up at the next meeting. This isn't about policing; it's about making it easy to follow through on good intentions.
+
+Not everyone needs to collaborate on everything. Some people contribute through detailed feedback, others through sharing resources, others through active collaboration. All are valuable.
+
 At longer intervals we use group meetings to:
 
 - Formulate and review broad goals, aims and progress
