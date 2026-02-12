@@ -131,6 +131,8 @@ During the 5-minute silent feedback, write in the shared Google Doc under your n
 
 Not everyone needs to collaborate on everything. Some people contribute through detailed feedback, others through sharing resources, others through active collaboration. All are valuable.
 
+#### Other meeting types
+
 At longer intervals we use group meetings to:
 
 - Formulate and review broad goals, aims and progress
