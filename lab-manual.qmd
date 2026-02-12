@@ -125,7 +125,7 @@ Before the meeting, the chair and each presenter briefly discuss how the present
 
 #### Feedback
 
-Feedback should be specific, constructive and focused on what the presenter asked for help with. Frame suggestions as curiosity rather than criticism — "I'm curious about..." or "Have you considered..." rather than "Why did you do...?" or "You should...".
+Feedback should be specific, constructive and focused on what the presenter asked for help with. Frame suggestions as curiosity rather than criticism — "I'm curious about..." or "Have you considered..." rather than "Why did you do...?", "You should..." or "I would do...".
 
 During the 5-minute silent feedback, write in the shared Google Doc under your name. Commitments — concrete offers like "I'll send that paper" or "I can help with that analysis" — are noted by the chair and followed up at the next meeting. This isn't about policing; it's about making it easy to follow through on good intentions.
 
