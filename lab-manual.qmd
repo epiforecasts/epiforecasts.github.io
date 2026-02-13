@@ -166,9 +166,13 @@ Not everyone needs to collaborate on everything. Some people contribute through 
 
 ### Communication
 
-We use Slack for most communication within the group. The @epiforecasts channel is used for general group communication, announcement of meeting topics, organising social events, reviewing coffee etc. Email is used for formal communication involving the broader community at LSHTM, and for communicating with people external to the group (except close collaborators, who are invited to Slack).
+We use Slack for most communication within the group. The @epiforecasts channel is used for general group communication — not just logistics like meeting topics, but also sharing interesting papers, methods, teaching opportunities, conference highlights and other things that might be useful to the group. Email is used for formal communication involving the broader community at LSHTM, and for communicating with people external to the group (except close collaborators, who are invited to Slack).
 
 We acknowledge the potential impact of push notifications on productivity and mental health. Everybody is strongly encouraged to turn off all notifications outside of standard working hours (9am-5pm), and is welcome to regularly check into communication channels rather than being alerted by them when within these hours. Generally, the expectation is that team-internal questions put via Slack are answered within 24 hours. After that, it is not considered impolite to send a reminder.
+
+### Onboarding
+
+When someone new joins the group, they should be given an overview of current projects and how they connect, and introduced to relevant tools and communication channels. The group's [projects page](https://epiforecasts.io/projects) provides an overview of current work with links to repositories.
 
 ### Web site
 
