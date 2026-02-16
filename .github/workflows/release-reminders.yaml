@@ -30,9 +30,9 @@ jobs:
             echo "Checking $repo..."
 
             # Get last release info
-            RELEASE_INFO=$(gh release view --repo "$repo" --json tagName,createdAt 2>/dev/null || echo '{}')
+            RELEASE_INFO=$(gh release view --repo "$repo" --json tagName,publishedAt 2>/dev/null || echo '{}')
             LAST_TAG=$(echo "$RELEASE_INFO" | jq -r '.tagName // empty')
-            LAST_DATE=$(echo "$RELEASE_INFO" | jq -r '.createdAt // empty')
+            LAST_DATE=$(echo "$RELEASE_INFO" | jq -r '.publishedAt // empty')
 
             if [ -n "$LAST_TAG" ]; then
               # Has releases - skip if released within last 60 days
