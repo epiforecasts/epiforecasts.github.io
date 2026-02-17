@@ -21,7 +21,11 @@ We are particularly interested in analyses that are conducted in close collabora
 
 ## Group principles
 
-We are aiming to maintain an inclusive environment where everyone feels valued and able to ask and answer questions and express new ideas. We recognise that each team member adds value to the group and that people have different skill sets, world views, and approaches to working. We believe that science should be open and collaborative. We treat each other, as well as our peers outside the group and their work with respect.
+What defines us as a group is our shared values and ways of working, not just our shared research interests. People in the group work on different problems, but openness, collaboration and mutual support are what hold us together.
+
+We are aiming to maintain an inclusive environment where everyone feels valued and able to ask and answer questions and express new ideas. We recognise that each team member adds value to the group and that people have different skill sets, world views, and approaches to working. We treat each other, as well as our peers outside the group and their work, with respect.
+
+We share work early rather than waiting until it feels ready. Incomplete drafts, failed approaches and dead ends are all worth sharing so that others can help. Our work lives in public GitHub repositories by default, and we collaborate through issues and pull requests.
 
 ### Expectations from members
 
@@ -33,6 +37,8 @@ Everyone:
 * Tell someone if you are struggling or if there is a conflict within the group. We can’t thrive in an environment in which we aren’t comfortable.
 * Spend your research time on projects related to the aims of the group - you are encouraged to collaborate with people outside the group on other projects, but if these are to take a substantial amount of time this should be discussed first, and as a general rule not cover more than 20% of day-to-day work.
 * Take time off at regular intervals, and use the full holiday allowance; also take sick days off if/when needed. We do not glorify workaholic behaviour. There may be times that you have to work longer or harder to finish a time-critical piece of analysis, but this should be balanced out over time.
+* Share your work openly and early, in meetings, on GitHub, on Slack. Don't wait until it's polished.
+* When someone asks for feedback or help, respond within a few days, even if just to say you can't help right now.
 * Engage in ongoing learning and professional development.
 
 PI: All of the above and
@@ -45,6 +51,7 @@ PI: All of the above and
 * Identify training opportunities and conferences and support you in making the most of them.
 * Point out grant and fellowship opportunities to you and support you in applying to appropriate ones.
 * Care for your mental and physical well-being, and prioritise it above anything else.
+* Model the group's values: share problems and incomplete work openly, ask for help, and show that this is how we work at all levels.
 
 ## Publications
 
@@ -106,10 +113,10 @@ Every group meeting has a rotating chair. The chair is responsible for conductin
 
 The meeting starts with the chair briefly sharing something non-work-related — a film, a book, a place visited, something they've been thinking about. The chair then follows up on any commitments from the previous meeting: offers to help, resources to share, introductions to make.
 
-The main part of the meeting consists of three presentation slots of around 18 minutes each:
+The main part of the meeting consists of three presentation slots of around 20 minutes each:
 
 - **10 minutes:** Presentation following the structure below
-- **3 minutes:** Clarifying questions
+- **5 minutes:** Clarifying questions
 - **5 minutes:** Silent written feedback in a shared Google Doc (named, to allow follow-up)
 
 The chair reviews feedback at the end of each slot and identifies any commitments ("I'll send that paper", "I can review that code"). These are recorded and followed up at the next meeting.
@@ -138,7 +145,7 @@ A monthly session to discuss papers, methods or broader topics relevant to the g
 
 ### Coffee walks (monthly)
 
-A monthly walk to a coffee shop or similar, replacing a regular meeting. These encourage smaller 2-3 person conversations and informal relationship building.
+A monthly walk to a coffee shop or similar, replacing a regular meeting. These encourage smaller 2-3 person conversations that don't happen easily in a full group.
 
 ### Individual meetings with the PI (every 2 weeks, one hour)
 
@@ -159,8 +166,6 @@ Occasional curry outings etc.
 Feedback should be specific, constructive and focused on what the presenter asked for help with. Frame suggestions as curiosity rather than criticism — "I'm curious about..." or "Have you considered..." rather than "Why did you do...?", "You should..." or "I would do...".
 
 During the 5-minute silent feedback in group meetings, write in the shared Google Doc under your name. Commitments — concrete offers like "I'll send that paper" or "I can help with that analysis" — are noted by the chair and followed up at the next meeting. This isn't about policing; it's about making it easy to follow through on good intentions.
-
-Not everyone needs to collaborate on everything. Some people contribute through detailed feedback, others through sharing resources, others through active collaboration. All are valuable.
 
 ## Practicalities
 
