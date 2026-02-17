@@ -9,9 +9,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## epiforecasts manual
 
-This document sets out the core aims, values and expectations of the epiforecasts group. It was originally inspired by two articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953), and a number of publicly available other lab manuals. It is supposed to serve as a point of reference for current and future team members. All team members are invited to contribute and suggest changes, based on what the environment looks like that they would like to work in. Nothing written here is set in stone, and ideally this will turn into a dynamic document maintained by the team as a whole.
-
-Suggestions for editing this manual via GitHub Pull Requests are welcome from any group member at any time.
+This document sets out the aims, values and expectations of the epiforecasts group, inspired by articles on [lab manuals](https://www.nature.com/articles/d41586-018-06167-w) and [lab meetings](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1008953). It is a point of reference for current and future team members, not a fixed set of rules. Suggestions for changes via Pull Requests are welcome from any group member at any time.
 
 ## Group aims
 
@@ -21,11 +19,9 @@ We are particularly interested in analyses that are conducted in close collabora
 
 ## Group principles
 
-What defines us as a group is our shared values and ways of working, not just our shared research interests. People in the group work on different problems, but openness, collaboration and mutual support are what hold us together.
-
 We are aiming to maintain an inclusive environment where everyone feels valued and able to ask and answer questions and express new ideas. We recognise that each team member adds value to the group and that people have different skill sets, world views, and approaches to working. We treat each other, as well as our peers outside the group and their work, with respect.
 
-We share work early rather than waiting until it feels ready. Incomplete drafts, failed approaches and dead ends are all worth sharing so that others can help. Our work lives in public GitHub repositories by default, and we collaborate through issues and pull requests.
+We share work early rather than waiting until it feels ready. Incomplete drafts, failed approaches and dead ends are all worth sharing so that others can help. Our work lives in public GitHub repositories, and we often collaborate through issues and pull requests.
 
 ### Expectations from members
 
@@ -59,7 +55,7 @@ PI: All of the above and
 
 All our publications must comply with [Wellcome’s Open Access Policy](https://wellcome.org/grant-funding/guidance/open-access-guidance/open-access-policy). In particular, we will post preprints of any work, and subsequently submit them to a peer-reviewed journal for publication under a CC-BY licence.
 
-We believe that the peer review and publication process should be open and transparent, and we particularly support journals that allow first submission in any format and have policies in line with our principles. We do not design our work to aim for “high-impact” but may choose to submit to them if we believe work we have done is of interest to the broadest readership. All that said, we are aware that in many instances career prospects of early career researchers may still be seen to depend on the impact factors and identities in journals in which they publish; whilst we do not think this is the case, we do not mandate any particular policy and accept if lab members feel the need to submit to particular journals. 
+We believe that peer review and publication should be open and transparent, and we particularly support journals that allow first submission in any format. We do not design our work to aim for "high-impact" journals but may submit to them if the work is of interest to the broadest readership. We do not mandate any particular policy on journal choice.
 
 Examples of journals that we like are:
 
@@ -105,7 +101,7 @@ Our meeting structure involves:
 
 ### Group meetings (weekly, ~60 minutes)
 
-Weekly group meetings are there to communicate, exchange ideas and help each other, not to update or impress. Participation is expected of all group members — if you can't make it, send advance notice. Meetings should be conducted in an informal, positive and supportive environment where it is at least as interesting to present loose ideas, failures, negative results and dead ends.
+Weekly group meetings are there to help each other, not to update or impress. Participation is expected of all group members — if you can't make it, send advance notice.
 
 Every group meeting has a rotating chair. The chair is responsible for conducting the meeting in an inclusive manner that gives everyone the chance to contribute.
 
@@ -124,7 +120,7 @@ The chair reviews feedback at the end of each slot and identifies any commitment
 #### Presentation structure
 
 1. **"Today I need help with..."** — 1-2 specific problems or questions, not "general feedback"
-2. **Your work** (max 8 slides) — focusing on what you're stuck on, thinking about or would like input on. There is no expectation that presentations are polished, and presentation of in-progress or early-stage work is very much encouraged.
+2. **Your work** (max 8 slides) — focusing on what you're stuck on, thinking about or would like input on
 3. **"How you can get involved"** — specific tasks, links, collaboration opportunities
 4. **"What you may find useful"** — your expertise, tools or resources relevant to others' work
 
@@ -165,8 +161,6 @@ Occasional curry outings etc.
 
 Feedback should be specific, constructive and focused on what the presenter asked for help with. Frame suggestions as curiosity rather than criticism — "I'm curious about..." or "Have you considered..." rather than "Why did you do...?", "You should..." or "I would do...".
 
-During the 5-minute silent feedback in group meetings, write in the shared Google Doc under your name. Commitments — concrete offers like "I'll send that paper" or "I can help with that analysis" — are noted by the chair and followed up at the next meeting. This isn't about policing; it's about making it easy to follow through on good intentions.
-
 ## Practicalities
 
 ### Communication
@@ -189,4 +183,4 @@ One of the benefits of a career in academic research is that it is typically mor
 
 ### Presence
 
-There are definite benefits to working together in the same building/office, particularly in facilitating informal communication. That said, the Covid-19 pandemic has shown that remote working can be managed successfully, and the same approach does not work for everyone. We are keen to find ways of working that are flexible enough for everyone to work in the way that they are most productive, whether on-site in London or remotely.
+There are benefits to working together in the same building, particularly for informal communication. But the same approach does not work for everyone, and we are flexible about whether people work on-site in London or remotely.
