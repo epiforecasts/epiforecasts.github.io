@@ -115,8 +115,6 @@ The main part of the meeting consists of three presentation slots of around 20 m
 - **5 minutes:** Clarifying questions
 - **5 minutes:** Silent written feedback in a shared Google Doc (named, to allow follow-up)
 
-The chair reviews feedback at the end of each slot and identifies any commitments ("I'll send that paper", "I can review that code"). These are recorded and followed up at the next meeting.
-
 #### Presentation structure
 
 1. **"Today I need help with..."** — 1-2 specific problems or questions, not "general feedback"
