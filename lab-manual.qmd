@@ -99,7 +99,7 @@ Any publication should be accompanied by a github repository with a README file 
 
 Our meeting structure involves:
 
-### Group meetings (weekly, ~60 minutes)
+### Group meetings (weekly, ~90 minutes)
 
 Weekly group meetings are there to help each other, not to update or impress. Participation is expected of all group members — if you can't make it, send advance notice.
 
