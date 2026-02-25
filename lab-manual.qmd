@@ -23,15 +23,11 @@ We share work early rather than waiting until it feels ready. Incomplete drafts,
 
 Everyone:
 
-* Be passionate and proud about the work you are doing within the group. Do work that others will care about. If you feel as though your work does not meet these standards, we should discuss and try to address this.
-* Support the work of other group members and offer help when you feel there is something you can help with.
-* Contribute constructively to lab meetings, journal clubs, seminars and other group events.
-* Tell someone if you are struggling or if there is a conflict within the group. We can’t thrive in an environment in which we aren’t comfortable.
-* Spend your research time on projects related to the aims of the group - you are encouraged to collaborate with people outside the group on other projects, but if these are to take a substantial amount of time this should be discussed first, and as a general rule not cover more than 20% of day-to-day work.
-* Take time off at regular intervals, and use the full holiday allowance; also take sick days off if/when needed. We do not glorify workaholic behaviour. There may be times that you have to work longer or harder to finish a time-critical piece of analysis, but this should be balanced out over time.
-* Share your work openly and early, in meetings, on GitHub, on Slack. Don't wait until it's polished.
-* When someone asks for feedback or help, respond within a few days, even if just to say you can't help right now.
-* Engage in ongoing learning and professional development.
+* Support the work of other group members and offer help where you can.
+* Contribute to group meetings and other group events.
+* Share your work openly and early, in meetings, on GitHub, on Slack.
+* When someone asks for feedback or help, respond within a few days, even if just to say you can’t help right now.
+* When giving feedback, be constructive and focus on the work.
 
 PI: All of the above and
 
