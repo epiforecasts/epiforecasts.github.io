@@ -83,7 +83,7 @@ A paper starts with an outline (e.g., 1 sentence per paragraph) following broadl
 
 We use GitHub extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member.
 
-The group’s github repository is <https://github.com/epiforecasts>. Initial and exploratory work should be in personal repositories; maturing and collaborative group projects should be in the group repository. Projects that involve multiple repositories and/or include core developers from outside the group can live within separate organisations and mention the affiliation to the group in some other way.
+The group’s GitHub organisation is <https://github.com/epiforecasts>. Any group member can create repositories there for work related to the group. Early-stage work can also live in personal repositories if preferred. Projects that involve multiple repositories and/or include core developers from outside the group can live within separate organisations and mention the affiliation to the group in some other way.
 
 Any publication should be accompanied by a github repository with a README file that allows full reproducibility of the results, reviewed by at least one other team member. Code may either be licensed to the group or licensed to the authors and contributors of that work. We suggest the use of the MIT licence as a default. 
 
