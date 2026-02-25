@@ -131,9 +131,9 @@ A monthly session to discuss papers, methods or broader topics relevant to the g
 
 A monthly walk to a coffee shop or similar, replacing a regular meeting. These encourage smaller 2-3 person conversations that don't happen easily in a full group.
 
-### Individual meetings with the PI (every 2 weeks, one hour)
+### Individual meetings with your supervisor (at least one hour per week)
 
-These start with a summary of progress since the last meeting, followed by any points for discussion either of us finds worthy of raising.
+Each group member has at least one dedicated hour per week of their supervisor's time. The default is a meeting, but you can use this however is most useful — a code review, written feedback on a draft, or skipping it entirely if you don't need it that week. These meetings are also the place to discuss career development, training, and any institutional or personal matters.
 
 We maintain a Google Doc (or similar) for ongoing notes — updated every meeting with a short summary of discussion and action points.
 
