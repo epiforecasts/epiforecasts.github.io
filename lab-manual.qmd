@@ -17,8 +17,6 @@ This document is a point of reference for current and future team members, not a
 
 ## Group principles
 
-We are aiming to maintain an inclusive environment where everyone feels valued and able to ask and answer questions and express new ideas. We recognise that each team member adds value to the group and that people have different skill sets, world views, and approaches to working. We treat each other, as well as our peers outside the group and their work, with respect.
-
 We share work early rather than waiting until it feels ready. Incomplete drafts, failed approaches and dead ends are all worth sharing so that others can help. Our work lives in public GitHub repositories, and we often collaborate through issues and pull requests.
 
 ### Expectations from members
