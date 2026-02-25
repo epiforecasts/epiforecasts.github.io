@@ -148,8 +148,7 @@ Occasional curry outings etc.
 
 ### Communication
 
-We use Slack for most communication within the group. The @epiforecasts channel is for group-internal communication. Email is used for formal communication involving the broader community at LSHTM, and for communicating with people external to the group (except close collaborators, who are invited to Slack).
-
+We use Slack for most communication within the group. The @epiforecasts channel is for group-internal communication. 
 We acknowledge the potential impact of push notifications on productivity and mental health. Everybody is strongly encouraged to turn off all notifications outside of standard working hours (9am-5pm), and is welcome to regularly check into communication channels rather than being alerted by them when within these hours. Generally, the expectation is that team-internal questions put via Slack are answered within 24 hours. After that, it is not considered impolite to send a reminder.
 
 ### Onboarding
