@@ -106,22 +106,13 @@ Every group meeting has a rotating chair. The chair is responsible for conductin
 
 #### Structure
 
-The meeting starts with the chair briefly sharing something non-work-related — a film, a book, a place visited, something they've been thinking about. The chair then follows up on any commitments from the previous meeting: offers to help, resources to share, introductions to make.
+The meeting starts with the chair sharing a topic of their choice — often something outside of work, but not about their own research. Each person then briefly says what they're focusing on.
 
 The main part of the meeting consists of three presentation slots of around 20 minutes each:
 
-- **10 minutes:** Presentation following the structure below
-- **5 minutes:** Clarifying questions
+- **10 minutes:** Presentation — cover your current work, what you're stuck on or have questions about, and how others can help or get involved.
 - **5 minutes:** Silent written feedback in a shared Google Doc (named, to allow follow-up)
-
-#### Presentation structure
-
-1. **"Today I need help with..."** — 1-2 specific problems or questions, not "general feedback"
-2. **Your work** (max 8 slides) — focusing on what you're stuck on, thinking about or would like input on
-3. **"How you can get involved"** — specific tasks, links, collaboration opportunities
-4. **"What you may find useful"** — your expertise, tools or resources relevant to others' work
-
-Before the meeting, the chair and each presenter briefly discuss how the presenter would like to receive feedback and what areas they most want input on.
+- **5 minutes:** Open discussion led by the presenter
 
 #### Other meeting types
 
