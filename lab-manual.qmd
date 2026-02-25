@@ -80,7 +80,7 @@ A paper starts with an outline (e.g., 1 sentence per paragraph) following broadl
 
 ### Code
 
-We use GitHub extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member.
+We use GitHub extensively. Any on-going work should be in an open github repository, unless restrictions on data sharing prevent us from doing so. Collaboration on code should proceed via GitHub Issues or discussions and, upon agreement on the way forward to address the issue, Pull Request (with pushing to main branches directly discouraged unless for very minor commits), which in general should be reviewed by at least one other team member. Review your own code before asking others to review it.
 
 The group’s GitHub organisation is <https://github.com/epiforecasts>. Any group member can create repositories there for work related to the group. Early-stage work can also live in personal repositories if preferred. Projects that involve multiple repositories and/or include core developers from outside the group can live within separate organisations and mention the affiliation to the group in some other way.
 
@@ -132,13 +132,13 @@ A monthly walk to a coffee shop or similar, replacing a regular meeting. These e
 
 ### Individual meetings with your supervisor (at least one hour per week)
 
-Each group member has at least one dedicated hour per week of their supervisor's time. The default is a meeting, but you can use this however is most useful — a code review, written feedback on a draft, or skipping it entirely if you don't need it that week. These meetings are also the place to discuss career development, training, and any institutional or personal matters.
+Each group member has at least one dedicated hour per week of their supervisor's time. The default is a meeting, but you can use this however is most useful — a code review, written feedback on a draft, or skipping it entirely if you don't need it that week. These meetings are also the place to discuss career development, training, and any institutional or personal matters. If you want feedback on something specific, share it at least a day before the meeting.
 
 We maintain a Google Doc (or similar) for ongoing notes — updated every meeting with a short summary of discussion and action points.
 
 ### Subproject meetings (project-dependent frequency)
 
-Where people collaborate on subprojects they are encouraged to agree on a separate meeting schedule to coordinate and update each other on progress.
+Where people collaborate on subprojects they are encouraged to agree on a separate meeting schedule to coordinate and update each other on progress. If you want feedback on something specific, share it at least a day before the meeting.
 
 ### Social meetings (whenever we feel like it)
 
