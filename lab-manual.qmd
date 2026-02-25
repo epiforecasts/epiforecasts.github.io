@@ -9,17 +9,17 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ## epiforecasts manual
 
-We are a group of researchers at LSHTM who work on real-time infectious disease modelling, united by shared ways of working: openness, collaborative development and building reusable tools.
-
-We develop, use and critically evaluate computational, statistical and mathematical techniques to improve our understanding of infectious disease outbreaks in real time, often in collaboration with public-health decision makers. We aim to develop general and reusable tools, particularly software packages in widely used, freely and openly available languages, rather than single-use computer code. We value software and tools as research outputs alongside papers, and when writing code for a project, consider whether it could become a reusable package rather than a one-off script.
+We are a group of researchers at LSHTM with a focus on real-time infectious disease modelling. We develop, use and critically evaluate computational, statistical and mathematical techniques to improve our understanding of infectious disease outbreaks in real time, often in collaboration with public-health decision makers.
 
 This document is a point of reference for current and future team members, not a fixed set of rules. Suggestions for changes via Pull Requests are welcome from any group member at any time.
 
 ## Group principles
 
-We share work early rather than waiting until it feels ready. Incomplete drafts, failed approaches and dead ends are all worth sharing so that others can help. Our work lives in public GitHub repositories, and we often collaborate through issues and pull requests.
+We value openness and collaborative development. We share work early rather than waiting until it feels ready. Incomplete drafts, failed approaches and dead ends are all worth sharing so that others can help. Our work lives in public GitHub repositories, and we often collaborate through issues and pull requests.
 
-### Expectations from members
+We aim to develop general and reusable tools, particularly software packages in widely used, freely and openly available languages, rather than single-use computer code. We value software and tools as research outputs alongside papers, and when writing code for a project, consider whether it could become a reusable package rather than a one-off script.
+
+## Expectations from members
 
 Everyone:
 
@@ -29,17 +29,17 @@ Everyone:
 * When someone asks for feedback or help, respond within a few days, even if just to say you can’t help right now.
 * When giving feedback, be constructive and focus on the work.
 
-Your supervisor: All of the above and
+Supervisors: All of the above and
 
-* Support you scientifically, emotionally and financially.
-* Be available both in person and via electronic communication, including regular meetings to discuss your work and anything else you would like to discuss.
-* Provide a broad perspective on your work within the context of the group and the general direction of science.
+* Support group members scientifically, emotionally and financially.
+* Be available both in person and via electronic communication, including regular meetings to discuss work and anything else group members would like to discuss.
+* Provide a broad perspective on work within the context of the group and the general direction of science.
 * Provide timely feedback on drafts of manuscripts, talks, grant proposals, etc.
-* Help you identify the next step in your career, whether inside or outside academia, and support you towards it.
-* Identify training opportunities and conferences and support you in making the most of them.
-* Point out grant and fellowship opportunities to you and support you in applying to appropriate ones.
-* Care for your mental and physical well-being, and prioritise it above anything else.
-* When changing your priorities, communicate this to others whose work is affected.
+* Help identify next career steps, whether inside or outside academia, and provide support towards them.
+* Identify training opportunities and conferences and support group members in making the most of them.
+* Point out grant and fellowship opportunities and support applications to appropriate ones.
+* Care for group members' mental and physical well-being, and prioritise it above anything else.
+* When changing priorities, communicate this to others whose work is affected.
 * Model the group's values: share problems and incomplete work openly, ask for help, and show that this is how we work at all levels.
 
 ## Publications
@@ -47,7 +47,6 @@ Your supervisor: All of the above and
 ### Choice of journal
 
 We post preprints of all work before or at the time of journal submission.
-
 We prefer journals that support open and transparent peer review, are non-profit or alternative-profit, and allow first submission in any format. We don’t chase high-impact journals, but recognise that individuals may sometimes want to make different choices. If so, discuss it with your supervisor.
 
 Examples of journals that we like are:
@@ -164,7 +163,3 @@ The group’s web site is at <https://epiforecasts.io/>. Content can be edited v
 ### Working hours
 
 One of the benefits of a career in academic research is that it is typically more flexible than other kinds of jobs. However, it is still a job. LSHTM employs people for 35 hours a week, typically expected to happen in 8 hours per weekday with a mandatory 1-hour break. Everybody is strongly encouraged to not work in excess of these hours.
-
-### Presence
-
-There are benefits to working together in the same building, particularly for informal communication. But the same approach does not work for everyone, and we are flexible about whether people work on-site in London or remotely.
