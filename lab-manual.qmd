@@ -145,10 +145,6 @@ Where people collaborate on subprojects they are encouraged to agree on a separa
 
 Occasional curry outings etc.
 
-### Feedback
-
-Feedback should be specific, constructive and focused on what the presenter asked for help with. Frame suggestions as curiosity rather than criticism — "I'm curious about..." or "Have you considered..." rather than "Why did you do...?", "You should..." or "I would do...".
-
 ## Practicalities
 
 ### Communication
