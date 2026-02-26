@@ -10,4 +10,5 @@
 - repo: epiforecasts/evalvariantnowcasthub
 - repo: epiforecasts/mme-review
 - repo: toshiakiasakura/sc_model_comparison
+- repo: toshiakiasakura/sc_heavy_tail_mean
 - repo: willgreen93/attenuated-renewal
