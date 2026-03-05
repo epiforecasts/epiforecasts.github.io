@@ -110,8 +110,9 @@ The meeting starts with the chair sharing something not directly related to thei
 The main part of the meeting consists of three presentation slots of around 20 minutes each:
 
 - **10 minutes:** Presentation — cover your current work, what you're stuck on or have questions about, and how others can help or get involved.
+- **5 minutes:** Clarifying questions
 - **5 minutes:** Silent written feedback in a shared Google Doc (named, to allow follow-up)
-- **5 minutes:** Open discussion led by the presenter
+- Brief summary by presenter and follow-up on any points of particular interest
 
 #### Other meeting types
 
