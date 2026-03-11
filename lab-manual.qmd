@@ -90,6 +90,16 @@ Any publication should be accompanied by a github repository with a README file 
 
 Projects are collaborative by default. Each project has a lead who coordinates the work, with decisions made collaboratively. Group packages have a named maintainer who is responsible for technical decisions about design, API and releases.
 
+Every project starts with a short analysis plan, shared with your supervisor and collaborators before diving into code. An analysis plan should cover:
+
+1. **Research question** — one sentence.
+2. **Background** — one paragraph, connecting to the broader context.
+3. **Methods** — what data, what methods, what scenarios or comparisons.
+4. **Results** — sketch the key figures, even if rough.
+5. **Timeline** — rough milestones and when the project is "done".
+
+The plan doesn't need to be long — one page is fine. It serves to sharpen the question and scope before investing weeks in code. Plans can be updated as the project evolves, but changes should be tracked and agreed with your supervisor — one purpose of the plan is to prevent scope creep.
+
 We aim to build on each other's work. When starting something new, look at what already exists in the group and talk to the people involved — there may be opportunities to collaborate or extend existing tools rather than starting from scratch.
 
 
