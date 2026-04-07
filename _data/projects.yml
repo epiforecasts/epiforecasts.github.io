@@ -13,3 +13,4 @@
 - repo: toshiakiasakura/sc_heavy_tail_mean
 - repo: willgreen93/attenuated-renewal
 - repo: epiforecasts/evalbehtransmission
+- repo: ch-holt/UDEs_recovering_functional_forms
