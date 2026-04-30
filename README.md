@@ -1,15 +1,34 @@
 # epiforecasts website
 
-This repository contains the source code for the epiforecasts website. 
+This repository contains the source code for the epiforecasts website.
 This website is built with [quarto](https://quarto.org/) and relies on automation wherever possible.
 
-## Adding a new team member
+## Adding yourself as a team member
 
-Used to generate this page: https://epiforecasts.io/people.html.
+The 'people' page (https://epiforecasts.io/people.html) is generated automatically from the yml files in [`_data/team/`](_data/team/). To add yourself:
 
-Adding a new team member only requires adding a new team member ID card in [`_data/team/`](_data/team/). The `README` there details how to do it.
+1. On GitHub, fork this repository (or create a branch if you have write access).
+2. Add a new file `_data/team/firstname-lastname.yml` (lowercase, hyphenated). The easiest way is to copy an existing one, e.g. [`sebastian-funk.yml`](_data/team/sebastian-funk.yml), and edit it.
+3. Open a pull request. A GitHub Action will validate your yml against [`_schema.yml`](_data/team/_schema.yml).
 
-The 'people' page will automatically include the new member.
+A minimal template:
+
+```yaml
+name: Your Name
+github: your-github-username        # optional, without the '@'
+orcid: 0000-0000-0000-0000          # optional
+bluesky: yourname.bsky.social       # optional
+webpage: https://your.webpage       # optional
+position:
+  - type: PhD                       # one of: Staff, PhD, Visitor
+    start: 2026-01-01               # YYYY-MM-DD
+description: >
+  A short paragraph about you and your work in the team.
+```
+
+When you leave the team, add an `end:` date to your current `position` entry (don't delete the file — it's used to list former members). If you take on a new role, append another entry to `position` rather than overwriting the old one.
+
+The required fields are `name` and `position`; everything else is optional. See [`_data/team/_schema.yml`](_data/team/_schema.yml) for the full schema.
 
 ## Updating the 'Software' page
 

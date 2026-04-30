@@ -1,15 +1,36 @@
 $schema: "http://json-schema.org/draft-07/schema"
 title: Team member ID card
 description: >
-  This is the schema for the team member ID cards contained in the present 
+  This is the schema for the team member ID cards contained in the present
   folder.
 type: object
 properties:
-  name: 
+  name:
     description: >
       Your name. It is only used for display and thus doesn't have to match your
       administrative name.
     type: string
+  position:
+    description: >
+      One or more positions held in the team. Add a new entry when you take on
+      a new role; add an `end` date to mark a position (or your time in the
+      team) as finished.
+    type: array
+    items:
+      type: object
+      properties:
+        type:
+          type: string
+          enum: [Staff, PhD, Visitor]
+        start:
+          type: string
+          format: date
+        end:
+          type: string
+          format: date
+      required:
+        - type
+        - start
   github:
     description: Your github username (*without* the '@')
     type: string
