@@ -154,7 +154,7 @@ while (next_date <= end_date) {
       lead <- next_chair(exclude = chair_excluded)
       df <- bind_rows(df, data.frame(
         Date = next_date, Topic = "Journal Club",
-        Chair = lead, Presenter1 = "", Presenter2 = "", Presenter3 = ""
+        Chair = "", Presenter1 = lead, Presenter2 = "", Presenter3 = ""
       ))
     } else if (nth == 3) {
       df <- bind_rows(df, data.frame(
@@ -177,7 +177,7 @@ while (next_date <= end_date) {
       last_presented[picks] <- next_date
       slot <- function(i) if (i <= length(picks)) picks[i] else ""
       df <- bind_rows(df, data.frame(
-        Date = next_date, Topic = "Group meeting",
+        Date = next_date, Topic = "Project updates",
         Chair = chair, Presenter1 = slot(1),
         Presenter2 = slot(2), Presenter3 = slot(3)
       ))
@@ -190,36 +190,19 @@ df <- df |> arrange(Date)
 
 write_csv(df, "rota.csv")
 
-## paste-ready CSV matching the group-meeting spreadsheet schema
-## (Date, Speaker, Topic, Chair). For group meetings Speaker is a comma-
-## separated list of the three presenters so a Slack automation can split
-## and tag each. For journal clubs the lead goes in Speaker so they get pinged.
-join_presenters <- function(p1, p2, p3) {
-  parts <- c(p1, p2, p3)
-  paste(parts[parts != ""], collapse = ", ")
-}
-
+## paste-ready CSV matching the group-meeting spreadsheet schema with three
+## speaker columns (Date, Speaker, Speaker2, Speaker3, Topic, Chair). The
+## Slack bot tags each non-empty speaker.
 sheet_df <- df |>
-  rowwise() |>
   mutate(
     Speaker = case_when(
-      Topic == "Group meeting" ~ join_presenters(Presenter1, Presenter2, Presenter3),
-      Topic == "Group updates" ~ Presenter1,
-      Topic == "Journal Club" ~ Chair,
+      Topic %in% c("Project updates", "Group updates", "Journal Club") ~ Presenter1,
       Topic == "End-of-rotation / 6-monthly update" ~ "Everyone",
       TRUE ~ ""
     ),
-    Topic = case_when(
-      Topic == "Group meeting" ~ paste0(
-        "Project updates (",
-        join_presenters(Presenter1, Presenter2, Presenter3),
-        ")"
-      ),
-      TRUE ~ Topic
-    ),
-    Chair = if_else(Topic == "Journal Club", "", Chair)
+    Speaker2 = if_else(Topic == "Project updates", Presenter2, ""),
+    Speaker3 = if_else(Topic == "Project updates", Presenter3, "")
   ) |>
-  ungroup() |>
-  select(Date, Speaker, Topic, Chair)
+  select(Date, Speaker, Speaker2, Speaker3, Topic, Chair)
 
 write_csv(sheet_df, "rota_for_sheet.csv")
