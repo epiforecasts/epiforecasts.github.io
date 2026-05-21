@@ -14,3 +14,6 @@
 - repo: willgreen93/attenuated-renewal
 - repo: epiforecasts/evalbehtransmission
 - repo: ch-holt/UDEs_recovering_functional_forms
+- repo: epiforecasts/andv-linelist-analysis
+- repo: epiforecasts/bdbv-linelist-analysis
+- repo: epiforecasts/BVDOutbreakSize
