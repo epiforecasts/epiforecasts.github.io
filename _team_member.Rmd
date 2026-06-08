@@ -49,7 +49,7 @@ if ("{{bluesky}}" != "") {
 
 ```{r, echo = FALSE}
 if ("{{github}}" != "") {
-  knitr::include_graphics(gh::gh("/users/{{github}}")$avatar_url)
+  knitr::include_graphics("https://github.com/{{github}}.png")
 }
 ```
 
