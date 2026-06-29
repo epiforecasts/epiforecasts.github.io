@@ -41,7 +41,7 @@ if (nrow(new_papers) > 0) {
   )
   bibentries_body <- paste(
     c(
-      "Papers published last month. Check the boxes for papers to add, then the next monthly run will create a PR.",
+      "Papers published last month. Check the boxes for papers to add, then add the `processed` label to this issue. The next weekly run will create a PR for the selected papers and close this issue.",
       "",
       bibentries_new_checklist,
       "<details>",
