@@ -16,8 +16,11 @@ if (length(open_issues) == 0) {
 
 message(sprintf("Found %d issue(s) ready to process", length(open_issues)))
 
-# Process each issue and collect selected papers
-all_selected_bibs <- list()
+# Process each issue and collect selected papers as formatted BibTeX strings.
+# Issues whose papers are added are closed only after papers.bib is written
+# successfully, so a later failure does not lose them.
+all_selected_bibs <- character(0)
+issues_to_close <- integer(0)
 
 for (issue in open_issues) {
   issue_number <- issue$number
@@ -75,20 +78,24 @@ for (issue in open_issues) {
 
   if (!any(selected)) {
     message(sprintf("  No papers selected in issue #%d, closing", issue_number))
+    # Nothing to add, so close immediately
+    gh::gh(
+      "PATCH /repos/{gh_repo}/issues/{issue_number}",
+      gh_repo = gh_repository,
+      issue_number = issue_number,
+      state = "closed",
+      labels = list("publications", "processed")
+    )
   } else {
     selected_bibentries <- bibentries[selected]
     message(sprintf("  Found %d selected paper(s)", length(selected_bibentries)))
-    all_selected_bibs <- c(all_selected_bibs, selected_bibentries)
+    all_selected_bibs <- c(
+      all_selected_bibs,
+      format(selected_bibentries, style = "Bibtex")
+    )
+    # Defer closing until papers.bib is written successfully
+    issues_to_close <- c(issues_to_close, issue_number)
   }
-
-  # Close the issue and add "processed" label
-  gh::gh(
-    "PATCH /repos/{gh_repo}/issues/{issue_number}",
-    gh_repo = gh_repository,
-    issue_number = issue_number,
-    state = "closed",
-    labels = list("publications", "processed")
-  )
 }
 
 # Clean up temp file
@@ -102,10 +109,21 @@ if (length(all_selected_bibs) == 0) {
 message(sprintf("Adding %d paper(s) to papers.bib", length(all_selected_bibs)))
 
 # Add all selected papers to bib file
-bib_new <- vapply(all_selected_bibs, format, style = "Bibtex", character(1))
+bib_new <- all_selected_bibs
 bib_old <- readLines("_data/papers.bib")
 bib <- paste(c(bib_old, bib_new), collapse = "\n")
 write(bib, "_data/papers.bib")
+
+# papers.bib written successfully -- now safe to close the processed issues
+for (issue_number in issues_to_close) {
+  gh::gh(
+    "PATCH /repos/{gh_repo}/issues/{issue_number}",
+    gh_repo = gh_repository,
+    issue_number = issue_number,
+    state = "closed",
+    labels = list("publications", "processed")
+  )
+}
 
 ## filter latest version
 df <- bib2df::bib2df("_data/papers.bib") |>
