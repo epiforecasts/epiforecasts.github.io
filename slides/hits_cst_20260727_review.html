@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.38">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Review notes for Sebastian Funk">
+<meta name="dcterms.date" content="2026-07-25">
+
+<title>Review of the CST technical talk</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="hits_cst_20260727_review_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hits_cst_20260727_review_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="hits_cst_20260727_review_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="hits_cst_20260727_review_files/libs/quarto-html/popper.min.js"></script>
+<script src="hits_cst_20260727_review_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hits_cst_20260727_review_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hits_cst_20260727_review_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hits_cst_20260727_review_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hits_cst_20260727_review_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hits_cst_20260727_review_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hits_cst_20260727_review_files/libs/bootstrap/bootstrap-8ffd5f67044e5306d9846f29df41dda5.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#overall-assessment" id="toc-overall-assessment" class="nav-link active" data-scroll-target="#overall-assessment">Overall assessment</a></li>
+  <li><a href="#must-fix" id="toc-must-fix" class="nav-link" data-scroll-target="#must-fix">Must fix</a></li>
+  <li><a href="#important-technical-qualifications" id="toc-important-technical-qualifications" class="nav-link" data-scroll-target="#important-technical-qualifications">Important technical qualifications</a></li>
+  <li><a href="#baseline-section" id="toc-baseline-section" class="nav-link" data-scroll-target="#baseline-section">Baseline section</a></li>
+  <li><a href="#predictability-section" id="toc-predictability-section" class="nav-link" data-scroll-target="#predictability-section">Predictability section</a></li>
+  <li><a href="#pacing" id="toc-pacing" class="nav-link" data-scroll-target="#pacing">Pacing</a></li>
+  <li><a href="#recommended-opening" id="toc-recommended-opening" class="nav-link" data-scroll-target="#recommended-opening">Recommended opening</a></li>
+  <li><a href="#recommended-closing" id="toc-recommended-closing" class="nav-link" data-scroll-target="#recommended-closing">Recommended closing</a></li>
+  </ul>
+</nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Review of the CST technical talk</h1>
+<p class="subtitle lead">How should we evaluate infectious disease forecasts?</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Review notes for Sebastian Funk </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">July 25, 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="overall-assessment" class="level2">
+<h2 class="anchored" data-anchor-id="overall-assessment">Overall assessment</h2>
+<p>This is a strong choice for Tilmann Gneiting’s group. It is substantially more technical than the preceding HITS colloquium, with little redundant material. The central progression is compelling:</p>
+<ol type="1">
+<li>Scores depend on the scale.</li>
+<li>Realised scores mix model capability with target difficulty.</li>
+<li>Apparent skill depends on the information set and reference baseline.</li>
+<li>Accuracy alone does not determine decision value.</li>
+</ol>
+<p>The talk is best treated as approximately 30 minutes of prepared material within a one-hour slot, leaving substantial time for interruption and discussion.</p>
+</section>
+<section id="must-fix" class="level2">
+<h2 class="anchored" data-anchor-id="must-fix">Must fix</h2>
+<section id="do-not-confuse-theoretical-information-bounds-with-fitted-model-performance" class="level3">
+<h3 class="anchored" data-anchor-id="do-not-confuse-theoretical-information-bounds-with-fitted-model-performance">Do not confuse theoretical information bounds with fitted-model performance</h3>
+<p>The earlier version defined</p>
+<p><span class="math display">\[
+e(\mathcal I)
+=
+\inf_{F\ \mathcal I\text{-measurable}}
+\mathbb E[S(F,Y)]
+\]</span></p>
+<p>and correctly stated that, for nested information sets,</p>
+<p><span class="math display">\[
+\mathcal I_1 \subseteq \mathcal I_2
+\quad\Longrightarrow\quad
+e(\mathcal I_2)\leq e(\mathcal I_1).
+\]</span></p>
+<p>It then showed a fitted seasonal model performing worse than the marginal null. Those claims cannot describe the same theoretical quantity. A forecast with calendar information can always ignore the calendar, so its optimal expected score cannot be worse than the optimum with no calendar information.</p>
+<p>The empirical curves are performances of particular estimated model classes: AR(1), harmonic climatology, and a marginal model. They are model-dependent estimates or upper bounds, not the generalised entropies of the information sets.</p>
+<p><strong>Status:</strong> Fixed. The problematic COVID information-rungs slide has been removed. The talk now introduces the fitted models using French influenza, where autoregression performs best at short horizons and seasonality overtakes it at four weeks. The speaker notes explicitly distinguish fitted-model risks from theoretical information bounds.</p>
+</section>
+<section id="do-not-use-identifiable-to-mean-no-adjusted-difference-detected" class="level3">
+<h3 class="anchored" data-anchor-id="do-not-use-identifiable-to-mean-no-adjusted-difference-detected">Do not use “identifiable” to mean “no adjusted difference detected”</h3>
+<p>The title “Structure isn’t identifiable” was too strong and used <em>identifiability</em> in a technical sense that the result did not establish. Adjusted estimates close to one are not evidence of non-identifiability.</p>
+<p>Prefer:</p>
+<ul>
+<li>“Adjusted structural differences disappear”</li>
+<li>“No detectable adjusted association with broad model class”</li>
+<li>“The data do not support ranking broad model classes”</li>
+</ul>
+<p>The analysis is observational and model-dependent. Adjustment may address measured differences in target difficulty, but it does not turn the result into a causal estimate of model structure.</p>
+<p>The conclusion should therefore be:</p>
+<blockquote class="blockquote">
+<p>We found no detectable adjusted association with broad model class; target difficulty and individual implementation mattered much more.</p>
+</blockquote>
+<p>Avoid “adjusted models reveal zero difference”.</p>
+<p><strong>Status:</strong> Still requires checking in the visible slide title and takeaways.</p>
+</section>
+<section id="do-not-infer-absence-of-information-from-failure-to-beat-an-ar-model" class="level3">
+<h3 class="anchored" data-anchor-id="do-not-infer-absence-of-information-from-failure-to-beat-an-ar-model">Do not infer absence of information from failure to beat an AR model</h3>
+<p>The earlier claim was:</p>
+<blockquote class="blockquote">
+<p>If an ensemble cannot beat simple past memory, no external signal is being extracted.</p>
+</blockquote>
+<p>That inference is too strong. External information may be present but its gain may be offset by estimation error, model misspecification, combination inefficiency, or mismatch with the selected scoring rule.</p>
+<p>Prefer:</p>
+<blockquote class="blockquote">
+<p>We find no net predictive gain over the autoregressive reference under this evaluation.</p>
+</blockquote>
+<p><strong>Status:</strong> Fixed by removing “Do complex ensembles beat simple baselines?”.</p>
+</section>
+<section id="frame-discrete-choice-experiments-as-a-research-proposal-not-a-solution" class="level3">
+<h3 class="anchored" data-anchor-id="frame-discrete-choice-experiments-as-a-research-proposal-not-a-solution">Frame discrete-choice experiments as a research proposal, not a solution</h3>
+<p>A discrete-choice experiment could estimate trade-offs for one defined action, population, context, horizon, and presentation format. It would not recover a universal public-health loss function.</p>
+<p>The elicited choices may depend on:</p>
+<ul>
+<li>framing and probability presentation;</li>
+<li>trust in the forecasting system;</li>
+<li>organisational rules and resource constraints;</li>
+<li>accountability for false alarms;</li>
+<li>who bears costs and receives benefits;</li>
+<li>whether the exercise is hypothetical;</li>
+<li>whether the action can be revised later.</li>
+</ul>
+<p>The slide should ask:</p>
+<blockquote class="blockquote">
+<p>Could discrete-choice experiments identify enough of the relevant trade-offs to make decision-based evaluation operational?</p>
+</blockquote>
+<p>Avoid saying that DCEs “complete the bridge”. Also avoid conflating decision loss, functional elicitability, and strictly proper scoring of a complete predictive distribution.</p>
+<p><strong>Status:</strong> Still requires softening in “But whose loss?”.</p>
+</section>
+<section id="remove-the-duplicated-ending" class="level3">
+<h3 class="anchored" data-anchor-id="remove-the-duplicated-ending">Remove the duplicated ending</h3>
+<p>The source previously rendered a section divider and a content slide both reading “That was hard”, followed by a generic thank-you slide.</p>
+<p>Use one substantive closing statement instead:</p>
+<blockquote class="blockquote">
+<p>There is no context-free answer to “which forecast is best”: the answer depends on the scale, task, information, baseline, and decision.</p>
+</blockquote>
+<p>Then end on the productive unresolved question:</p>
+<blockquote class="blockquote">
+<p>Can we elicit those choices well enough to evaluate forecasts for the decisions they are meant to support?</p>
+</blockquote>
+<p><strong>Status:</strong> Still requires fixing.</p>
+</section>
+</section>
+<section id="important-technical-qualifications" class="level2">
+<h2 class="anchored" data-anchor-id="important-technical-qualifications">Important technical qualifications</h2>
+<section id="transformation-and-propriety" class="level3">
+<h3 class="anchored" data-anchor-id="transformation-and-propriety">Transformation and propriety</h3>
+<p>The statement that a transformed score remains proper “as long as the transform is invertible (strictly proper if strictly monotonic)” is muddled.</p>
+<p>For a real-valued target, a measurable one-to-one transformation preserves enough information to transfer strict propriety. Strict monotonicity is a convenient sufficient condition for such a transformation, not a separate upgrade from propriety to strict propriety.</p>
+<p>The slide should also make clear that evaluating <span class="math inline">\(\log(1+y)\)</span> defines a different evaluation target and weighting of errors. Propriety does not select that scale; epidemiological relevance must justify it.</p>
+</section>
+<section id="the-second-two-problems-claim" class="level3">
+<h3 class="anchored" data-anchor-id="the-second-two-problems-claim">The second “Two problems” claim</h3>
+<p>The wording</p>
+<blockquote class="blockquote">
+<p>If <span class="math inline">\(|r|\)</span> is the prediction target, overprediction is penalised more than underprediction</p>
+</blockquote>
+<p>is difficult to parse. If the intended claim is that equal positive and negative errors in growth rate produce asymmetric absolute errors on the natural incidence scale, say that directly.</p>
+</section>
+<section id="modelling-scores-as-data" class="level3">
+<h3 class="anchored" data-anchor-id="modelling-scores-as-data">Modelling scores as data</h3>
+<p>Be prepared to explain:</p>
+<ul>
+<li>why the positive WIS outcome is modelled using a Gaussian family with a log link rather than Gamma or lognormal regression;</li>
+<li>how heteroskedasticity and within-model dependence are handled;</li>
+<li>the estimand under intermittent and selective model participation;</li>
+<li>whether target difficulty variables could be consequences of participation or model-selection decisions;</li>
+<li>whether the result is descriptive attribution or a causal claim.</li>
+</ul>
+<p>The safe framing is an observational, descriptive decomposition of realised scores.</p>
+</section>
+<section id="pairwise-comparison" class="level3">
+<h3 class="anchored" data-anchor-id="pairwise-comparison">Pairwise comparison</h3>
+<p>The talk need not add a separate slide, but it should acknowledge the standard hub solution verbally:</p>
+<blockquote class="blockquote">
+<p>Hubs address unequal coverage using pairwise comparisons on shared tasks. That produces a fairer ranking, but ranking is not attribution—and it still depends on the baseline used in the comparison network.</p>
+</blockquote>
+<p>This also foreshadows the later baseline analysis.</p>
+</section>
+<section id="retrospective-decision-examples" class="level3">
+<h3 class="anchored" data-anchor-id="retrospective-decision-examples">Retrospective decision examples</h3>
+<p>Statements such as “all wrong” or “only model X was useful” require an event definition, decision threshold, lead time, and loss function. Otherwise they are retrospective visual judgements selected after observing the trajectory.</p>
+<p>This is especially important because the section’s ultimate argument is that the decision and loss must be specified.</p>
+</section>
+</section>
+<section id="baseline-section" class="level2">
+<h2 class="anchored" data-anchor-id="baseline-section">Baseline section</h2>
+<p>The original rank heatmaps did not communicate the practical consequence of baseline choice clearly. The revised figure is much better aligned with the claim:</p>
+<ul>
+<li>baselines appear on the y-axis;</li>
+<li>the x-axis is the proportion of hub models that beat each baseline;</li>
+<li>coloured lines show horizons one to four;</li>
+<li>COVID-19 and influenza are shown separately;</li>
+<li>WIS is shown first and log-WIS is revealed as a fragment.</li>
+</ul>
+<p>Proportions are preferable to counts because the eligible model total changes by horizon. For influenza there are 81 models at horizons one to three but 44 at horizon four.</p>
+<p>The result uses the same pairwise scaled-relative-skill construction as the paper, restricting each comparison to shared forecast tasks.</p>
+</section>
+<section id="predictability-section" class="level2">
+<h2 class="anchored" data-anchor-id="predictability-section">Predictability section</h2>
+<p>The revised sequence is coherent:</p>
+<ol type="1">
+<li>Show the French influenza observations alone.</li>
+<li>Reveal a prospective expanding-window climatology.</li>
+<li>Explain past memory versus calendar information.</li>
+<li>Compare marginal, seasonal, and autoregressive fitted models by horizon for French influenza.</li>
+<li>Show the full cross-setting handover figure.</li>
+<li>Ask which baseline should define success.</li>
+</ol>
+<p>The prospective climatology uses only observations available before each prediction date. It therefore avoids the hindsight problem in the original week-of-year average.</p>
+<p>The full handover figure should be described empirically:</p>
+<ul>
+<li>the bubble marks where fitted autoregression is overtaken by the fitted seasonal reference, or fades towards the marginal null;</li>
+<li>it is not an estimate of an intrinsic predictability ceiling;</li>
+<li>“never crosses in the evaluated horizon” is safer than describing a pathogen as “pure momentum”.</li>
+</ul>
+</section>
+<section id="pacing" class="level2">
+<h2 class="anchored" data-anchor-id="pacing">Pacing</h2>
+<p>There are still many rendered slides for 30 minutes of prepared material. The talk can work if several slides are treated as optional and discussion is allowed to replace later detail.</p>
+<p>A sensible default route is:</p>
+<ol type="1">
+<li>Proper scores as the shared starting point.</li>
+<li>Scale choice and the ranking reversal.</li>
+<li>Forecast- versus target-generating processes.</li>
+<li>Scores as observational data.</li>
+<li>Adjusted structural result and target-difficulty drivers.</li>
+<li>French influenza: observations, prospective climatology, and crossover.</li>
+<li>Cross-setting handover.</li>
+<li>Baseline sensitivity.</li>
+<li>One MetroCast example and the threshold table.</li>
+<li>Formal decision value.</li>
+<li>Whose loss?</li>
+<li>One synthesis slide.</li>
+</ol>
+<p>Slides that can be skipped when discussion runs long include:</p>
+<ul>
+<li>the separate “Two problems” slide;</li>
+<li>the untitled Ebola fan chart;</li>
+<li>the hub screenshot;</li>
+<li>one of the two MetroCast episodes;</li>
+<li>section-divider slides.</li>
+</ul>
+</section>
+<section id="recommended-opening" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-opening">Recommended opening</h2>
+<p>The existing opening questions are reasonable, but the technical tension can be stated more sharply:</p>
+<blockquote class="blockquote">
+<p>Proper scoring rules tell us how to compare predictive distributions once the target and score are fixed. In infectious-disease forecasting, fixing those things is most of the problem.</p>
+</blockquote>
+<p>The talk then examines the required choices: scale, comparison procedure, information and baseline, and decision loss.</p>
+</section>
+<section id="recommended-closing" class="level2">
+<h2 class="anchored" data-anchor-id="recommended-closing">Recommended closing</h2>
+<p>A concise synthesis is:</p>
+<blockquote class="blockquote">
+<p>“Which forecast is best?” is incomplete without specifying the scale, the comparison task and baseline, the available information, and the decision and its losses.</p>
+</blockquote>
+<p>The final question for this audience is:</p>
+<blockquote class="blockquote">
+<p>We have mature tools once these choices are fixed. Can we fix them defensibly—and can we elicit the decision trade-offs well enough to evaluate forecasts for their intended use?</p>
+</blockquote>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
