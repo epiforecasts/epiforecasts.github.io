@@ -1,6 +1,9 @@
 ---
 title: "People"
 link-external-icon: false
+aliases:
+  - /people/
+  - /aboutus/
 ---
 
 <script src="https://kit.fontawesome.com/52811a1d50.js" crossorigin="anonymous"></script>

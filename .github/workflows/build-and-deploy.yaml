@@ -40,6 +40,8 @@ jobs:
       
       - run: cp -r slides _site
 
+      - run: cp -r _redirects/. _site
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v5
         with:
