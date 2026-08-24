@@ -21,8 +21,8 @@ if (length(open_issues) > 0) {
  pending_dois <- open_issues |>
    purrr::map_chr("body", .default = "") |>
    purrr::map(~ regmatches(.x, gregexpr("doi\\s*=\\s*\\{([^}]+)\\}", .x, ignore.case = TRUE))) |>
-   purrr::map(~ gsub("doi\\s*=\\s*\\{|\\}", "", .x, ignore.case = TRUE)) |>
    unlist() |>
+   gsub(pattern = "doi\\s*=\\s*\\{|\\}", replacement = "", ignore.case = TRUE) |>
    unique()
 }
 
