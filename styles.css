@@ -56,3 +56,52 @@
 .publications-list .pub-item em {
   color: var(--bs-secondary-color, #6c757d);
 }
+
+/* Package hex logos.
+   The site ships flatly (white) and darkly (#222), so a sticker whose own tone
+   matches the current ground loses its edges. The ring follows the alpha channel
+   and outlines the hex in whichever direction the ground needs; the plate keeps
+   the logos on a common tile so the column reads as a column. */
+:root {
+  --hex-plate: #eef1f5;
+  --hex-ring: rgba(28, 37, 48, 0.38);
+}
+
+[data-bs-theme="dark"] {
+  --hex-plate: #2b323a;
+  --hex-ring: rgba(255, 255, 255, 0.42);
+}
+
+.pkg-body {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.pkg-text {
+  min-width: 0;
+}
+
+.pkg-logo {
+  flex: 0 0 auto;
+  width: 78px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+  border-radius: 8px;
+  background: var(--hex-plate);
+}
+
+.pkg-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 1.5px var(--hex-ring));
+}
+
+@media (max-width: 575px) {
+  .pkg-logo {
+    width: 60px;
+  }
+}

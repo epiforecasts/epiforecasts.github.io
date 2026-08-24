@@ -55,8 +55,21 @@ fetch_package_info <- function(repo, team_by_github) {
       )
     })
 
+  logo_url <- NA_character_
+  for (f in c("logo.png", "logo.svg")) {
+    hit <- tryCatch(
+      gh::gh("/repos/{repo}/contents/man/figures/{f}", repo = repo, f = f),
+      error = function(err) NULL
+    )
+    if (!is.null(hit$download_url)) {
+      logo_url <- hit$download_url
+      break
+    }
+  }
+
   list(
     Package = repo_info$name,
+    logo_url = logo_url,
     description = repo_info$description %||% "No description available",
     github_url = repo_info$html_url,
     stars = repo_info$stargazers_count %||% 0,
@@ -115,9 +128,18 @@ all_packages %>%
       contributors_section <- paste(contributor_items, collapse = " ")
     }
 
+    logo_html <- ""
+    if (!is.na(e$logo_url)) {
+      logo_html <- sprintf(
+        '<div class="pkg-logo"><img src="%s" alt="%s hex logo" loading="lazy"></div>',
+        e$logo_url, e$Package
+      )
+    }
+
     knitr::knit_expand(
       "_software-item.Rmd",
       Package = e$Package,
+      logo_html = logo_html,
       description = e$description,
       github_url = e$github_url,
       language = e$language %||% "",
