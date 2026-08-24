@@ -50,6 +50,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      # Identifies us to Crossref's "polite pool", which has a far more
+      # generous rate limit than the anonymous pool shared across runner IPs
+      crossref_email: ${{ secrets.CROSSREF_EMAIL }}
     steps:
       - uses: actions/checkout@v7
 

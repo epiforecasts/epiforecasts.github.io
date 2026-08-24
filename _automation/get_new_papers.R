@@ -1,9 +1,29 @@
+## Crossref rate-limits bursts of requests and rcrossref signals this with a
+## warning and an empty result, so retry with exponential backoff before
+## giving up.
+cr_works_retry <- function(..., attempts = 5, base_wait = 5) {
+  for (attempt in seq_len(attempts)) {
+    refs <- withCallingHandlers(
+      rcrossref::cr_works(...) |> purrr::pluck("data"),
+      warning = function(w) {
+        if (grepl("^429", conditionMessage(w))) invokeRestart("muffleWarning")
+      }
+    )
+    if (!is.null(refs)) return(refs)
+    if (attempt < attempts) {
+      wait <- base_wait * 2^(attempt - 1)
+      message("Crossref request failed, retrying in ", wait, "s")
+      Sys.sleep(wait)
+    }
+  }
+  stop("Crossref returned no data after ", attempts, " attempts")
+}
+
 get_new_papers_orcid <- function(orcid, from_date) {
-  refs <- rcrossref::cr_works(filter = list(
+  refs <- cr_works_retry(filter = list(
     orcid = orcid,
     from_deposit_date = from_date
-  )) |>
-    purrr::pluck("data")
+  ))
 
   if (nrow(refs) > 0) {
     if (!("container.title" %in% colnames(refs))) {
