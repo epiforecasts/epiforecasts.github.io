@@ -1,0 +1,40 @@
+"date","doi","title","year","citations"
+"2026-08-25","10.1016/j.epidem.2024.100765","Characterising information gains and losses when collecting multiple epidemic model outputs",2024,11
+"2026-08-25","10.1016/j.idm.2025.04.005","Visual preferences for communicating modelling: a global analysis of COVID-19 policy and decision makers",2025,4
+"2026-08-25","10.1016/s2214-109x(20)30074-7","Feasibility of controlling COVID-19 outbreaks by isolation of cases and contacts",2020,2830
+"2026-08-25","10.1038/s41467-021-22213-0","Implications of the school-household network structure on SARS-CoV-2 transmission under school reopening strategies in England",2021,43
+"2026-08-25","10.1038/s41467-021-25207-0","A pre-registered short-term forecasting study of COVID-19 in Germany and Poland during the second wave",2021,86
+"2026-08-25","10.1073/pnas.2203019119","Simulating respiratory disease transmission within and between classrooms to assess pandemic management strategies at schools",2022,11
+"2026-08-25","10.1098/rsfs.2025.0007","Improving modelling for epidemic response: a progress update from a community of UK infectious disease modellers",2025,0
+"2026-08-25","10.1098/rsif.2020.0084","Probabilistic reconstruction of measles transmission clusters from routinely collected surveillance data",2020,12
+"2026-08-25","10.1098/rstb.2020.0283","Exploring surveillance data biases when estimating the reproduction number: with insights into subpopulation transmission of COVID-19 in England",2021,52
+"2026-08-25","10.1101/2022.01.08.22268920","Estimation of the test to test distribution as a proxy for generation interval distribution for the Omicron variant in England",2022,68
+"2026-08-25","10.1101/2022.10.12.22280917","Evaluating an epidemiologically motivated surrogate model of a multi-model ensemble",2022,2
+"2026-08-25","10.1101/2025.03.04.25323088","The utility of infectious disease modelling in informing policy for outbreak response: a scoping review",2025,0
+"2026-08-25","10.1101/2025.04.03.25325159","Fine-Grid Spatial Interaction Matrices for Surveillance Models, with Application to Influenza in Germany",2025,0
+"2026-08-25","10.1101/2025.04.10.25325611","The influence of model structure and geographic specificity on predictive accuracy among European COVID-19 forecasts",2025,1
+"2026-08-25","10.1101/2025.08.01.25332807","Mind the Baseline: The Hidden Impact of Reference Model Selection on Forecast Assessment",2025,2
+"2026-08-25","10.1101/2025.08.09.25331484","The influence of ensemble size and composition on the performance of combined real-time COVID-19 forecasts",2025,0
+"2026-08-25","10.1111/rssa.12974","Sebastian Funk, Sam Abbott and Johannes Bracher’s Discussion Contribution to the Papers in Session 2 of The Royal Statistical Society’s Special Topic Meeting on Covid-19 Transmission: 11 June 2021",2022,2
+"2026-08-25","10.1126/science.abf9648","The impact of population-wide rapid antigen testing on SARS-CoV-2 prevalence in Slovakia",2021,195
+"2026-08-25","10.1126/science.add4507","Heavy-tailed sexual contact networks and monkeypox epidemiology in the global outbreak, 2022",2022,220
+"2026-08-25","10.1186/s12916-019-1288-7","Real-time analysis of the diphtheria outbreak in forcibly displaced Myanmar nationals in Bangladesh",2019,56
+"2026-08-25","10.1186/s12916-022-02271-x","Comparative assessment of methods for short-term forecasts of COVID-19 hospital admissions in England at the local level",2022,34
+"2026-08-25","10.12688/wellcomeopenres.15718.1","The transmissibility of novel Coronavirus in the early stages of the 2019-20 outbreak in Wuhan: Exploring initial point-source exposure sizes and durations using scenario analysis",2020,83
+"2026-08-25","10.12688/wellcomeopenres.15842.3","Estimating the overdispersion in COVID-19 transmission using outbreak sizes outside China",2020,676
+"2026-08-25","10.12688/wellcomeopenres.16006.2","Estimating the time-varying reproduction number of SARS-CoV-2 using national and subnational case counts",2020,195
+"2026-08-25","10.12688/wellcomeopenres.16344.3","Implication of backward contact tracing in the presence of overdispersed transmission in COVID-19 outbreaks",2021,91
+"2026-08-25","10.12688/wellcomeopenres.19380.2","Human judgement forecasting of COVID-19 in the UK",2024,3
+"2026-08-25","10.12688/wellcomeopenres.19601.1","Improving modelling for epidemic responses: reflections from members of the UK infectious disease modelling community on their experiences during the COVID-19 pandemic",2024,15
+"2026-08-25","10.12688/wellcomeopenres.25027.2","Baseline nowcasting methods for handling delays in epidemiological data",2026,1
+"2026-08-25","10.1371/currents.outbreaks.406ae55e83ec0b5193e30856b9235ed2","Temporal Changes in Ebola Transmission in Sierra Leone and Implications for Control Requirements: a Real-time Modelling Study",2015,131
+"2026-08-25","10.1371/journal.pcbi.1006785","Assessing the performance of real-time epidemic forecasts: A case study of Ebola in the Western Area region of Sierra Leone, 2014-15",2019,114
+"2026-08-25","10.1371/journal.pcbi.1010405","Comparing human and model-based forecasts of COVID-19 in Germany and Poland",2022,31
+"2026-08-25","10.1371/journal.pcbi.1011393","Scoring epidemiological forecasts on transformed scales",2023,50
+"2026-08-25","10.1371/journal.pcbi.1011453","Evaluating the use of social contact data to produce age-specific short-term forecasts of SARS-CoV-2 incidence in England",2023,14
+"2026-08-25","10.1371/journal.pgph.0004675","How does policy modelling work in practice? A global analysis on the use of epidemiological modelling in health crises",2025,9
+"2026-08-25","10.1371/journal.pgph.0005120","The utility of infectious disease modelling in informing decisions for outbreak response: A scoping review",2025,2
+"2026-08-25","10.21105/joss.03290","covidregionaldata: Subnational data for COVID-19 epidemiology",2021,13
+"2026-08-25","10.7554/elife.70767","Inference of the SARS-CoV-2 generation time using UK household data",2022,73
+"2026-08-25","10.7554/elife.81916","Predictive performance of multi-model ensemble forecasts of COVID-19 across European nations",2023,109
+"2026-08-25","10.7554/elife.98005.3","Forecasting the spatial spread of an Ebola epidemic in real time: Comparing predictions of mathematical models and experts",2025,1

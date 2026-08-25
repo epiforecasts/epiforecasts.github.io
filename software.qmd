@@ -14,6 +14,20 @@ library(magrittr)
 stale_months <- 24
 ```
 
+```{r load-stats}
+# Weekly download figures, collected by .github/workflows/update-stats.yaml.
+# Absent until that job has run at least once, so treat it as optional.
+downloads_by_package <- list()
+stats_file <- "_data/package-stats.csv"
+if (file.exists(stats_file)) {
+  stats <- read.csv(stats_file, stringsAsFactors = FALSE)
+  stats <- stats[stats$date == max(stats$date), ]
+  stats <- stats[!is.na(stats$downloads_last_month), ]
+  # registry and repo names differ in case (rbi vs RBi)
+  downloads_by_package <- split(stats$downloads_last_month, tolower(stats$package))
+}
+```
+
 ```{r load-team}
 # Load team members and create lookup by GitHub username
 team <- fs::dir_ls("_data/team", regexp = "\\w+\\-\\w+\\.yml") |>
@@ -216,9 +230,22 @@ all_packages %>%
       )
     }
 
+    downloads <- downloads_by_package[[tolower(e$Package)]]
+    downloads_text <- if (is.null(downloads)) {
+      ""
+    } else {
+      # name the source, so a package without a figure reads as "not on CRAN"
+      # rather than "not used"
+      paste(
+        formatC(downloads, big.mark = ",", format = "d"),
+        "CRAN downloads/month"
+      )
+    }
+
     knitr::knit_expand(
       "_software-item.Rmd",
       Package = e$Package,
+      downloads_text = downloads_text,
       logo_html = logo_html,
       part_of_html = part_of_html,
       description = e$description,

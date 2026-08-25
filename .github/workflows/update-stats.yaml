@@ -1,0 +1,45 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6am UTC
+
+name: Update stats
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      CROSSREF_EMAIL: ${{ secrets.CROSSREF_EMAIL }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          install-r: true
+          use-public-rspm: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install libcurl4-openssl-dev
+
+      - uses: r-lib/actions/setup-renv@v2
+
+      - name: Collect package and paper metrics
+        run: source("snippets/update_stats.R")
+        shell: Rscript {0}
+
+      - name: Commit the new rows
+        run: |
+          git config user.name "epiforecasts-bot"
+          git config user.email "epiforecasts-bot@users.noreply.github.com"
+          git add _data/package-stats.csv _data/paper-citations.csv
+          if git diff --staged --quiet; then
+            echo "No change this week"
+          else
+            git commit -m "Weekly package and paper metrics"
+            git push
+          fi
