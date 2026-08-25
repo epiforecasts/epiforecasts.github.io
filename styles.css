@@ -105,3 +105,60 @@
     width: 60px;
   }
 }
+
+/* Honeycomb index above the package list.
+   The logos are already hex-shaped with transparent surrounds, so they
+   tessellate on their own: rows overlap vertically by a quarter of the hex
+   height, and rows of alternating length give the half-width stagger. */
+.hex-wall {
+  --hex-w: clamp(46px, 6.4vw, 82px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem 0 2.25rem;
+}
+
+.hex-row {
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+}
+
+.hex-row + .hex-row {
+  /* pointy-top hexes are 1.1547x as tall as wide; overlap a quarter of that */
+  margin-top: calc(var(--hex-w) * -0.2887);
+}
+
+.hex-wall a {
+  display: block;
+  width: var(--hex-w);
+  line-height: 0;
+  transition: transform 0.15s ease;
+}
+
+.hex-wall a:hover,
+.hex-wall a:focus-visible {
+  transform: translateY(-4px);
+}
+
+.hex-wall img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 0 1.5px var(--hex-ring));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hex-wall a {
+    transition: none;
+  }
+}
+
+/* Quarto appends an external-link icon to every off-site link. The hexes are
+   self-evidently links and the icons break the tessellation, so hide them
+   inside the wall only. */
+.hex-wall a::after,
+.hex-wall a .bi {
+  display: none !important;
+  content: none !important;
+}
