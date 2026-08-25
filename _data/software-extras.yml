@@ -14,3 +14,9 @@
   part_of:
     name: epinowcast
     url: https://www.epinowcast.org
+
+# Successor to epiforecasts/bpmodels, which this group wrote and has retired.
+- repo: epiverse-trace/epichains
+  part_of:
+    name: epiverse-trace
+    url: https://epiverse-trace.github.io/

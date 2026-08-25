@@ -123,15 +123,44 @@ all_packages <- c(universe_packages, extra_packages) %>%
 with_logo <- purrr::keep(all_packages, ~ !is.na(.x$logo_url))
 
 if (length(with_logo) > 0) {
-  per_row <- 5
-  sizes <- integer(0)
-  left <- length(with_logo)
-  wide <- TRUE
-  while (left > 0) {
-    n <- min(if (wide) per_row else per_row - 1, left)
-    sizes <- c(sizes, n)
-    left <- left - n
-    wide <- !wide
+  # Adjacent rows must differ by exactly one hex, which is what offsets them by
+  # half a width and makes the shapes interlock. Enumerate the row patterns
+  # that satisfy that and sum exactly, preferring a symmetric one so the widest
+  # row sits in the middle.
+  patterns <- function(total, rows) {
+    out <- list()
+    for (first in 7:3) {
+      steps <- as.matrix(expand.grid(rep(list(c(-1, 1)), rows - 1)))
+      for (k in seq_len(nrow(steps))) {
+        widths <- cumsum(c(first, steps[k, ]))
+        if (sum(widths) == total && min(widths) >= 3) {
+          out[[length(out) + 1]] <- as.integer(widths)
+        }
+      }
+    }
+    out
+  }
+
+  n <- length(with_logo)
+  options <- c(patterns(n, 3), patterns(n, 4), patterns(n, 2))
+  palindromic <- purrr::keep(options, ~ identical(.x, rev(.x)))
+
+  sizes <- if (length(palindromic) > 0) {
+    palindromic[[1]]
+  } else if (length(options) > 0) {
+    options[[1]]
+  } else {
+    # nothing interlocks exactly, so fill rows greedily and accept the shape
+    widths <- integer(0)
+    left <- n
+    wide <- FALSE
+    while (left > 0) {
+      take <- min(if (wide) 6 else 5, left)
+      widths <- c(widths, take)
+      left <- left - take
+      wide <- !wide
+    }
+    widths
   }
 
   idx <- 0
