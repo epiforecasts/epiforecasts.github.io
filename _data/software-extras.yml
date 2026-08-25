@@ -1,5 +1,16 @@
-# Additional software packages not in epiforecasts r-universe
-# These are merged with the r-universe list on the software page
+# Additional software packages not in the epiforecasts r-universe.
+# These are merged with the r-universe list on the software page.
+#
+# `part_of` marks a package that belongs to a separate community project. It
+# is listed here because group members built it, but it is developed and
+# distributed over there, so the entry links out rather than claiming it.
 
 - repo: epinowcast/epinowcast
+  part_of:
+    name: epinowcast
+    url: https://www.epinowcast.org
+
 - repo: epinowcast/baselinenowcast
+  part_of:
+    name: epinowcast
+    url: https://www.epinowcast.org

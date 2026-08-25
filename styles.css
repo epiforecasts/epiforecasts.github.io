@@ -162,3 +162,11 @@
   display: none !important;
   content: none !important;
 }
+
+/* Marks a package that belongs to a separate community project: listed here
+   because group members built it, developed and distributed over there. */
+.pkg-part-of {
+  font-size: 0.8rem;
+  margin-top: 0.35rem;
+  color: var(--bs-secondary-color, #6c757d);
+}

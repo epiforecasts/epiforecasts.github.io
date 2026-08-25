@@ -102,7 +102,10 @@ universe_packages <- pkg_descriptions %>%
 # Get extra packages from YAML
 extras <- yaml::read_yaml("_data/software-extras.yml")
 extra_packages <- purrr::map(extras, function(e) {
-  fetch_package_info(e$repo, team_by_github)
+  info <- fetch_package_info(e$repo, team_by_github)
+  # marks a package belonging to a separate community project
+  info$part_of <- e$part_of
+  info
 })
 
 # Combine, filter stale, and sort by stars
@@ -176,10 +179,19 @@ all_packages %>%
       )
     }
 
+    part_of_html <- ""
+    if (!is.null(e$part_of)) {
+      part_of_html <- sprintf(
+        '<div class="pkg-part-of">Part of <a href="%s">%s</a></div>',
+        e$part_of$url, e$part_of$name
+      )
+    }
+
     knitr::knit_expand(
       "_software-item.Rmd",
       Package = e$Package,
       logo_html = logo_html,
+      part_of_html = part_of_html,
       description = e$description,
       github_url = e$github_url,
       language = e$language %||% "",
