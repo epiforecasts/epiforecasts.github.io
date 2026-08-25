@@ -6,6 +6,12 @@
 
 ::: {}
 
+::: {.pkg-body}
+
+{{logo_html}}
+
+::: {.pkg-text}
+
 {{description}}
 
 ```{r, results='asis'}
@@ -21,6 +27,12 @@ if (length(meta) > 0) {
   cat('<div class="project-meta">', paste(meta, collapse = " · "), '</div>\n')
 }
 ```
+
+{{part_of_html}}
+
+:::
+
+:::
 
 :::
 

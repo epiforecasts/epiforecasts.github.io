@@ -55,8 +55,21 @@ fetch_package_info <- function(repo, team_by_github) {
       )
     })
 
+  logo_url <- NA_character_
+  for (f in c("logo.png", "logo.svg")) {
+    hit <- tryCatch(
+      gh::gh("/repos/{repo}/contents/man/figures/{f}", repo = repo, f = f),
+      error = function(err) NULL
+    )
+    if (!is.null(hit$download_url)) {
+      logo_url <- hit$download_url
+      break
+    }
+  }
+
   list(
     Package = repo_info$name,
+    logo_url = logo_url,
     description = repo_info$description %||% "No description available",
     github_url = repo_info$html_url,
     stars = repo_info$stargazers_count %||% 0,
@@ -89,7 +102,10 @@ universe_packages <- pkg_descriptions %>%
 # Get extra packages from YAML
 extras <- yaml::read_yaml("_data/software-extras.yml")
 extra_packages <- purrr::map(extras, function(e) {
-  fetch_package_info(e$repo, team_by_github)
+  info <- fetch_package_info(e$repo, team_by_github)
+  # marks a package belonging to a separate community project
+  info$part_of <- e$part_of
+  info
 })
 
 # Combine, filter stale, and sort by stars
@@ -100,6 +116,46 @@ all_packages <- c(universe_packages, extra_packages) %>%
     as.Date(.x$updated) > Sys.Date() - (stale_months * 30)
   }) %>%
   { .[order(purrr::map_dbl(., "stars"), decreasing = TRUE)] }
+
+# Honeycomb index: every package with a logo, in offset rows so the hexes
+# tessellate. Rows alternate between `per_row` and one fewer, which is what
+# produces the half-width stagger without any positioning maths.
+with_logo <- purrr::keep(all_packages, ~ !is.na(.x$logo_url))
+
+if (length(with_logo) > 0) {
+  per_row <- 5
+  sizes <- integer(0)
+  left <- length(with_logo)
+  wide <- TRUE
+  while (left > 0) {
+    n <- min(if (wide) per_row else per_row - 1, left)
+    sizes <- c(sizes, n)
+    left <- left - n
+    wide <- !wide
+  }
+
+  idx <- 0
+  rows <- character(0)
+  for (n in sizes) {
+    cells <- character(0)
+    for (i in seq_len(n)) {
+      idx <- idx + 1
+      e <- with_logo[[idx]]
+      cells <- c(cells, sprintf(
+        '<a href="%s" title="%s"><img src="%s" alt="%s"></a>',
+        e$github_url, e$Package, e$logo_url, paste(e$Package, "hex logo")
+      ))
+    }
+    rows <- c(rows, paste0(
+      '<div class="hex-row">', paste(cells, collapse = ""), '</div>'
+    ))
+  }
+
+  cat(paste0(
+    '<div class="hex-wall">',
+    paste(rows, collapse = ""), '</div>\n\n'
+  ))
+}
 
 # Render each package
 all_packages %>%
@@ -115,9 +171,27 @@ all_packages %>%
       contributors_section <- paste(contributor_items, collapse = " ")
     }
 
+    logo_html <- ""
+    if (!is.na(e$logo_url)) {
+      logo_html <- sprintf(
+        '<div class="pkg-logo"><img src="%s" alt="%s hex logo" loading="lazy"></div>',
+        e$logo_url, e$Package
+      )
+    }
+
+    part_of_html <- ""
+    if (!is.null(e$part_of)) {
+      part_of_html <- sprintf(
+        '<div class="pkg-part-of">Part of <a href="%s">%s</a></div>',
+        e$part_of$url, e$part_of$name
+      )
+    }
+
     knitr::knit_expand(
       "_software-item.Rmd",
       Package = e$Package,
+      logo_html = logo_html,
+      part_of_html = part_of_html,
       description = e$description,
       github_url = e$github_url,
       language = e$language %||% "",
