@@ -39,34 +39,41 @@ openalex_citations <- function(doi) {
 ## ---- packages --------------------------------------------------------------
 
 ## Every repo the software page shows, from the same two sources it uses.
+## Returns repository slugs named by the package name the registry uses. The
+## two differ in case for RBi/rbi, and crandb is case-sensitive, so the
+## registry name is the one to ask CRAN about.
 package_repos <- function() {
   universe <- jsonlite::read_json(
     "https://github.com/epiforecasts/universe/raw/main/packages.json"
   )
   flagged <- purrr::keep(universe, ~ isTRUE(.x$display_website))
-  from_universe <- purrr::map_chr(flagged, function(e) {
-    sub("^https://github.com/", "", e$url)
-  })
+  from_universe <- purrr::set_names(
+    purrr::map_chr(flagged, ~ sub("^https://github.com/", "", .x$url)),
+    purrr::map_chr(flagged, "package")
+  )
 
   extras <- yaml::read_yaml("_data/software-extras.yml")
-  from_extras <- purrr::map_chr(extras, "repo")
+  from_extras <- purrr::set_names(
+    purrr::map_chr(extras, "repo"),
+    basename(purrr::map_chr(extras, "repo"))
+  )
 
-  unique(c(from_universe, from_extras))
+  both <- c(from_universe, from_extras)
+  both[!duplicated(both)]
 }
 
-## `open_issues_count` on the repository endpoint counts open issues *plus*
-## open pull requests, so it cannot be recorded under a column called issues.
-## Search is the only endpoint that separates them.
-open_issue_count <- function(repo) {
-  res <- tryCatch(
-    gh::gh(
-      "/search/issues",
-      q = sprintf("repo:%s is:open is:issue", repo),
-      per_page = 1
-    ),
+## `open_issues_count` counts open issues *plus* open pull requests, so
+## subtract the pull requests rather than record the sum under a column called
+## issues. The search endpoint separates them directly but will not do here:
+## it does not follow repository renames, and three registry URLs point at
+## repositories that have since moved. Both endpoints used below do follow.
+open_pull_requests <- function(repo) {
+  prs <- tryCatch(
+    gh::gh("/repos/{repo}/pulls", repo = repo, state = "open",
+           per_page = 100, .limit = Inf),
     error = function(err) NULL
   )
-  if (is.null(res$total_count)) NA_integer_ else as.integer(res$total_count)
+  if (is.null(prs)) NA_integer_ else length(prs)
 }
 
 github_stats <- function(repo) {
@@ -77,10 +84,12 @@ github_stats <- function(repo) {
   if (is.null(info)) {
     return(list(stars = NA_integer_, forks = NA_integer_, issues = NA_integer_))
   }
+  issues_and_prs <- as.integer(info$open_issues_count %||% NA)
+  prs <- open_pull_requests(repo)
   list(
     stars = as.integer(info$stargazers_count %||% NA),
     forks = as.integer(info$forks_count %||% NA),
-    issues = open_issue_count(repo)
+    issues = issues_and_prs - prs
   )
 }
 
@@ -142,8 +151,7 @@ collect_package_stats <- function(on_date = Sys.Date()) {
   repos <- package_repos()
   downloads <- universe_downloads()
 
-  rows <- purrr::map(repos, function(repo) {
-    package <- basename(repo)
+  rows <- purrr::imap(repos, function(repo, package) {
     gh_stats <- github_stats(repo)
     dl <- downloads[[tolower(package)]] %||% cranlogs_downloads(package)
 
