@@ -6,6 +6,16 @@ description: |
 
 Reusable tools and packages developed by the group. See also our [ongoing projects](projects.qmd) and [publications](pubs.qmd).
 
+Most packages are on CRAN. The rest can be installed from our
+[r-universe](https://epiforecasts.r-universe.dev):
+
+```r
+install.packages(
+  "packagename",
+  repos = c("https://epiforecasts.r-universe.dev", getOption("repos"))
+)
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(magrittr)
@@ -231,14 +241,20 @@ all_packages %>%
     }
 
     downloads <- downloads_by_package[[tolower(e$Package)]]
-    downloads_text <- if (is.null(downloads)) {
-      ""
-    } else {
-      # name the source, so a package without a figure reads as "not on CRAN"
-      # rather than "not used"
+    # Name the source rather than leaving a gap: a package with no CRAN figure
+    # is distributed elsewhere, not unused. Its universe follows from the
+    # owner of the repository it is built from.
+    downloads_text <- if (!is.null(downloads)) {
       paste(
         formatC(downloads, big.mark = ",", format = "d"),
         "CRAN downloads/month"
+      )
+    } else {
+      owner <- sub("/.*$", "", sub("^https://github.com/", "", e$github_url))
+      # single-quoted attribute: this string is substituted into R source
+      sprintf(
+        "<a href='https://%s.r-universe.dev/%s'>On r-universe</a>",
+        owner, e$Package
       )
     }
 
