@@ -33,8 +33,9 @@ if (file.exists(stats_file)) {
   stats <- read.csv(stats_file, stringsAsFactors = FALSE)
   stats <- stats[stats$date == max(stats$date), ]
   stats <- stats[!is.na(stats$downloads_last_month), ]
-  # registry and repo names differ in case (rbi vs RBi)
-  downloads_by_package <- split(stats$downloads_last_month, tolower(stats$package))
+  # keyed by repository, not package name: the two can differ and the
+  # repository is what both sides can agree on
+  downloads_by_package <- split(stats$downloads_last_month, tolower(stats$repo))
 }
 ```
 
@@ -242,7 +243,8 @@ all_packages %>%
       )
     }
 
-    downloads <- downloads_by_package[[tolower(e$Package)]]
+    slug <- sub("^https://github.com/", "", e$github_url)
+    downloads <- downloads_by_package[[tolower(slug)]]
     # Name the source rather than leaving a gap: a package with no CRAN figure
     # is distributed elsewhere, not unused.
     downloads_text <- if (!is.null(downloads)) {

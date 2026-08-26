@@ -108,45 +108,27 @@ github_stats <- function(repo) {
     error = function(err) NULL
   )
   if (is.null(info)) {
-    return(list(stars = NA_integer_, forks = NA_integer_, issues = NA_integer_))
+    return(list(
+      full_name = repo, stars = NA_integer_,
+      forks = NA_integer_, issues = NA_integer_
+    ))
   }
   issues_and_prs <- as.integer(info$open_issues_count %||% NA)
   prs <- open_pull_requests(repo)
   list(
+    ## the canonical name, which is what the website sees; three registry
+    ## URLs are stale slugs that redirect
+    full_name = info$full_name %||% repo,
     stars = as.integer(info$stargazers_count %||% NA),
     forks = as.integer(info$forks_count %||% NA),
     issues = issues_and_prs - prs
   )
 }
 
-## r-universe reports a download count per package, sourced from cranlogs. For
-## a package that is not on CRAN that count is always zero, which would read as
-## "nobody downloaded it" rather than "this figure does not apply", so keep the
-## CRAN flag alongside it and blank the count when it does not apply.
-universe_downloads <- function() {
-  pkgs <- tryCatch(
-    jsonlite::fromJSON(
-      "https://epiforecasts.r-universe.dev/api/packages",
-      simplifyVector = FALSE
-    ),
-    error = function(err) NULL
-  )
-  if (is.null(pkgs)) return(list())
-  stats <- purrr::map(pkgs, function(p) {
-    on_cran <- isTRUE(p$`_cranurl`)
-    list(
-      package = p$Package,
-      on_cran = on_cran,
-      downloads = if (on_cran) p$`_downloads`$count %||% NA else NA
-    )
-  })
-  ## registry names and repo names differ in case (RBi vs rbi)
-  purrr::set_names(stats, tolower(purrr::map_chr(stats, "package")))
-}
-
-## Packages listed from outside the epiforecasts registry have no entry there,
-## so ask cranlogs directly. A package absent from CRAN returns a zero, which
-## is why the answer is only trusted when crandb knows the package.
+## The only download source. r-universe also reports a count, but it is the
+## figure from whenever it last indexed the package rather than a current
+## one, so the same number can repeat for weeks or differ from cranlogs by a
+## quarter. Asking cranlogs directly gives one source and a current window.
 cranlogs_downloads <- function(package) {
   ## Ask by status code rather than by whether the body parses: crandb throws
   ## on a 404 as well as on a network failure, and those mean different
@@ -180,16 +162,15 @@ cranlogs_downloads <- function(package) {
 collect_package_stats <- function(on_date = Sys.Date()) {
   repos <- package_repos()
   if (length(repos) == 0) return(data.frame())
-  downloads <- universe_downloads()
 
   rows <- purrr::imap(repos, function(repo, package) {
     gh_stats <- github_stats(repo)
-    dl <- downloads[[tolower(package)]] %||% cranlogs_downloads(package)
+    dl <- cranlogs_downloads(package)
 
     data.frame(
       date = as.character(on_date),
       package = package,
-      repo = repo,
+      repo = gh_stats$full_name,
       stars = gh_stats$stars,
       forks = gh_stats$forks,
       open_issues = gh_stats$issues,
