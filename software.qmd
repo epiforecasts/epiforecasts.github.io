@@ -31,8 +31,15 @@ downloads_by_package <- list()
 stats_file <- "_data/package-stats.csv"
 if (file.exists(stats_file)) {
   stats <- read.csv(stats_file, stringsAsFactors = FALSE)
-  stats <- stats[stats$date == max(stats$date), ]
+  # Take each repository's most recent figure rather than the newest date's:
+  # one week where cranlogs is unreachable writes NAs for everything, and
+  # keying on the newest date alone would drop every figure from the page
+  # even though last week's are sitting in the same file. Bounded so a
+  # long outage shows nothing rather than something months out of date.
   stats <- stats[!is.na(stats$downloads_last_month), ]
+  stats <- stats[as.Date(stats$date) > Sys.Date() - 35, ]
+  stats <- stats[order(stats$date, decreasing = TRUE), ]
+  stats <- stats[!duplicated(tolower(stats$repo)), ]
   # keyed by repository, not package name: the two can differ and the
   # repository is what both sides can agree on
   downloads_by_package <- split(stats$downloads_last_month, tolower(stats$repo))

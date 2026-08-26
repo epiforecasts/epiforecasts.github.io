@@ -108,8 +108,12 @@ github_stats <- function(repo) {
     error = function(err) NULL
   )
   if (is.null(info)) {
+    ## Not the registry slug: three of those are stale and redirect, so
+    ## recording one as the join key would write a name the site cannot
+    ## match, and being present it would beat the canonical name a later
+    ## run recovers. Unknown has to stay unknown so a rerun can repair it.
     return(list(
-      full_name = repo, stars = NA_integer_,
+      full_name = NA_character_, stars = NA_integer_,
       forks = NA_integer_, issues = NA_integer_
     ))
   }
