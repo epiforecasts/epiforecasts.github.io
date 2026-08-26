@@ -250,11 +250,19 @@ all_packages %>%
         "CRAN downloads/month"
       )
     } else {
-      owner <- sub("/.*$", "", sub("^https://github.com/", "", e$github_url))
+      # A package is served by the registry that lists it, not by whoever owns
+      # its repository: epimixr lives at sbfnk/epimixr but is built in the
+      # epiforecasts universe. A package belonging to a separate project is
+      # distributed by that project, so send it to their universe instead.
+      universe <- if (is.null(e$part_of)) {
+        "epiforecasts"
+      } else {
+        sub("/.*$", "", sub("^https://github.com/", "", e$github_url))
+      }
       # single-quoted attribute: this string is substituted into R source
       sprintf(
         "<a href='https://%s.r-universe.dev/%s'>On r-universe</a>",
-        owner, e$Package
+        universe, e$Package
       )
     }
 
