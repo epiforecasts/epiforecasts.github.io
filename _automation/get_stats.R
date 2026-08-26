@@ -172,9 +172,13 @@ collect_paper_citations <- function(on_date = Sys.Date()) {
 ## the same day corrects rather than duplicates.
 append_stats <- function(new_rows, path, key) {
   if (nrow(new_rows) == 0) return(invisible(NULL))
+  ## new rows first: distinct() keeps the first of each (date, key), so a
+  ## rerun on the same day replaces that day's row rather than keeping the
+  ## earlier one. A run that hit a rate limit writes NAs, and re-running it
+  ## has to be able to repair them.
   combined <- if (file.exists(path)) {
     old <- utils::read.csv(path, stringsAsFactors = FALSE)
-    dplyr::bind_rows(old, new_rows)
+    dplyr::bind_rows(new_rows, old)
   } else {
     new_rows
   }
