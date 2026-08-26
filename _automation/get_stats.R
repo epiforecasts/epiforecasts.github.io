@@ -39,23 +39,49 @@ openalex_citations <- function(doi) {
 ## ---- packages --------------------------------------------------------------
 
 ## Every repo the software page shows, from the same two sources it uses.
+## The name a package declares for itself, which is what CRAN knows it by.
+## Falls back to the repository name, which is usually the same.
+package_name_from_description <- function(repo) {
+  raw <- tryCatch(
+    gh::gh("/repos/{repo}/contents/DESCRIPTION", repo = repo,
+           .accept = "application/vnd.github.raw"),
+    error = function(err) NULL
+  )
+  if (is.null(raw)) return(basename(repo))
+  text <- if (is.raw(raw)) rawToChar(as.raw(raw)) else as.character(raw)
+  hit <- regmatches(text, regexpr("(?m)^Package:[ \t]*\\S+", text, perl = TRUE))
+  if (length(hit) == 0) return(basename(repo))
+  trimws(sub("^Package:", "", hit[[1]]))
+}
+
 ## Returns repository slugs named by the package name the registry uses. The
 ## two differ in case for RBi/rbi, and crandb is case-sensitive, so the
 ## registry name is the one to ask CRAN about.
 package_repos <- function() {
-  universe <- jsonlite::read_json(
-    "https://github.com/epiforecasts/universe/raw/main/packages.json"
+  universe <- tryCatch(
+    jsonlite::read_json(
+      "https://github.com/epiforecasts/universe/raw/main/packages.json"
+    ),
+    error = function(err) NULL
   )
+  if (is.null(universe)) {
+    message("  registry unreachable, skipping package metrics")
+    return(character(0))
+  }
   flagged <- purrr::keep(universe, ~ isTRUE(.x$display_website))
   from_universe <- purrr::set_names(
     purrr::map_chr(flagged, ~ sub("^https://github.com/", "", .x$url)),
     purrr::map_chr(flagged, "package")
   )
 
+  ## Extras have no registry entry, and it is exactly these that fall through
+  ## to crandb, which is case-sensitive. The repo name is not reliably the
+  ## package name (sbfnk/RBi declares Package: rbi), so read DESCRIPTION.
   extras <- yaml::read_yaml("_data/software-extras.yml")
+  extra_repos <- purrr::map_chr(extras, "repo")
   from_extras <- purrr::set_names(
-    purrr::map_chr(extras, "repo"),
-    basename(purrr::map_chr(extras, "repo"))
+    extra_repos,
+    purrr::map_chr(extra_repos, package_name_from_description)
   )
 
   both <- c(from_universe, from_extras)
@@ -98,10 +124,14 @@ github_stats <- function(repo) {
 ## "nobody downloaded it" rather than "this figure does not apply", so keep the
 ## CRAN flag alongside it and blank the count when it does not apply.
 universe_downloads <- function() {
-  pkgs <- jsonlite::fromJSON(
-    "https://epiforecasts.r-universe.dev/api/packages",
-    simplifyVector = FALSE
+  pkgs <- tryCatch(
+    jsonlite::fromJSON(
+      "https://epiforecasts.r-universe.dev/api/packages",
+      simplifyVector = FALSE
+    ),
+    error = function(err) NULL
   )
+  if (is.null(pkgs)) return(list())
   stats <- purrr::map(pkgs, function(p) {
     on_cran <- isTRUE(p$`_cranurl`)
     list(
@@ -149,6 +179,7 @@ cranlogs_downloads <- function(package) {
 
 collect_package_stats <- function(on_date = Sys.Date()) {
   repos <- package_repos()
+  if (length(repos) == 0) return(data.frame())
   downloads <- universe_downloads()
 
   rows <- purrr::imap(repos, function(repo, package) {
