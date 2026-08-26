@@ -242,8 +242,7 @@ all_packages %>%
 
     downloads <- downloads_by_package[[tolower(e$Package)]]
     # Name the source rather than leaving a gap: a package with no CRAN figure
-    # is distributed elsewhere, not unused. Its universe follows from the
-    # owner of the repository it is built from.
+    # is distributed elsewhere, not unused.
     downloads_text <- if (!is.null(downloads)) {
       paste(
         formatC(downloads, big.mark = ",", format = "d"),
