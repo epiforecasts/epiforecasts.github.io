@@ -172,20 +172,27 @@ collect_paper_citations <- function(on_date = Sys.Date()) {
 ## the same day corrects rather than duplicates.
 append_stats <- function(new_rows, path, key) {
   if (nrow(new_rows) == 0) return(invisible(NULL))
-  ## new rows first: distinct() keeps the first of each (date, key), so a
-  ## rerun on the same day replaces that day's row rather than keeping the
-  ## earlier one. A run that hit a rate limit writes NAs, and re-running it
-  ## has to be able to repair them.
+  ## Every fetch here turns a failure into NA rather than stopping, so a run
+  ## that was rate-limited writes a row of NAs and exits cleanly. Re-running
+  ## the same day must be able to repair that, without a second failed run
+  ## then wiping what the good one wrote. So neither run wins outright: for
+  ## each (date, key) take the newest value that is actually present, falling
+  ## back to what was already recorded.
   combined <- if (file.exists(path)) {
     old <- utils::read.csv(path, stringsAsFactors = FALSE)
     dplyr::bind_rows(new_rows, old)
   } else {
     new_rows
   }
+  newest_present <- function(x) {
+    present <- which(!is.na(x))
+    if (length(present) == 0) x[1] else x[present[1]]
+  }
   combined <- combined |>
-    dplyr::distinct(
-      dplyr::across(dplyr::all_of(c("date", key))),
-      .keep_all = TRUE
+    dplyr::group_by(dplyr::across(dplyr::all_of(c("date", key)))) |>
+    dplyr::summarise(
+      dplyr::across(dplyr::everything(), newest_present),
+      .groups = "drop"
     ) |>
     dplyr::arrange(date, .data[[key]])
   utils::write.csv(combined, path, row.names = FALSE)
