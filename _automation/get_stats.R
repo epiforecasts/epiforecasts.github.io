@@ -54,6 +54,21 @@ package_repos <- function() {
   unique(c(from_universe, from_extras))
 }
 
+## `open_issues_count` on the repository endpoint counts open issues *plus*
+## open pull requests, so it cannot be recorded under a column called issues.
+## Search is the only endpoint that separates them.
+open_issue_count <- function(repo) {
+  res <- tryCatch(
+    gh::gh(
+      "/search/issues",
+      q = sprintf("repo:%s is:open is:issue", repo),
+      per_page = 1
+    ),
+    error = function(err) NULL
+  )
+  if (is.null(res$total_count)) NA_integer_ else as.integer(res$total_count)
+}
+
 github_stats <- function(repo) {
   info <- tryCatch(
     gh::gh("/repos/{repo}", repo = repo),
@@ -65,7 +80,7 @@ github_stats <- function(repo) {
   list(
     stars = as.integer(info$stargazers_count %||% NA),
     forks = as.integer(info$forks_count %||% NA),
-    issues = as.integer(info$open_issues_count %||% NA)
+    issues = open_issue_count(repo)
   )
 }
 

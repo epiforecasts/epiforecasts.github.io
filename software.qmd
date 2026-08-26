@@ -251,20 +251,21 @@ all_packages %>%
         "CRAN downloads/month"
       )
     } else {
-      # A package is served by the registry that lists it, not by whoever owns
-      # its repository: epimixr lives at sbfnk/epimixr but is built in the
-      # epiforecasts universe. Anything listed via software-extras.yml is by
-      # definition not in that registry, so it goes to its owner's instead.
-      universe <- if (isTRUE(e$from_extras)) {
-        sub("/.*$", "", sub("^https://github.com/", "", e$github_url))
+      # Only link where the registry is known. A package from the registry is
+      # served by the epiforecasts universe whatever repo it lives in, so
+      # epimixr at sbfnk/epimixr still resolves there. For an extras entry we
+      # cannot know: its owner is not necessarily a universe, and guessing
+      # produced dead links. Those carry a "Part of" link to their own project
+      # instead, so say nothing rather than something wrong.
+      if (isTRUE(e$from_extras)) {
+        ""
       } else {
-        "epiforecasts"
+        # single-quoted attribute: substituted into R source
+        sprintf(
+          "<a href='https://epiforecasts.r-universe.dev/%s'>On r-universe</a>",
+          e$Package
+        )
       }
-      # single-quoted attribute: this string is substituted into R source
-      sprintf(
-        "<a href='https://%s.r-universe.dev/%s'>On r-universe</a>",
-        universe, e$Package
-      )
     }
 
     knitr::knit_expand(
