@@ -129,6 +129,8 @@ extra_packages <- purrr::map(extras, function(e) {
   info <- fetch_package_info(e$repo, team_by_github)
   # marks a package belonging to a separate community project
   info$part_of <- e$part_of
+  # listed here rather than in the registry, so it is not in our universe
+  info$from_extras <- TRUE
   info
 })
 
@@ -251,12 +253,12 @@ all_packages %>%
     } else {
       # A package is served by the registry that lists it, not by whoever owns
       # its repository: epimixr lives at sbfnk/epimixr but is built in the
-      # epiforecasts universe. A package belonging to a separate project is
-      # distributed by that project, so send it to their universe instead.
-      universe <- if (is.null(e$part_of)) {
-        "epiforecasts"
-      } else {
+      # epiforecasts universe. Anything listed via software-extras.yml is by
+      # definition not in that registry, so it goes to its owner's instead.
+      universe <- if (isTRUE(e$from_extras)) {
         sub("/.*$", "", sub("^https://github.com/", "", e$github_url))
+      } else {
+        "epiforecasts"
       }
       # single-quoted attribute: this string is substituted into R source
       sprintf(

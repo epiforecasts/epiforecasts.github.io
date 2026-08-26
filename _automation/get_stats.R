@@ -94,13 +94,20 @@ universe_downloads <- function() {
 ## so ask cranlogs directly. A package absent from CRAN returns a zero, which
 ## is why the answer is only trusted when crandb knows the package.
 cranlogs_downloads <- function(package) {
-  known <- tryCatch(
-    !is.null(
-      jsonlite::fromJSON(paste0("https://crandb.r-pkg.org/", package))$Package
-    ),
-    error = function(err) FALSE
+  ## Ask by status code rather than by whether the body parses: crandb throws
+  ## on a 404 as well as on a network failure, and those mean different
+  ## things. A 404 is "not on CRAN"; anything else unexpected is "we do not
+  ## know", which must not be recorded as though we do.
+  crandb <- tryCatch(
+    curl::curl_fetch_memory(paste0("https://crandb.r-pkg.org/", package)),
+    error = function(err) NULL
   )
-  if (!isTRUE(known)) return(list(on_cran = FALSE, downloads = NA_integer_))
+  if (is.null(crandb) || !crandb$status_code %in% c(200L, 404L)) {
+    return(list(on_cran = NA, downloads = NA_integer_))
+  }
+  if (identical(crandb$status_code, 404L)) {
+    return(list(on_cran = FALSE, downloads = NA_integer_))
+  }
 
   res <- tryCatch(
     jsonlite::fromJSON(
