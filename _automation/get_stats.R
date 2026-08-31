@@ -10,10 +10,9 @@ openalex_mailto <- function() {
   if (identical(email, "")) NULL else email
 }
 
-## Citation counts are tracked for papers only. Packages rarely declare a
-## citable reference: of sixteen, three do, and one of those is a CRAN package
-## DOI that is almost never cited, so a package citation column would be blank
-## or misleading nearly everywhere.
+## Citation counts are tracked for papers only. Few packages declare a citable
+## reference, and a CRAN package DOI is almost never cited, so the column would
+## be blank or misleading for most of them.
 ##
 ## OpenAlex is generous but rate-limits anonymous callers, so identify us where
 ## an address is available.
@@ -218,12 +217,10 @@ collect_paper_citations <- function(on_date = Sys.Date()) {
 ## the same day corrects rather than duplicates.
 append_stats <- function(new_rows, path, key) {
   if (nrow(new_rows) == 0) return(invisible(NULL))
-  ## Every fetch here turns a failure into NA rather than stopping, so a run
-  ## that was rate-limited writes a row of NAs and exits cleanly. Re-running
-  ## the same day must be able to repair that, without a second failed run
-  ## then wiping what the good one wrote. So neither run wins outright: for
-  ## each (date, key) take the newest value that is actually present, falling
-  ## back to what was already recorded.
+  ## A failed fetch records NA and exits cleanly, so a rate-limited run
+  ## writes a row of NAs that a later run must be able to repair, without a
+  ## second failed run wiping what a good one wrote. For each (date, key),
+  ## take the newest value that is actually present.
   combined <- if (file.exists(path)) {
     old <- utils::read.csv(path, stringsAsFactors = FALSE)
     dplyr::bind_rows(new_rows, old)
