@@ -19,9 +19,8 @@ jobs:
         id: app-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1 # v3.2.0
         with:
-          # The client id is public app metadata, not a secret, so it is
-          # written here rather than kept alongside the private key. app-id
-          # is deprecated in favour of it.
+          # The client id is public app metadata, not a secret like the key
+          # below, so it is written here rather than stored alongside it.
           client-id: Iv23liO6XAGL0YY9eHLU
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
 
@@ -41,9 +40,8 @@ jobs:
 
       - uses: r-lib/actions/setup-renv@v2
 
-      # The accumulated history lives on the data branch, so bring it in
-      # before collecting: append_stats() merges each run against what is
-      # already recorded, and without this every week would start empty.
+      # append_stats() merges each run against what is already recorded, so
+      # the history has to be in place before anything is collected.
       - name: Fetch the existing history
         env:
           DATA_BRANCH: stats-data
@@ -63,11 +61,9 @@ jobs:
         run: source("snippets/update_stats.R")
         shell: Rscript {0}
 
-      # Committed to their own branch, not to main. The org ruleset requires a
-      # pull request on default branches and the point of this job is not to
-      # open one every week; an ordinary branch needs no exception, so nothing
-      # has to be granted for this to work. The site reads these files from
-      # the branch when it renders.
+      # An ordinary branch, so the ruleset requiring a pull request on
+      # default branches does not apply and nothing needs granting. The site
+      # reads these files from here when it renders.
       - name: Commit the new rows to the data branch
         env:
           DATA_BRANCH: stats-data

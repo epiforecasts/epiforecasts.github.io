@@ -29,10 +29,9 @@ stale_months <- 24
 # Absent until that job has run at least once, so treat it as optional.
 downloads_by_package <- list()
 
-## The weekly job records to the stats-data branch rather than to main, so
-## that it needs no exception to the ruleset protecting default branches.
-## Read from there, falling back to a local file so the page still renders
-## before the branch exists or if the fetch fails.
+## The weekly job records to the stats-data branch. Read from there, falling
+## back to a local file so the page still renders before the branch exists or
+## if the fetch fails.
 stats_url <- paste0(
   "https://raw.githubusercontent.com/epiforecasts/epiforecasts.github.io/",
   "stats-data/_data/package-stats.csv"
@@ -46,11 +45,10 @@ if (is.null(stats) && file.exists("_data/package-stats.csv")) {
 }
 
 if (!is.null(stats) && nrow(stats) > 0) {
-  # Take each repository's most recent figure rather than the newest date's:
-  # one week where cranlogs is unreachable writes NAs for everything, and
-  # keying on the newest date alone would drop every figure from the page
-  # even though last week's are sitting in the same file. Bounded so a
-  # long outage shows nothing rather than something months out of date.
+  # Each repository's most recent figure: a week where cranlogs is
+  # unreachable writes NAs for everything, and the previous week's figures
+  # are still usable. Bounded so a long outage shows nothing rather than
+  # something months out of date.
   stats <- stats[!is.na(stats$downloads_last_month), ]
   stats <- stats[as.Date(stats$date) > Sys.Date() - 35, ]
   stats <- stats[order(stats$date, decreasing = TRUE), ]
@@ -267,20 +265,19 @@ all_packages %>%
 
     slug <- sub("^https://github.com/", "", e$github_url)
     downloads <- downloads_by_package[[tolower(slug)]]
-    # Name the source rather than leaving a gap: a package with no CRAN figure
-    # is distributed elsewhere, not unused.
+    # Naming the source matters: a package with no CRAN figure is
+    # distributed elsewhere, not unused.
     downloads_text <- if (!is.null(downloads)) {
       paste(
         formatC(downloads, big.mark = ",", format = "d"),
         "CRAN downloads/month"
       )
     } else {
-      # Only link where the registry is known. A package from the registry is
-      # served by the epiforecasts universe whatever repo it lives in, so
-      # epimixr at sbfnk/epimixr still resolves there. For an extras entry we
-      # cannot know: its owner is not necessarily a universe, and guessing
-      # produced dead links. Those carry a "Part of" link to their own project
-      # instead, so say nothing rather than something wrong.
+      # Only link where the registry is known. A registry package is served
+      # by the epiforecasts universe whatever repo it lives in, so epimixr at
+      # sbfnk/epimixr still resolves there. An extras entry could be in any
+      # universe or none, and it carries a "Part of" link to its own project
+      # already.
       if (isTRUE(e$from_extras)) {
         ""
       } else {
