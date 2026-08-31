@@ -28,9 +28,24 @@ stale_months <- 24
 # Weekly download figures, collected by .github/workflows/update-stats.yaml.
 # Absent until that job has run at least once, so treat it as optional.
 downloads_by_package <- list()
-stats_file <- "_data/package-stats.csv"
-if (file.exists(stats_file)) {
-  stats <- read.csv(stats_file, stringsAsFactors = FALSE)
+
+## The weekly job records to the stats-data branch rather than to main, so
+## that it needs no exception to the ruleset protecting default branches.
+## Read from there, falling back to a local file so the page still renders
+## before the branch exists or if the fetch fails.
+stats_url <- paste0(
+  "https://raw.githubusercontent.com/epiforecasts/epiforecasts.github.io/",
+  "stats-data/_data/package-stats.csv"
+)
+stats <- tryCatch(
+  read.csv(stats_url, stringsAsFactors = FALSE),
+  error = function(err) NULL
+)
+if (is.null(stats) && file.exists("_data/package-stats.csv")) {
+  stats <- read.csv("_data/package-stats.csv", stringsAsFactors = FALSE)
+}
+
+if (!is.null(stats) && nrow(stats) > 0) {
   # Take each repository's most recent figure rather than the newest date's:
   # one week where cranlogs is unreachable writes NAs for everything, and
   # keying on the newest date alone would drop every figure from the page
