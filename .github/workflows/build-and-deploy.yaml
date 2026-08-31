@@ -14,6 +14,15 @@ on:
 
 name: build-and-deploy
 
+# One deployment at a time. Two triggers can now overlap -- a metrics push to
+# stats-data and a change to main -- and both build from main, so whichever
+# finishes last wins. Without this, a run that started before a site change
+# can publish its older tree over the newer one. In-progress runs are left to
+# finish rather than cancelled, so a deployment is never half-applied.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
