@@ -3,7 +3,10 @@
 on:
   workflow_dispatch:
   push:
-    branches: [main, master]
+    # stats-data carries the weekly metrics the software page reads. A push
+    # there is made by the App rather than by GITHUB_TOKEN, so it does
+    # trigger this build and the figures refresh without anyone acting.
+    branches: [main, master, stats-data]
   pull_request:
     branches: [main, master]
   schedule:
@@ -20,6 +23,13 @@ jobs:
       LC_ALL: "en_US.UTF-8"
     steps:
       - uses: actions/checkout@v7
+        with:
+          # A push to stats-data must still build the site from main: that
+          # branch carries a snapshot of the tree as it stood when the data
+          # job branched, and deploying it would publish stale pages. The
+          # metrics themselves are fetched over HTTP at render time, so
+          # building main picks them up.
+          ref: ${{ github.ref_name == 'stats-data' && 'main' || '' }}
 
       - uses: quarto-dev/quarto-actions/setup@v2
 

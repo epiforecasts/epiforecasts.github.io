@@ -1,0 +1,93 @@
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 6 * * 1'  # Every Monday at 6am UTC
+
+name: Update stats
+
+jobs:
+  update-stats:
+    runs-on: ubuntu-latest
+    env:
+      CROSSREF_EMAIL: ${{ secrets.CROSSREF_EMAIL }}
+    steps:
+      # An App token, not GITHUB_TOKEN: the ruleset on main requires a pull
+      # request, which GITHUB_TOKEN does not bypass, and a push made with it
+      # would not trigger build-and-deploy even if it landed. The same App
+      # is used by release-reminders.yaml.
+      - name: Generate token from GitHub App
+        id: app-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
+      - uses: actions/checkout@v7
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          install-r: true
+          use-public-rspm: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install libcurl4-openssl-dev
+
+      - uses: r-lib/actions/setup-renv@v2
+
+      # The accumulated history lives on the data branch, so bring it in
+      # before collecting: append_stats() merges each run against what is
+      # already recorded, and without this every week would start empty.
+      - name: Fetch the existing history
+        env:
+          DATA_BRANCH: stats-data
+        run: |
+          git fetch origin "$DATA_BRANCH" || true
+          if git rev-parse --verify "origin/$DATA_BRANCH" >/dev/null 2>&1; then
+            git checkout "origin/$DATA_BRANCH" -- _data/package-stats.csv \
+              _data/paper-citations.csv
+            echo "Restored history from $DATA_BRANCH"
+          else
+            echo "No data branch yet, starting from what is in the tree"
+          fi
+
+      - name: Collect package and paper metrics
+        env:
+          GITHUB_PAT: ${{ steps.app-token.outputs.token }}
+        run: source("snippets/update_stats.R")
+        shell: Rscript {0}
+
+      # Committed to their own branch, not to main. The org ruleset requires a
+      # pull request on default branches and the point of this job is not to
+      # open one every week; an ordinary branch needs no exception, so nothing
+      # has to be granted for this to work. The site reads these files from
+      # the branch when it renders.
+      - name: Commit the new rows to the data branch
+        env:
+          DATA_BRANCH: stats-data
+        run: |
+          git config user.name "epiforecasts-bot"
+          git config user.email "epiforecasts-bot@users.noreply.github.com"
+
+          tmp=$(mktemp -d)
+          cp _data/package-stats.csv _data/paper-citations.csv "$tmp/"
+
+          if git rev-parse --verify "origin/$DATA_BRANCH" >/dev/null 2>&1; then
+            git checkout -B "$DATA_BRANCH" "origin/$DATA_BRANCH"
+          else
+            git checkout -B "$DATA_BRANCH"
+          fi
+
+          mkdir -p _data
+          cp "$tmp/package-stats.csv" "$tmp/paper-citations.csv" _data/
+          git add _data/package-stats.csv _data/paper-citations.csv
+
+          if git diff --staged --quiet; then
+            echo "No change this week"
+          else
+            git commit -m "Weekly package and paper metrics"
+            git push origin "$DATA_BRANCH"
+          fi

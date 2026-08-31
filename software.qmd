@@ -6,12 +6,59 @@ description: |
 
 Reusable tools and packages developed by the group. See also our [ongoing projects](projects.qmd) and [publications](pubs.qmd).
 
+Most packages are on CRAN. The rest can be installed from our
+[r-universe](https://epiforecasts.r-universe.dev):
+
+```r
+install.packages(
+  "packagename",
+  repos = c("https://epiforecasts.r-universe.dev", getOption("repos"))
+)
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(magrittr)
 
 # Hide software not updated in this many months (set to NULL to disable)
 stale_months <- 24
+```
+
+```{r load-stats}
+# Weekly download figures, collected by .github/workflows/update-stats.yaml.
+# Absent until that job has run at least once, so treat it as optional.
+downloads_by_package <- list()
+
+## The weekly job records to the stats-data branch rather than to main, so
+## that it needs no exception to the ruleset protecting default branches.
+## Read from there, falling back to a local file so the page still renders
+## before the branch exists or if the fetch fails.
+stats_url <- paste0(
+  "https://raw.githubusercontent.com/epiforecasts/epiforecasts.github.io/",
+  "stats-data/_data/package-stats.csv"
+)
+stats <- tryCatch(
+  read.csv(stats_url, stringsAsFactors = FALSE),
+  error = function(err) NULL
+)
+if (is.null(stats) && file.exists("_data/package-stats.csv")) {
+  stats <- read.csv("_data/package-stats.csv", stringsAsFactors = FALSE)
+}
+
+if (!is.null(stats) && nrow(stats) > 0) {
+  # Take each repository's most recent figure rather than the newest date's:
+  # one week where cranlogs is unreachable writes NAs for everything, and
+  # keying on the newest date alone would drop every figure from the page
+  # even though last week's are sitting in the same file. Bounded so a
+  # long outage shows nothing rather than something months out of date.
+  stats <- stats[!is.na(stats$downloads_last_month), ]
+  stats <- stats[as.Date(stats$date) > Sys.Date() - 35, ]
+  stats <- stats[order(stats$date, decreasing = TRUE), ]
+  stats <- stats[!duplicated(tolower(stats$repo)), ]
+  # keyed by repository, not package name: the two can differ and the
+  # repository is what both sides can agree on
+  downloads_by_package <- split(stats$downloads_last_month, tolower(stats$repo))
+}
 ```
 
 ```{r load-team}
@@ -105,6 +152,8 @@ extra_packages <- purrr::map(extras, function(e) {
   info <- fetch_package_info(e$repo, team_by_github)
   # marks a package belonging to a separate community project
   info$part_of <- e$part_of
+  # listed here rather than in the registry, so it is not in our universe
+  info$from_extras <- TRUE
   info
 })
 
@@ -216,9 +265,37 @@ all_packages %>%
       )
     }
 
+    slug <- sub("^https://github.com/", "", e$github_url)
+    downloads <- downloads_by_package[[tolower(slug)]]
+    # Name the source rather than leaving a gap: a package with no CRAN figure
+    # is distributed elsewhere, not unused.
+    downloads_text <- if (!is.null(downloads)) {
+      paste(
+        formatC(downloads, big.mark = ",", format = "d"),
+        "CRAN downloads/month"
+      )
+    } else {
+      # Only link where the registry is known. A package from the registry is
+      # served by the epiforecasts universe whatever repo it lives in, so
+      # epimixr at sbfnk/epimixr still resolves there. For an extras entry we
+      # cannot know: its owner is not necessarily a universe, and guessing
+      # produced dead links. Those carry a "Part of" link to their own project
+      # instead, so say nothing rather than something wrong.
+      if (isTRUE(e$from_extras)) {
+        ""
+      } else {
+        # single-quoted attribute: substituted into R source
+        sprintf(
+          "<a href='https://epiforecasts.r-universe.dev/%s'>On r-universe</a>",
+          e$Package
+        )
+      }
+    }
+
     knitr::knit_expand(
       "_software-item.Rmd",
       Package = e$Package,
+      downloads_text = downloads_text,
       logo_html = logo_html,
       part_of_html = part_of_html,
       description = e$description,
