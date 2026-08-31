@@ -23,6 +23,9 @@ if ("{{language}}" != "" && "{{language}}" != "NA") {
 if ("{{updated}}" != "" && "{{updated}}" != "NA") {
   meta <- c(meta, paste0("Updated ", format(as.Date("{{updated}}"), "%b %Y")))
 }
+if ("{{downloads_text}}" != "") {
+  meta <- c(meta, "{{downloads_text}}")
+}
 if (length(meta) > 0) {
   cat('<div class="project-meta">', paste(meta, collapse = " · "), '</div>\n')
 }
