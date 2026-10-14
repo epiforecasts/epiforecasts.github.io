@@ -24,9 +24,17 @@ no_jc_dates <- ymd(character(0))
 ## people temporarily out of the rotation (e.g. on leave)
 pool_exclusions <- character(0)
 
+## people in the rotation who aren't on the website team page yet
+pool_additions <- character(0)
+
 ## people who shouldn't chair before a given date (e.g. new chairs, or the
 ## group leader during travel)
 not_chair_before <- list(
+  # "Some Person" = ymd("2026-09-01")
+)
+
+## people who shouldn't present before a given date (e.g. just started)
+not_present_before <- list(
   # "Some Person" = ymd("2026-09-01")
 )
 
@@ -35,6 +43,18 @@ not_chair_before <- list(
 recently_presented <- list(
   # "Some Person" = ymd("2026-04-30")
 )
+
+## most recent journal club each person led; people who have never led one
+## (or led one longest ago) are first in line for the next
+last_journal_club <- list(
+  # "Some Person" = ymd("2026-03-05")
+)
+
+## meetings alternate weekly between 10:30 and 15:30; this is a 15:30 Thursday
+afternoon_anchor <- ymd("2026-10-01")
+
+## people who can only make the 15:30 meetings
+afternoon_only <- character(0)
 
 ## minimum gap (in weeks) between presentation slots for the same person
 min_presenter_gap_weeks <- 5
@@ -59,11 +79,12 @@ fixed_topics <- data.frame(
 )
 fixed <- rbind(fixed_topics, break_time)
 
-pool_names <- setdiff(names, pool_exclusions)
+pool_names <- setdiff(union(names, pool_additions), pool_exclusions)
 
 ## round-robin rotation; excluded candidates stay in their slot until eligible
-make_rotation <- function(pool) {
-  order <- sample(pool)
+make_rotation <- function(pool, last_done = list()) {
+  last <- map_dbl(pool, ~ if (is.null(last_done[[.x]])) -Inf else as.numeric(last_done[[.x]]))
+  order <- pool[order(last, runif(length(pool)))]
   function(exclude = character(0)) {
     for (i in seq_along(order)) {
       candidate <- order[i]
@@ -77,9 +98,11 @@ make_rotation <- function(pool) {
 }
 
 next_presenter <- make_rotation(pool_names)
-## single chair rotation covers both group meetings and journal clubs, so the
-## same person can't chair two weeks in a row by accident
+## journal club leads have their own rotation, ordered by who led one longest
+## ago, so it doesn't drift with the chair draws
 next_chair <- make_rotation(pool_names)
+next_jc_lead <- make_rotation(pool_names, last_journal_club)
+last_jc <- list(date = ymd(NA), lead = NA_character_)
 
 nth_thursday_of_month <- function(date) {
   ((day(date) - 1) %/% 7) + 1
@@ -123,13 +146,21 @@ while (next_date <= end_date) {
   chair_excluded <- names(not_chair_before)[
     map_lgl(not_chair_before, ~ next_date < .x)
   ]
-  presenter_excluded <- pool_names[
-    map_lgl(pool_names, function(p) {
-      lp <- last_presented[[p]]
-      !is.na(lp) &&
-        as.numeric(next_date - lp, units = "weeks") < min_presenter_gap_weeks
-    })
-  ]
+  presenter_excluded <- c(
+    pool_names[
+      map_lgl(pool_names, function(p) {
+        lp <- last_presented[[p]]
+        !is.na(lp) &&
+          as.numeric(next_date - lp, units = "weeks") < min_presenter_gap_weeks
+      })
+    ],
+    names(not_present_before)[map_lgl(not_present_before, ~ next_date < .x)]
+  )
+  is_afternoon <- as.numeric(next_date - afternoon_anchor) %% 14 == 0
+  if (!is_afternoon) {
+    chair_excluded <- c(chair_excluded, afternoon_only)
+    presenter_excluded <- c(presenter_excluded, afternoon_only)
+  }
 
   if (next_date %in% fixed$Date) {
     row <- fixed |> filter(Date == next_date)
@@ -151,7 +182,10 @@ while (next_date <= end_date) {
   } else {
     nth <- nth_thursday_of_month(next_date)
     if (nth == 1 && !(next_date %in% no_jc_dates)) {
-      lead <- next_chair(exclude = chair_excluded)
+      ## leading journal club counts as a presentation for the gap rule
+      lead <- next_jc_lead(exclude = presenter_excluded)
+      last_jc <- list(date = next_date, lead = lead)
+      last_presented[lead] <- next_date
       df <- bind_rows(df, data.frame(
         Date = next_date, Topic = "Journal Club",
         Chair = "", Presenter1 = lead, Presenter2 = "", Presenter3 = ""
@@ -173,7 +207,13 @@ while (next_date <= end_date) {
         if (is.na(candidate)) break
         picks <- c(picks, candidate)
       }
-      chair <- next_chair(exclude = c(chair_excluded, picks))
+      ## don't have last week's journal club lead chair straight after
+      jc_lead_last_week <- if (isTRUE(next_date - last_jc$date == 7)) {
+        last_jc$lead
+      } else {
+        character(0)
+      }
+      chair <- next_chair(exclude = c(chair_excluded, picks, jc_lead_last_week))
       last_presented[picks] <- next_date
       slot <- function(i) if (i <= length(picks)) picks[i] else ""
       df <- bind_rows(df, data.frame(
