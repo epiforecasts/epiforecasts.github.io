@@ -15,7 +15,7 @@ website:
     left:
       - text: "People"
         href: people.qmd
-      - text: "Lab manual"
+      - text: "Group manual"
         href: lab-manual.qmd
       - text: "Blog"
         href: blog.qmd
