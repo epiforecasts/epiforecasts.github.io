@@ -123,18 +123,23 @@
       const { obs, fit, fc } = simulate(seed);
       // Scale to the observations, so the history fills a good share of the
       // height; a wide forecast band may run off the top, as it would in a
-      // figure with a fixed axis
+      // figure with a fixed axis, and is clipped there rather than flattened
       const pastMax = Math.max(...obs.slice(0, NOW + 1));
       const futureMax = Math.max(...obs.slice(NOW + 1));
       const ymax = Math.max(pastMax * 1.6, Math.min(futureMax, pastMax * 2.6)) * 1.05;
       const x = (t) => PAD.l + ((W - PAD.l - PAD.r) * t) / (N - 1);
-      const y = (v) => H - PAD.b - ((H - PAD.t - PAD.b) * Math.min(v, ymax)) / ymax;
+      const y = (v) => H - PAD.b - ((H - PAD.t - PAD.b) * v) / ymax;
 
       el("line", { x1: PAD.l, x2: W - PAD.r, y1: H - PAD.b, y2: H - PAD.b, class: "ef-axis" }, svg);
 
-      const bands = el("g", { class: "ef-bands" }, svg);
-      const pts = el("g", {}, svg);
-      const fitPath = el("path", { class: "ef-fit", d: "" }, svg);
+      // The bands animate their own CSS clip-path, so the plot area is
+      // clipped on an enclosing group instead
+      const clip = el("clipPath", { id: "ef-plot-area" }, el("defs", {}, svg));
+      el("rect", { x: 0, y: PAD.t - 6, width: W, height: H - PAD.t - PAD.b + 12 }, clip);
+      const plot = el("g", { "clip-path": "url(#ef-plot-area)" }, svg);
+      const bands = el("g", { class: "ef-bands" }, plot);
+      const pts = el("g", {}, plot);
+      const fitPath = el("path", { class: "ef-fit", d: "" }, plot);
 
       const nowLine = el(
         "line",
