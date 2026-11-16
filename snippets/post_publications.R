@@ -1,8 +1,11 @@
 options(width = 10000) # do not hard-wrap formatted citations
 
 source("_automation/get_new_papers.R")
-month_1st <- format(lubridate::floor_date(lubridate::today() - 1, "month"))
-new_papers <- get_new_papers_team(from_date = month_1st)
+# Look back further than the weekly interval so nothing deposited between two
+# runs is skipped, whatever the month boundaries; papers already listed in an
+# issue or in the bib file are filtered out below
+from_date <- format(lubridate::today() - 35)
+new_papers <- get_new_papers_team(from_date = from_date)
 
 # Get DOIs from open OR processed publications issues to avoid duplicates
 # "processed" label marks issues that have been reviewed (even if no papers added)
@@ -41,7 +44,7 @@ if (nrow(new_papers) > 0) {
   )
   bibentries_body <- paste(
     c(
-      "Papers published last month. Check the boxes for papers to add, then add the `processed` label to this issue. The next weekly run will create a PR for the selected papers and close this issue.",
+      "Papers deposited in the last five weeks. Check the boxes for papers to add, then add the `processed` label to this issue. The next weekly run will create a PR for the selected papers and close this issue.",
       "",
       bibentries_new_checklist,
       "<details>",
