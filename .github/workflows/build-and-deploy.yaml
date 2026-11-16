@@ -9,6 +9,8 @@ on:
     branches: [main, master, stats-data]
   pull_request:
     branches: [main, master]
+    # closed removes the PR's preview
+    types: [opened, reopened, synchronize, closed]
   schedule:
     - cron:  '0 5 1 * *'
 
@@ -17,13 +19,24 @@ name: build-and-deploy
 # One deployment at a time. A metrics push to stats-data and a change to main
 # can overlap, and both build from main, so without this the run that started
 # first can publish its older tree over the newer one. In-progress runs are
-# left to finish, so a deployment is never half-applied.
+# left to finish, so a deployment is never half-applied. Each PR has its own
+# group, so a new push to a PR replaces its preview build rather than queueing
+# behind the site.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'pull_request' && format('preview-{0}', github.event.number) || 'pages' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# The site is served from the gh-pages branch. The main site sits at its root
+# and each open PR from this repository gets a preview under pr-preview/pr-N/,
+# removed again when the PR is merged or closed. PRs from forks and from
+# Dependabot only build: their token cannot push.
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   build:
+    if: github.event.action != 'closed'
     runs-on: ubuntu-latest
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
@@ -56,28 +69,50 @@ jobs:
       - name: Render site
         run: quarto render
       
-      - run: cp -r slides _site
+      # The slides are most of the site's size. Previews leave them out so a
+      # few open PRs stay well within the Pages size limit.
+      - if: github.event_name != 'pull_request'
+        run: cp -r slides _site
 
       - run: cp -r _redirects/. _site
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v5
-        with:
-          path: ./_site
+      # Pages serves the custom domain from this file when deploying from a
+      # branch; previews stay out of search results
+      - name: Add CNAME and keep previews out of search results
+        run: |
+          echo "epiforecasts.io" > _site/CNAME
+          printf 'User-agent: *\nDisallow: /pr-preview/\n' >> _site/robots.txt
 
-  # Deployment job
-  deploy:
-    if: github.event_name != 'pull_request'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      - name: Deploy site
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: _site
+          branch: gh-pages
+          # keep the open PRs' previews when the site is replaced
+          clean-exclude: pr-preview/
+
+      - name: Deploy preview
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]'
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: _site
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          pages-base-url: epiforecasts.io
+          # this job is skipped on close, so it only ever deploys
+          action: deploy
+          qr-code: false
+
+  remove-preview:
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
-    needs: build
-    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
     steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v5
+      - uses: actions/checkout@v7
+
+      - name: Remove preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: remove
