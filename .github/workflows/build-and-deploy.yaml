@@ -69,7 +69,10 @@ jobs:
       - name: Render site
         run: quarto render
       
-      - run: cp -r slides _site
+      # The slides are most of the site's size. Previews leave them out so a
+      # few open PRs stay well within the Pages size limit.
+      - if: github.event_name != 'pull_request'
+        run: cp -r slides _site
 
       - run: cp -r _redirects/. _site
 
