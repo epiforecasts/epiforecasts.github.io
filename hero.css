@@ -6,6 +6,10 @@
   --ef-teal: #0f7f76;
   --ef-teal-bright: #17a398;
   --ef-coral: #e4572e;
+  /* coral dark enough to carry text, and the text colour that goes on it,
+     both at 4.5:1 or better */
+  --ef-coral-ink: #bf4422;
+  --ef-on-coral: #ffffff;
   --ef-muted: #5c6b7a;
   --ef-rule: #e3e1da;
   --ef-fit: #14213d;
@@ -19,6 +23,8 @@ body.quarto-dark {
   --ef-teal: #3dd6c4;
   --ef-teal-bright: #3dd6c4;
   --ef-coral: #ff7a59;
+  --ef-coral-ink: #ff7a59;
+  --ef-on-coral: #0f1623;
   --ef-muted: #9aa7b6;
   --ef-rule: #263247;
   --ef-fit: #e3e8ef;
@@ -98,14 +104,14 @@ body.quarto-dark {
 }
 
 .ef-btn-primary {
-  background: var(--ef-coral);
-  border-color: var(--ef-coral);
-  color: #fff;
+  background: var(--ef-coral-ink);
+  border-color: var(--ef-coral-ink);
+  color: var(--ef-on-coral);
 }
 
 .ef-btn-primary:hover {
-  color: #fff;
-  border-color: var(--ef-coral);
+  color: var(--ef-on-coral);
+  border-color: var(--ef-coral-ink);
   filter: brightness(1.05);
 }
 
@@ -167,7 +173,7 @@ body.quarto-dark {
   text-align: center;
   font-size: 0.85rem;
   font-weight: 500;
-  color: var(--ef-coral);
+  color: var(--ef-coral-ink);
 }
 
 .ef-band-outer {
