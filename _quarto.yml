@@ -20,7 +20,11 @@ website:
       - text: "Blog"
         href: blog.qmd
       - text: "Software"
-        href: software.qmd
+        menu:
+          - text: '<img src="/images/r-logo.svg" class="nav-lang-icon" alt=""> R packages'
+            href: software.qmd
+          - text: '<img src="/images/julia-logo.svg" class="nav-lang-icon" alt=""> Julia packages'
+            href: julia.qmd
       - text: "Projects"
         href: projects.qmd
       - text: "Publications"
