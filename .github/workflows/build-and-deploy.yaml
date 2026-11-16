@@ -75,10 +75,10 @@ jobs:
 
       # Pages serves the custom domain from this file when deploying from a
       # branch; previews stay out of search results
-      - name: Add CNAME and robots.txt
+      - name: Add CNAME and keep previews out of search results
         run: |
           echo "epiforecasts.io" > _site/CNAME
-          printf 'User-agent: *\nDisallow: /pr-preview/\n' > _site/robots.txt
+          printf 'User-agent: *\nDisallow: /pr-preview/\n' >> _site/robots.txt
 
       - name: Deploy site
         if: github.event_name != 'pull_request'
