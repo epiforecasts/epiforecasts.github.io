@@ -1,0 +1,29 @@
+---
+title: "Julia packages"
+description: |
+  Julia packages developed by the group
+---
+
+Julia packages developed by the group, some of them as part of [EpiAware](https://epiaware.org). We also write [R packages](software.qmd). See also our [ongoing projects](projects.qmd) and [publications](pubs.qmd).
+
+Packages in the Julia General registry install by name. The rest install from GitHub:
+
+```julia
+using Pkg
+Pkg.add("PackageName")
+Pkg.add(url = "https://github.com/owner/PackageName.jl")
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
+source("_software.R")
+```
+
+```{r, results='asis'}
+packages <- fetch_listed_packages(
+  "_data/julia-packages.yml", load_team_by_github()
+) |>
+  tidy_packages()
+hex_wall(packages)
+render_packages(packages)
+```
