@@ -91,6 +91,16 @@
     });
     container.appendChild(svg);
 
+    // SVG text is sized in figure units and scales with the figure, so set
+    // the label size from the drawn width to keep it the same on screen
+    const LABEL_PX = 12.5;
+    function sizeLabels() {
+      const drawn = svg.getBoundingClientRect().width;
+      if (drawn > 0) svg.style.setProperty("--ef-label-size", `${(LABEL_PX * W) / drawn}px`);
+    }
+    sizeLabels();
+    if (window.ResizeObserver) new ResizeObserver(sizeLabels).observe(svg);
+
     // The score is HTML rather than SVG text so it stays legible when the
     // figure is scaled down on a phone
     const score = document.createElement("p");
