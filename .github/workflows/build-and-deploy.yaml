@@ -28,8 +28,8 @@ concurrency:
 
 # The site is served from the gh-pages branch. The main site sits at its root
 # and each open PR from this repository gets a preview under pr-preview/pr-N/,
-# removed again when the PR is merged or closed. PRs from forks only build:
-# their token cannot push.
+# removed again when the PR is merged or closed. PRs from forks and from
+# Dependabot only build: their token cannot push.
 permissions:
   contents: write
   pull-requests: write
@@ -93,7 +93,7 @@ jobs:
           clean-exclude: pr-preview/
 
       - name: Deploy preview
-        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]'
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: _site
@@ -105,7 +105,7 @@ jobs:
           qr-code: false
 
   remove-preview:
-    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.action == 'closed' && github.event.pull_request.head.repo.full_name == github.repository && github.event.pull_request.user.login != 'dependabot[bot]'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
