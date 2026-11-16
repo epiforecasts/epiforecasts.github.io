@@ -19,6 +19,10 @@ cr_works_retry <- function(..., attempts = 5, base_wait = 5) {
   stop("Crossref returned no data after ", attempts, " attempts")
 }
 
+## medRxiv deposits under its own publisher name, which changed when it moved
+## to openRxiv; preprints under either name are kept alongside journal articles
+preprint_publishers <- c("Cold Spring Harbor Laboratory", "openRxiv")
+
 get_new_papers_orcid <- function(orcid, from_date) {
   refs <- cr_works_retry(filter = list(
     orcid = orcid,
@@ -33,12 +37,12 @@ get_new_papers_orcid <- function(orcid, from_date) {
     refs <- refs |>
       dplyr::mutate(
         container.title = dplyr::if_else(
-          publisher == "Cold Spring Harbor Laboratory",
+          publisher %in% preprint_publishers,
           "medRxiv",
           container.title
         ),
         type = dplyr::if_else(
-          publisher == "Cold Spring Harbor Laboratory",
+          publisher %in% preprint_publishers,
           "journal-article",
           type
         )
