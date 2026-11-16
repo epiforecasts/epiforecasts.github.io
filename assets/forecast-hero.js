@@ -100,6 +100,8 @@
     function draw(seed) {
       timers.forEach(clearTimeout);
       timers = [];
+      // A cycle cut short while fading out must not leave the new one hidden
+      svg.classList.remove("ef-fade");
       while (svg.firstChild) svg.removeChild(svg.firstChild);
 
       const { obs, fit, fc } = simulate(seed);
