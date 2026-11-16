@@ -1,4 +1,4 @@
-# Additional software packages not in the epiforecasts r-universe.
+# Additional R packages not in the epiforecasts r-universe.
 # These are merged with the r-universe list on the software page.
 #
 # `part_of` marks a package that belongs to a separate community project. It
@@ -20,3 +20,4 @@
   part_of:
     name: epiverse-trace
     url: https://epiverse-trace.github.io/
+
