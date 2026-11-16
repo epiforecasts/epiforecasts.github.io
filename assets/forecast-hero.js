@@ -154,11 +154,14 @@
         "M" + fit.slice(0, upto + 1).map((v, t) => `${x(t)},${y(v)}`).join("L");
 
       if (reduce) {
+        let hits = 0;
         for (let t = 0; t < N; t++) {
           const inside = t <= NOW || (obs[t] >= fc[t - NOW].lo90 && obs[t] <= fc[t - NOW].hi90);
+          if (t > NOW && inside) hits++;
           dot(t, t <= NOW ? "past" : inside ? "inside" : "outside");
         }
         fitPath.setAttribute("d", fitD(NOW));
+        score.textContent = `${hits}/${N - NOW - 1} inside 90% interval`;
         return;
       }
 
