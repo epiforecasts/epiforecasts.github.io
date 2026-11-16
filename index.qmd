@@ -21,4 +21,29 @@ organisations such as [Médecins Sans Frontières](https://www.msf.org/).
 
 <script async src="https://bst.heion.net/timeline.js" data-handle="epiforecasts.io" data-theme="light" data-width="420" data-height="500" data-lang="en" data-pin="0"></script>
 
+<script>
+// The widget takes its theme as a URL parameter of the iframe it inserts, so
+// keep that parameter in step with Quarto's light/dark toggle
+(function () {
+  const container = document.currentScript.parentElement;
+  function sync() {
+    const theme = document.body.classList.contains("quarto-dark") ? "dark" : "light";
+    container.querySelectorAll('iframe[src*="blueskytimeline.com"]').forEach(function (frame) {
+      const url = new URL(frame.src);
+      if (url.searchParams.get("theme") !== theme) {
+        url.searchParams.set("theme", theme);
+        frame.src = url.toString();
+      }
+    });
+  }
+  // the toggle changes the body's class; the widget adds its iframe later
+  new MutationObserver(sync).observe(document.body, {
+    attributes: true,
+    attributeFilter: ["class"]
+  });
+  new MutationObserver(sync).observe(container, { childList: true, subtree: true });
+  sync();
+})();
+</script>
+
 :::
