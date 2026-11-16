@@ -32,7 +32,11 @@ organisations such as [Médecins Sans Frontières](https://www.msf.org/).
       const url = new URL(frame.src);
       if (url.searchParams.get("theme") !== theme) {
         url.searchParams.set("theme", theme);
-        frame.src = url.toString();
+        // a fresh iframe loads without adding a browser history entry,
+        // which changing the src of a loaded one would
+        const fresh = frame.cloneNode();
+        fresh.src = url.toString();
+        frame.replaceWith(fresh);
       }
     });
   }
