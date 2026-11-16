@@ -26,6 +26,9 @@ if ("{{updated}}" != "" && "{{updated}}" != "NA") {
 if ("{{downloads_text}}" != "") {
   meta <- c(meta, "{{downloads_text}}")
 }
+if ("{{docs_text}}" != "") {
+  meta <- c(meta, "{{docs_text}}")
+}
 if (length(meta) > 0) {
   cat('<div class="project-meta">', paste(meta, collapse = " · "), '</div>\n')
 }

@@ -1,0 +1,18 @@
+# Julia packages shown on julia.qmd.
+#
+# `part_of` marks a package that belongs to a separate community project, as
+# in software-extras.yml. `description` replaces a GitHub description that is
+# missing or too terse to say what the package does. `logo` is a path in the
+# repository, for a package whose sticker is not at docs/src/assets/logo.svg.
+# `hex: false` keeps a logo that is not a hex sticker out of the honeycomb,
+# where it would break the tessellation.
+
+- repo: epiforecasts/EpiBranch.jl
+- repo: epiforecasts/ForecastBaselines.jl
+  description: Baseline forecasting methods for time series, with a consistent interface and prediction intervals
+- repo: epiforecasts/ForecastEnsembles.jl
+- repo: EpiAware/ScoringRules.jl
+  logo: docs/src/assets/logo-sticker.svg
+  part_of:
+    name: EpiAware
+    url: https://epiaware.org
