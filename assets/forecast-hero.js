@@ -91,6 +91,12 @@
     });
     container.appendChild(svg);
 
+    // The score is HTML rather than SVG text so it stays legible when the
+    // figure is scaled down on a phone
+    const score = document.createElement("p");
+    score.className = "ef-score";
+    container.appendChild(score);
+
     let timers = [];
 
     function later(fn, ms) {
@@ -127,7 +133,7 @@
       );
       const nowLabel = el("text", { x: x(NOW) + 8, y: PAD.t - 14, class: "ef-label" }, svg);
       nowLabel.textContent = "now";
-      const score = el("text", { x: W - PAD.r, y: PAD.t - 14, class: "ef-label ef-score", "text-anchor": "end" }, svg);
+      score.textContent = "";
 
       const area = (lo, hi) =>
         "M" +

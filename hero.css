@@ -161,7 +161,13 @@ body.quarto-dark {
 }
 
 .ef-score {
-  fill: var(--ef-coral);
+  order: 1;
+  margin: 0;
+  min-height: 1.4em;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ef-coral);
 }
 
 .ef-band-outer {
@@ -267,6 +273,20 @@ body.quarto-dark {
 @media (max-width: 991px) {
   .ef-hero-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* SVG text sizes are in figure units and shrink with the figure, so the
+   label grows as the screen narrows to stay readable */
+@media (max-width: 767px) {
+  .ef-label {
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 575px) {
+  .ef-label {
+    font-size: 30px;
   }
 }
 
