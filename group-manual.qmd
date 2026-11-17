@@ -9,8 +9,6 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 
-## epiforecasts manual
-
 We are a group of researchers at LSHTM with a focus on real-time infectious disease modelling. We develop, use and critically evaluate computational, statistical and mathematical techniques to improve our understanding of infectious disease outbreaks in real time, often in collaboration with public-health decision makers.
 
 This document is a point of reference for current and future team members, not a fixed set of rules. Suggestions for changes via Pull Requests are welcome from any group member at any time.
