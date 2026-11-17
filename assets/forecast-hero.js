@@ -1,9 +1,10 @@
 // Animated forecast for the homepage hero.
 //
-// Each cycle simulates a new outbreak, reveals the observations up to "now",
-// opens a forecast fan from the recent growth rate, then lets the future
-// observations land and counts how many fell inside the 90% interval. Colours
-// come from CSS custom properties, so the figure follows the light/dark theme.
+// It simulates an outbreak, reveals the observations up to "now", opens a
+// forecast fan from the recent growth rate, then lets the later observations
+// land and counts how many fell inside the 50% and 90% intervals. It plays
+// once and stays on the finished figure. Colours come from CSS custom
+// properties, so the figure follows the light/dark theme.
 (function () {
   "use strict";
 
@@ -21,7 +22,7 @@
     return node;
   }
 
-  // Seeded generator, so a cycle is reproducible while it plays
+  // Seeded generator, so the finished figure can be drawn from the same seed
   function rng(seed) {
     let s = seed >>> 0;
     return function () {
@@ -113,11 +114,13 @@
       timers.push(setTimeout(fn, ms));
     }
 
-    function draw(seed) {
+    let finished = false;
+
+    // finish = true draws the completed figure at once, without animating
+    function draw(seed, finish) {
       timers.forEach(clearTimeout);
       timers = [];
-      // A cycle cut short while fading out must not leave the new one hidden
-      svg.classList.remove("ef-fade");
+      finished = false;
       while (svg.firstChild) svg.removeChild(svg.firstChild);
 
       const { obs, fit, fc } = simulate(seed);
@@ -174,15 +177,26 @@
       const fitD = (upto) =>
         "M" + fit.slice(0, upto + 1).map((v, t) => `${x(t)},${y(v)}`).join("L");
 
-      if (reduce) {
-        let hits = 0;
+      // Coverage of the later observations by both intervals, up to t
+      const within = (t, lo, hi) => obs[t] >= fc[t - NOW][lo] && obs[t] <= fc[t - NOW][hi];
+      const showScore = (upto) => {
+        let in50 = 0;
+        let in90 = 0;
+        for (let t = NOW + 1; t <= upto; t++) {
+          if (within(t, "lo50", "hi50")) in50++;
+          if (within(t, "lo90", "hi90")) in90++;
+        }
+        const n = upto - NOW;
+        score.textContent = `${in50}/${n} inside 50% · ${in90}/${n} inside 90%`;
+      };
+
+      if (finish) {
         for (let t = 0; t < N; t++) {
-          const inside = t <= NOW || (obs[t] >= fc[t - NOW].lo90 && obs[t] <= fc[t - NOW].hi90);
-          if (t > NOW && inside) hits++;
-          dot(t, t <= NOW ? "past" : inside ? "inside" : "outside");
+          dot(t, t <= NOW ? "past" : within(t, "lo90", "hi90") ? "inside" : "outside");
         }
         fitPath.setAttribute("d", fitD(NOW));
-        score.textContent = `${hits}/${N - NOW - 1} inside 90% interval`;
+        showScore(N - 1);
+        finished = true;
         return;
       }
 
@@ -206,37 +220,23 @@
         bands.classList.add("ef-reveal");
       }, tFc + 300);
 
-      let inside = 0;
       const tObs = tFc + 1500;
       for (let t = NOW + 1; t < N; t++) {
         later(() => {
-          const f = fc[t - NOW];
-          const ok = obs[t] >= f.lo90 && obs[t] <= f.hi90;
-          if (ok) inside++;
-          dot(t, ok ? "inside" : "outside").classList.add("ef-drop");
-          score.textContent = `${inside}/${t - NOW} inside 90% interval`;
+          dot(t, within(t, "lo90", "hi90") ? "inside" : "outside").classList.add("ef-drop");
+          showScore(t);
+          if (t === N - 1) finished = true;
         }, tObs + (t - NOW - 1) * 170);
       }
-
-      later(() => svg.classList.add("ef-fade"), tObs + (N - NOW) * 170 + 2600);
-      later(() => {
-        svg.classList.remove("ef-fade");
-        draw(seed + 7919);
-      }, tObs + (N - NOW) * 170 + 3200);
     }
 
-    draw(20141 + Math.floor(Math.random() * 1000));
+    // The figure plays once and then stays on the finished forecast
+    const seed = 20141 + Math.floor(Math.random() * 1000);
+    draw(seed, reduce);
 
-    // Stop the animation while the tab is hidden and start a fresh one on return
-    let paused = false;
+    // A tab hidden mid-animation comes back to the finished figure
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) {
-        timers.forEach(clearTimeout);
-        paused = true;
-      } else if (paused) {
-        paused = false;
-        draw(1 + Math.floor(Math.random() * 1e6));
-      }
+      if (document.hidden && !finished) draw(seed, true);
     });
   }
 
