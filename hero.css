@@ -79,8 +79,6 @@ body.quarto-dark {
   border-radius: 18px;
   box-shadow: var(--ef-card-shadow);
   padding: 0.75rem 0.75rem 0.5rem;
-  display: flex;
-  flex-direction: column;
 }
 
 .ef-hero-svg {
@@ -115,7 +113,6 @@ body.quarto-dark {
 }
 
 .ef-foot {
-  order: 1;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -228,7 +225,6 @@ body.quarto-dark {
   font-size: 0.82rem;
   color: var(--ef-muted);
   padding: 0.35rem 0 0.15rem;
-  order: 2;
 }
 
 .ef-key {
