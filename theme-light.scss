@@ -1,0 +1,38 @@
+/*-- scss:defaults --*/
+
+// The palette comes from a forecast: navy ink for the record, teal for
+// observations, coral for the forecast itself. The dark theme keeps the same
+// roles in lighter tones.
+
+$ef-ink: #14213d;
+$ef-paper: #fbfaf7;
+$ef-teal: #0f7f76;
+$ef-coral: #e4572e;
+$ef-muted: #5c6b7a;
+$ef-rule: #e3e1da;
+
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$headings-font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$font-family-monospace: "JetBrains Mono", SFMono-Regular, Menlo, monospace;
+$headings-font-weight: 700;
+$font-size-root: 17px;
+$line-height-base: 1.6;
+
+$body-bg: $ef-paper;
+$body-color: #1f2a37;
+$primary: $ef-ink;
+$secondary: $ef-muted;
+$success: $ef-teal;
+$danger: $ef-coral;
+$link-color: $ef-teal;
+$link-hover-color: darken($ef-teal, 10%);
+$border-color: $ef-rule;
+
+$navbar-bg: $ef-ink;
+$navbar-fg: #b9c3d2;
+$navbar-hl: #ffffff;
+$footer-bg: $ef-paper;
+$footer-fg: $ef-muted;
+
+$code-bg: #f1efe9;
+$code-color: #8a2f14;
