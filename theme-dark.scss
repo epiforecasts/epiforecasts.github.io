@@ -1,0 +1,34 @@
+/*-- scss:defaults --*/
+
+$ef-ink: #0b111c;
+$ef-paper: #0f1623;
+$ef-teal: #3dd6c4;
+$ef-coral: #ff7a59;
+$ef-muted: #9aa7b6;
+$ef-rule: #263247;
+
+$font-family-sans-serif: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$headings-font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+$font-family-monospace: "JetBrains Mono", SFMono-Regular, Menlo, monospace;
+$headings-font-weight: 700;
+$font-size-root: 17px;
+$line-height-base: 1.6;
+
+$body-bg: $ef-paper;
+$body-color: #e3e8ef;
+$primary: #8fb3ff;
+$secondary: $ef-muted;
+$success: $ef-teal;
+$danger: $ef-coral;
+$link-color: $ef-teal;
+$link-hover-color: lighten($ef-teal, 12%);
+$border-color: $ef-rule;
+
+$navbar-bg: $ef-ink;
+$navbar-fg: #d7dde6;
+$navbar-hl: #ffffff;
+$footer-bg: $ef-paper;
+$footer-fg: $ef-muted;
+
+$code-bg: #1b2538;
+$code-color: #ffb199;

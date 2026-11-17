@@ -40,8 +40,9 @@ website:
 format:
   html:
     theme:
-      light: flatly
-      dark: darkly
+      light: [flatly, theme-light.scss]
+      dark: [darkly, theme-dark.scss]
     css: styles.css
+    include-in-header: _fonts.html
     link-external-icon: true
     link-external-newwindow: true
