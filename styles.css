@@ -187,3 +187,9 @@ body.quarto-dark {
   vertical-align: -0.125em;
   margin-right: 0.35em;
 }
+
+/* Packages with a dark-mode logo carry both; show the one for the scheme */
+body.quarto-dark .logo-for-light,
+body:not(.quarto-dark) .logo-for-dark {
+  display: none !important;
+}

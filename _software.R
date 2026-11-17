@@ -81,25 +81,36 @@ fetch_package_info <- function(repo, team_by_github) {
   # R packages keep their logo in man/figures, Julia packages in the
   # Documenter assets folder. There the SVG is the sticker, while a PNG
   # alongside it can be a different mark.
-  logo_url <- NA_character_
-  logo_paths <- c(
+  find_file <- function(paths) {
+    for (f in paths) {
+      hit <- tryCatch(
+        gh::gh("/repos/{repo}/contents/{f}", repo = repo, f = f),
+        error = function(err) NULL
+      )
+      if (!is.null(hit$download_url)) {
+        return(list(path = f, url = hit$download_url))
+      }
+    }
+    NULL
+  }
+  logo <- find_file(c(
     "man/figures/logo.png", "man/figures/logo.svg",
     "docs/src/assets/logo.svg", "docs/src/assets/logo.png"
-  )
-  for (f in logo_paths) {
-    hit <- tryCatch(
-      gh::gh("/repos/{repo}/contents/{f}", repo = repo, f = f),
-      error = function(err) NULL
-    )
-    if (!is.null(hit$download_url)) {
-      logo_url <- hit$download_url
-      break
-    }
+  ))
+  logo_url <- logo$url %||% NA_character_
+  # A dark-mode variant sits next to the logo, as pkgdown's logo-dark does
+  logo_dark_url <- NA_character_
+  if (!is.null(logo)) {
+    dark <- find_file(file.path(
+      dirname(logo$path), c("logo-dark.svg", "logo-dark.png")
+    ))
+    logo_dark_url <- dark$url %||% NA_character_
   }
 
   list(
     Package = repo_info$name,
     logo_url = logo_url,
+    logo_dark_url = logo_dark_url,
     description = if (nzchar(repo_info$description %||% "")) {
       repo_info$description
     } else {
@@ -126,6 +137,8 @@ fetch_listed_packages <- function(path, team_by_github) {
       info$logo_url <- paste0(
         "https://raw.githubusercontent.com/", e$repo, "/HEAD/", e$logo
       )
+      # a dark variant found at the default path would belong to another logo
+      info$logo_dark_url <- NA_character_
     }
     # not in our r-universe, so there is no page there to link to
     info$from_extras <- TRUE
@@ -142,6 +155,19 @@ tidy_packages <- function(packages) {
       as.Date(.x$updated) > Sys.Date() - (stale_months * 30)
     }) %>%
     { .[order(purrr::map_dbl(., "stars"), decreasing = TRUE)] }
+}
+
+# A logo as one <img>, or as a light and a dark one when the package has a
+# dark-mode variant; styles.css shows the one matching the colour scheme
+logo_img <- function(e, alt, attrs = "") {
+  light <- sprintf('<img src="%s" alt="%s"%s>', e$logo_url, alt, attrs)
+  if (is.null(e$logo_dark_url) || is.na(e$logo_dark_url)) {
+    return(light)
+  }
+  paste0(
+    sprintf('<img class="logo-for-light" src="%s" alt="%s"%s>', e$logo_url, alt, attrs),
+    sprintf('<img class="logo-for-dark" src="%s" alt="%s"%s>', e$logo_dark_url, alt, attrs)
+  )
 }
 
 # Honeycomb index: every package with a hex logo, in offset rows so the hexes
@@ -203,8 +229,8 @@ hex_wall <- function(packages) {
       idx <- idx + 1
       e <- with_logo[[idx]]
       cells <- c(cells, sprintf(
-        '<a href="%s" title="%s"><img src="%s" alt="%s"></a>',
-        e$github_url, e$Package, e$logo_url, paste(e$Package, "hex logo")
+        '<a href="%s" title="%s">%s</a>',
+        e$github_url, e$Package, logo_img(e, paste(e$Package, "hex logo"))
       ))
     }
     rows <- c(rows, paste0(
@@ -236,8 +262,8 @@ render_packages <- function(packages, downloads_by_package = list()) {
       logo_html <- ""
       if (!is.na(e$logo_url)) {
         logo_html <- sprintf(
-          '<div class="pkg-logo"><img src="%s" alt="%s logo" loading="lazy"></div>',
-          e$logo_url, e$Package
+          '<div class="pkg-logo">%s</div>',
+          logo_img(e, paste(e$Package, "logo"), ' loading="lazy"')
         )
       }
 
