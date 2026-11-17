@@ -4,13 +4,13 @@ description: |
   Groups we work with and training material we have created
 ---
 
-This page is maintained by hand. For code and ongoing analyses, see our [software](software.qmd) and [projects](projects.qmd) pages.
+For code and ongoing analyses, see our [software](software.qmd) and [projects](projects.qmd) pages.
 
 ## Collaborations
 
-* [CMMID](https://cmmid.lshtm.ac.uk/): the Centre for the Mathematical Modelling of Infectious Diseases at LSHTM, which we are part of.
+* [CMMID](https://cmmid.lshtm.ac.uk/): the Centre for the Mathematical Modelling of Infectious Diseases at LSHTM. We are part of it.
 * [epinowcast](https://www.epinowcast.org/): a community developing tools and methods for real-time nowcasting and forecasting of infectious diseases.
-* [Modelling hubs](https://hubverse.io/): the hubverse provides open tools for building collaborative modelling hubs, which we have been closely involved with.
+* [Modelling hubs](https://hubverse.io/): the hubverse provides open tools for building collaborative modelling hubs. We have been closely involved with it.
 
 ## Training
 
