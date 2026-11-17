@@ -1,0 +1,21 @@
+---
+title: "Collaborations and training"
+description: |
+  Groups we work with and training material we have created
+---
+
+This page is maintained by hand. For code and ongoing analyses, see our [software](software.qmd) and [projects](projects.qmd) pages.
+
+## Collaborations
+
+* [CMMID](https://cmmid.lshtm.ac.uk/): the Centre for the Mathematical Modelling of Infectious Diseases at LSHTM, which we are part of.
+* [epinowcast](https://www.epinowcast.org/): a community developing tools and methods for real-time nowcasting and forecasting of infectious diseases.
+* [Modelling hubs](https://hubverse.io/): the hubverse provides open tools for building collaborative modelling hubs, which we have been closely involved with.
+
+## Training
+
+* [Nowcasting and Forecasting of Infectious Disease Dynamics (NFIDD)](https://nfidd.github.io/nfidd/): an open course on nowcasting and forecasting infectious disease dynamics.
+
+## Group manual
+
+Our [group manual](group-manual.qmd) describes how we work together.
