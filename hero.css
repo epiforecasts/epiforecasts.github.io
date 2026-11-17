@@ -161,8 +161,35 @@ body.quarto-dark {
   font: 500 var(--ef-label-size, 13px) var(--bs-font-sans-serif, sans-serif);
 }
 
-.ef-score {
+.ef-foot {
   order: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem 1rem;
+}
+
+.ef-play {
+  font: 500 0.85rem var(--bs-font-sans-serif, sans-serif);
+  color: var(--ef-teal);
+  background: transparent;
+  border: 1px solid var(--ef-rule);
+  border-radius: 999px;
+  padding: 0.2rem 0.85rem;
+  cursor: pointer;
+}
+
+.ef-play:hover {
+  border-color: var(--ef-teal);
+}
+
+.ef-play:focus-visible {
+  outline: 2px solid var(--ef-teal);
+  outline-offset: 2px;
+}
+
+.ef-score {
   margin: 0;
   min-height: 1.4em;
   text-align: center;
