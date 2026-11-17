@@ -238,6 +238,7 @@ body.quarto-dark {
 
 .ef-key-obs { background: var(--ef-fit); }
 .ef-key-fc { background: var(--ef-coral); opacity: 0.6; border-radius: 2px; width: 16px; }
+.ef-key-in { background: var(--ef-teal-bright); }
 .ef-key-out { border: 2px solid var(--ef-coral); }
 
 @media (max-width: 991px) {

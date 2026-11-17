@@ -26,6 +26,7 @@ knitr::opts_chunk$set(echo = FALSE)
       <figcaption class="ef-legend">
         <span><i class="ef-key ef-key-obs"></i>observed</span>
         <span><i class="ef-key ef-key-fc"></i>forecast, 50% and 90%</span>
+        <span><i class="ef-key ef-key-in"></i>inside 90%</span>
         <span><i class="ef-key ef-key-out"></i>outside 90%</span>
       </figcaption>
     </figure>
