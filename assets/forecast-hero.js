@@ -2,9 +2,9 @@
 //
 // It simulates an outbreak, reveals the observations up to "now", opens a
 // forecast fan from the recent growth rate, then lets the later observations
-// land and counts how many fell inside the 50% and 90% intervals. It plays
-// once and stays on the finished figure. Colours come from CSS custom
-// properties, so the figure follows the light/dark theme.
+// land and counts how many fell inside the 50% and 90% intervals. It opens
+// on the finished figure and plays only when the reader asks. Colours come
+// from CSS custom properties, so the figure follows the light/dark theme.
 (function () {
   "use strict";
 
@@ -81,6 +81,27 @@
     return { obs, fit, fc };
   }
 
+  // Later observations inside an interval, out of the 19 after "now"
+  function coverage(sim, lo, hi) {
+    let n = 0;
+    for (let t = NOW + 1; t < N; t++) {
+      const f = sim.fc[t - NOW];
+      if (sim.obs[t] >= f[lo] && sim.obs[t] <= f[hi]) n++;
+    }
+    return n;
+  }
+
+  // A random outbreak whose forecast does reasonably, so that no visitor's
+  // first view is a forecast that missed everything
+  function pickSeed() {
+    for (let i = 0; i < 200; i++) {
+      const seed = 1 + Math.floor(Math.random() * 1e6);
+      const sim = simulate(seed);
+      if (coverage(sim, "lo50", "hi50") >= 8 && coverage(sim, "lo90", "hi90") >= 15) return seed;
+    }
+    return 4;
+  }
+
   function build(container) {
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const svg = el("svg", {
@@ -104,9 +125,12 @@
 
     // The score is HTML rather than SVG text so it stays legible when the
     // figure is scaled down on a phone
+    const foot = document.createElement("div");
+    foot.className = "ef-foot";
     const score = document.createElement("p");
     score.className = "ef-score";
-    container.appendChild(score);
+    foot.appendChild(score);
+    container.appendChild(foot);
 
     let timers = [];
 
@@ -230,14 +254,25 @@
       }
     }
 
-    // The figure plays once and then stays on the finished forecast
-    const seed = 20141 + Math.floor(Math.random() * 1000);
-    draw(seed, reduce);
+    // The page opens on the finished forecast; the reader can play it to
+    // watch the data arrive and the forecast meet them
+    const seed = pickSeed();
+    draw(seed, true);
 
-    // A tab hidden mid-animation comes back to the finished figure
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden && !finished) draw(seed, true);
-    });
+    if (!reduce) {
+      const play = document.createElement("button");
+      play.type = "button";
+      play.className = "ef-play";
+      play.textContent = "Play";
+      play.setAttribute("aria-label", "Play the forecast as it unfolds");
+      play.addEventListener("click", () => draw(seed, false));
+      foot.appendChild(play);
+
+      // A tab hidden mid-animation comes back to the finished figure
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && !finished) draw(seed, true);
+      });
+    }
   }
 
   document.addEventListener("DOMContentLoaded", () => {
