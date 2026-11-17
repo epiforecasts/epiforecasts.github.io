@@ -1,9 +1,8 @@
 ---
-pagetitle: "epiforecasts"
+title: "epiforecasts"
 description: |
   Real-time modelling and forecasting of infectious disease dynamics
 css: hero.css
-title-block-style: none
 include-after-body:
   text: '<script src="assets/forecast-hero.js"></script>'
 resources:
@@ -20,14 +19,8 @@ knitr::opts_chunk$set(echo = FALSE)
 <section class="ef-hero">
   <div class="ef-wrap ef-hero-grid">
     <div class="ef-hero-text">
-      <p class="ef-eyebrow">CMMID · London School of Hygiene &amp; Tropical Medicine</p>
       <h1>Real-time modelling and forecasting of infectious disease dynamics</h1>
       <p class="ef-lead">We develop methods and open-source tools for modelling and forecasting outbreaks, test them by how well they predict, and use them to inform outbreak response, control and prevention.</p>
-      <div class="ef-actions">
-        <a class="ef-btn ef-btn-primary" href="software.html">Our software</a>
-        <a class="ef-btn" href="pubs.html">Publications</a>
-        <a class="ef-btn ef-btn-ghost" href="positions.html">Join us</a>
-      </div>
     </div>
     <figure class="ef-hero-figure" data-forecast-hero>
       <figcaption class="ef-legend">
