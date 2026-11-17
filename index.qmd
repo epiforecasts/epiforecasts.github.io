@@ -4,9 +4,9 @@ description: |
   Real-time modelling and forecasting of infectious disease dynamics
 css: hero.css
 include-after-body:
-  text: '<script src="assets/forecast-hero.js"></script>'
+  text: '<script src="assets/hero-panels.js"></script>'
 resources:
-  - "assets/forecast-hero.js"
+  - "assets/hero-panels.js"
 ---
 
 ```{r setup, include=FALSE}
@@ -22,14 +22,12 @@ knitr::opts_chunk$set(echo = FALSE)
       <h1>Real-time modelling and forecasting of infectious disease dynamics</h1>
       <p class="ef-lead">We develop methods and open-source tools for modelling and forecasting outbreaks, test them by how well they predict, and use them to inform outbreak response, control and prevention.</p>
     </div>
-    <figure class="ef-hero-figure" data-forecast-hero>
-      <figcaption class="ef-legend">
-        <span><i class="ef-key ef-key-obs"></i>observed</span>
-        <span><i class="ef-key ef-key-fc"></i>forecast, 50% and 90%</span>
-        <span><i class="ef-key ef-key-in"></i>inside 90%</span>
-        <span><i class="ef-key ef-key-out"></i>outside 90%</span>
-      </figcaption>
-    </figure>
+    <div class="ef-panels">
+      <figure class="ef-panel" title="Nowcasting: correcting for reporting delays and tracking Rt" data-hero-panel="nowcast" aria-label="Nowcasting: reported cases with the most recent days not yet fully reported, a nowcast of their eventual counts, and the reproduction number over time"></figure>
+      <figure class="ef-panel" title="Transmission and control: how outbreaks spread and how interventions stop them" data-hero-panel="transmission" aria-label="Transmission and control: a simulated outbreak as a transmission tree, in which cases isolated by contact tracing end their chains"></figure>
+      <figure class="ef-panel" title="Contacts and immunity: who mixes with whom, and who is protected" data-hero-panel="contacts" aria-label="Contacts and immunity: daily contacts between age groups, and the share immune in each age group against the level needed to prevent outbreaks"></figure>
+      <figure class="ef-panel" title="Forecasting: predicting what comes next, and checking how well" data-hero-panel="forecast" aria-label="Forecasting: observations up to now, a forecast with 50% and 90% intervals, and later observations inside or outside the 90% interval"></figure>
+    </div>
   </div>
 </section>
 ```
