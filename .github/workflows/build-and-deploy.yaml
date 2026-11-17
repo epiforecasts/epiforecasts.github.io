@@ -3,10 +3,7 @@
 on:
   workflow_dispatch:
   push:
-    # stats-data carries the weekly metrics the software page reads. Those
-    # pushes are made by the App, whose pushes trigger workflows, so the
-    # figures refresh without anyone acting.
-    branches: [main, master, stats-data]
+    branches: [main, master]
   pull_request:
     branches: [main, master]
     # closed removes the PR's preview
@@ -16,10 +13,10 @@ on:
 
 name: build-and-deploy
 
-# One deployment at a time. A metrics push to stats-data and a change to main
-# can overlap, and both build from main, so without this the run that started
-# first can publish its older tree over the newer one. In-progress runs are
-# left to finish, so a deployment is never half-applied. Each PR has its own
+# One deployment at a time. The weekly metrics job starts a build of main,
+# which can overlap with a change to main, so without this the run that
+# started first can publish its older tree over the newer one. In-progress
+# runs are left to finish, so a deployment is never half-applied. Each PR has its own
 # group, so a new push to a PR replaces its preview build rather than queueing
 # behind the site.
 concurrency:
@@ -44,13 +41,6 @@ jobs:
       LC_ALL: "en_US.UTF-8"
     steps:
       - uses: actions/checkout@v7
-        with:
-          # A push to stats-data must still build the site from main: that
-          # branch carries a snapshot of the tree as it stood when the data
-          # job branched, and deploying it would publish stale pages. The
-          # metrics themselves are fetched over HTTP at render time, so
-          # building main picks them up.
-          ref: ${{ github.ref_name == 'stats-data' && 'main' || '' }}
 
       - uses: quarto-dev/quarto-actions/setup@v2
 

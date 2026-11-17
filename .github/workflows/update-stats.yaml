@@ -5,16 +5,19 @@ on:
 
 name: Update stats
 
+# actions: write lets the job start the site build once the figures change
+permissions:
+  contents: read
+  actions: write
+
 jobs:
   update-stats:
     runs-on: ubuntu-latest
     env:
       CROSSREF_EMAIL: ${{ secrets.CROSSREF_EMAIL }}
     steps:
-      # An App token, not GITHUB_TOKEN: the ruleset on main requires a pull
-      # request, which GITHUB_TOKEN does not bypass, and a push made with it
-      # would not trigger build-and-deploy even if it landed. The same App
-      # is used by release-reminders.yaml.
+      # The App token reads the package repositories and pushes the figures
+      # to the data branch. The same App is used by release-reminders.yaml.
       - name: Generate token from GitHub App
         id: app-token
         uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
@@ -67,6 +70,7 @@ jobs:
       - name: Commit the new rows to the data branch
         env:
           DATA_BRANCH: stats-data
+          GH_TOKEN: ${{ github.token }}
         run: |
           git config user.name "epiforecasts-bot"
           git config user.email "epiforecasts-bot@users.noreply.github.com"
@@ -89,4 +93,8 @@ jobs:
           else
             git commit -m "Weekly package and paper metrics"
             git push origin "$DATA_BRANCH"
+            # The site reads the figures when it renders, so rebuild it.
+            # The data branch holds only the CSVs and so has no workflows
+            # of its own to run on this push.
+            gh workflow run build-and-deploy.yaml --ref main
           fi
