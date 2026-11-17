@@ -49,6 +49,20 @@ load_downloads <- function() {
   split(stats$downloads_last_month, tolower(stats$repo))
 }
 
+# The first of `paths` that exists in the repository, with its download URL
+find_file <- function(repo, paths) {
+  for (f in paths) {
+    hit <- tryCatch(
+      gh::gh("/repos/{repo}/contents/{f}", repo = repo, f = f),
+      error = function(err) NULL
+    )
+    if (!is.null(hit$download_url)) {
+      return(list(path = f, url = hit$download_url))
+    }
+  }
+  NULL
+}
+
 fetch_package_info <- function(repo, team_by_github) {
   repo_info <- tryCatch(
     gh::gh("/repos/{repo}", repo = repo),
@@ -81,19 +95,7 @@ fetch_package_info <- function(repo, team_by_github) {
   # R packages keep their logo in man/figures, Julia packages in the
   # Documenter assets folder. There the SVG is the sticker, while a PNG
   # alongside it can be a different mark.
-  find_file <- function(paths) {
-    for (f in paths) {
-      hit <- tryCatch(
-        gh::gh("/repos/{repo}/contents/{f}", repo = repo, f = f),
-        error = function(err) NULL
-      )
-      if (!is.null(hit$download_url)) {
-        return(list(path = f, url = hit$download_url))
-      }
-    }
-    NULL
-  }
-  logo <- find_file(c(
+  logo <- find_file(repo, c(
     "man/figures/logo.png", "man/figures/logo.svg",
     "docs/src/assets/logo.svg", "docs/src/assets/logo.png"
   ))
@@ -101,7 +103,7 @@ fetch_package_info <- function(repo, team_by_github) {
   # A dark-mode variant sits next to the logo, as pkgdown's logo-dark does
   logo_dark_url <- NA_character_
   if (!is.null(logo)) {
-    dark <- find_file(file.path(
+    dark <- find_file(repo, file.path(
       dirname(logo$path), c("logo-dark.svg", "logo-dark.png")
     ))
     logo_dark_url <- dark$url %||% NA_character_
@@ -137,8 +139,10 @@ fetch_listed_packages <- function(path, team_by_github) {
       info$logo_url <- paste0(
         "https://raw.githubusercontent.com/", e$repo, "/HEAD/", e$logo
       )
-      # a dark variant found at the default path would belong to another logo
-      info$logo_dark_url <- NA_character_
+      # a dark variant found at the default path would belong to another
+      # logo, so look for one named after this logo instead
+      dark <- find_file(e$repo, sub("(\\.[[:alnum:]]+)$", "-dark\\1", e$logo))
+      info$logo_dark_url <- dark$url %||% NA_character_
     }
     # not in our r-universe, so there is no page there to link to
     info$from_extras <- TRUE
