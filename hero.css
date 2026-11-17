@@ -1,4 +1,4 @@
-/* Homepage hero: introduction and an animated forecast. The colours match
+/* Homepage hero: introduction and a forecast figure. The colours match
    the site theme and switch with Quarto's dark mode. */
 
 :root {
@@ -6,10 +6,8 @@
   --ef-teal: #0f7f76;
   --ef-teal-bright: #17a398;
   --ef-coral: #e4572e;
-  /* coral dark enough to carry text, and the text colour that goes on it,
-     both at 4.5:1 or better */
+  /* coral dark enough to carry text at 4.5:1 or better */
   --ef-coral-ink: #bf4422;
-  --ef-on-coral: #ffffff;
   --ef-muted: #5c6b7a;
   --ef-rule: #e3e1da;
   --ef-fit: #14213d;
@@ -24,13 +22,18 @@ body.quarto-dark {
   --ef-teal-bright: #3dd6c4;
   --ef-coral: #ff7a59;
   --ef-coral-ink: #ff7a59;
-  --ef-on-coral: #0f1623;
   --ef-muted: #9aa7b6;
   --ef-rule: #263247;
   --ef-fit: #e3e8ef;
   --ef-band-inner: rgba(255, 122, 89, 0.34);
   --ef-band-outer: rgba(255, 122, 89, 0.14);
   --ef-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* The hero carries the page's heading, so Quarto's title block is not shown;
+   the title still names the page in the browser tab */
+#title-block-header {
+  display: none;
 }
 
 .ef-wrap {
@@ -55,15 +58,6 @@ body.quarto-dark {
   align-items: center;
 }
 
-.ef-eyebrow {
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--ef-teal);
-  margin-bottom: 0.9rem;
-}
-
 .ef-hero h1 {
   font-size: clamp(2rem, 4.2vw, 3.1rem);
   line-height: 1.08;
@@ -76,47 +70,6 @@ body.quarto-dark {
   font-size: 1.12rem;
   color: var(--ef-muted);
   max-width: 34rem;
-}
-
-.ef-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 1.5rem;
-}
-
-.ef-btn {
-  display: inline-block;
-  padding: 0.6rem 1.15rem;
-  border-radius: 999px;
-  border: 1px solid var(--ef-rule);
-  background: var(--ef-surface);
-  color: inherit;
-  font-weight: 500;
-  text-decoration: none;
-  transition: transform 0.15s ease, border-color 0.15s ease;
-}
-
-.ef-btn:hover {
-  transform: translateY(-1px);
-  border-color: var(--ef-teal);
-  color: inherit;
-}
-
-.ef-btn-primary {
-  background: var(--ef-coral-ink);
-  border-color: var(--ef-coral-ink);
-  color: var(--ef-on-coral);
-}
-
-.ef-btn-primary:hover {
-  color: var(--ef-on-coral);
-  border-color: var(--ef-coral-ink);
-  filter: brightness(1.05);
-}
-
-.ef-btn-ghost {
-  background: transparent;
 }
 
 .ef-hero-figure {
@@ -291,18 +244,8 @@ body.quarto-dark {
 .ef-key-fc { background: var(--ef-coral); opacity: 0.6; border-radius: 2px; width: 16px; }
 .ef-key-out { border: 2px solid var(--ef-coral); }
 
-.ef-hero a::after {
-  display: none !important;
-}
-
 @media (max-width: 991px) {
   .ef-hero-grid {
     grid-template-columns: minmax(0, 1fr);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ef-btn {
-    transition: none;
   }
 }
