@@ -7,7 +7,7 @@ knitr::opts_chunk$set(echo = FALSE)
 library(magrittr)
 ```
 
-Below is a list of selected publications (sorted by year) illustrating the type of work conducted by our team. See also our [ongoing projects](projects.qmd) and [software](software.qmd). We aim to make our work open beyond the paper itself, so where we can, each paper links to its code, its published peer reviews, its registered protocol and its preprint.
+Below is a list of selected publications (sorted by year) illustrating the type of work conducted by our team. See also our [ongoing projects](projects.qmd) and [software](software.qmd). We try to make our work open beyond the paper itself: where they exist, each paper links to its code, its published peer reviews, its registered study protocol and its preprint.
 
 ```{r open-research}
 open_research <- yaml::read_yaml("_data/paper-open.yml")
@@ -48,8 +48,8 @@ bib <- bibtex::read.bib(bibfile) %>%
 years <- purrr::map_chr(bib, ~ as.character(.x$year %||% "0"))
 bib <- bib[order(years, decreasing = TRUE)]
 
-# A preprint whose published version is also listed is shown as a link on
-# that version rather than as a paper of its own
+# Drop a preprint if its published version is also listed: it then appears as
+# the Preprint link on that version
 preprint_of_listed <- purrr::map_chr(open_research, ~ .x$preprint %||% NA_character_) |>
   na.omit() |>
   sub(pattern = "^https?://(dx\\.)?doi\\.org/", replacement = "") |>

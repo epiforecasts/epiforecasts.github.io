@@ -2,7 +2,8 @@
 #   code: where the analysis code is, as stated in the paper
 #   preprint: the preprint of a published paper
 #   open_review: the reviews are published with the paper; true when they
-#     are on the paper's own page, or the address of the page that has them
+#     are on the page of the paper itself, otherwise the address of the
+#     page with the reviews
 #   registered: the study protocol registered before the work was done
 
 "10.1371/journal.pcbi.1006785":
