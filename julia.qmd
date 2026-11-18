@@ -20,10 +20,7 @@ source("_software.R")
 ```
 
 ```{r, results='asis'}
-packages <- fetch_listed_packages(
-  "_data/julia-packages.yml", load_team_by_github()
-) |>
-  tidy_packages()
+packages <- julia_packages()
 hex_wall(packages)
 render_packages(packages)
 ```
