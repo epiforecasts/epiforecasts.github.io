@@ -80,6 +80,7 @@ open_links <- function(doi, journal) {
   marks <- c(
     if (!is.null(o$code)) link(o$code, "Code"),
     if (isTRUE(o$open_review)) link(paste0("https://doi.org/", doi), "Open peer review"),
+    if (is.character(o$open_review)) link(o$open_review, "Open peer review"),
     if (!is.null(o$registered)) link(o$registered, "Registered protocol"),
     if (!is.null(preprint_url)) link(preprint_url, "Preprint")
   )
