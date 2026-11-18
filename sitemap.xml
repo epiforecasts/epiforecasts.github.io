@@ -2,58 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://epiforecasts.io/group-manual.html</loc>
-    <lastmod>2026-11-18T21:15:44.998Z</lastmod>
+    <lastmod>2026-11-18T21:52:40.269Z</lastmod>
   </url>
   <url>
     <loc>https://epiforecasts.io/index.html</loc>
-    <lastmod>2026-11-18T21:15:44.999Z</lastmod>
+    <lastmod>2026-11-18T21:52:40.270Z</lastmod>
   </url>
   <url>
     <loc>https://epiforecasts.io/people.html</loc>
-    <lastmod>2026-11-18T21:15:44.999Z</lastmod>
+    <lastmod>2026-11-18T21:52:40.270Z</lastmod>
   </url>
   <url>
     <loc>https://epiforecasts.io/projects.html</loc>
-    <lastmod>2026-11-18T21:15:45.002Z</lastmod>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/posts/2022-03-25-rt-reflections/index.html</loc>
-    <lastmod>2026-11-18T21:15:45.000Z</lastmod>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/posts/2025-03-19-stan-doc-guide/index.html</loc>
-    <lastmod>2026-11-18T21:15:45.002Z</lastmod>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/julia.html</loc>
-    <lastmod>2026-11-18T21:15:44.999Z</lastmod>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/blog.html</loc>
-    <lastmod>2026-11-18T21:15:44.998Z</lastmod>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/contact.html</loc>
-    <lastmod>2026-11-18T21:15:44.998Z</lastmod>
-  </url>
-  <url>
-    <loc>https://epiforecasts.io/posts/2019-08-21-dip/index.html</loc>
-    <lastmod>2026-11-18T21:15:44.999Z</lastmod>
+    <lastmod>2026-11-18T21:52:40.273Z</lastmod>
   </url>
   <url>
     <loc>https://epiforecasts.io/posts/2022-04-11-robust-actions/index.html</loc>
-    <lastmod>2026-11-18T21:15:45.001Z</lastmod>
+    <lastmod>2026-11-18T21:52:40.272Z</lastmod>
+  </url>
+  <url>
+    <loc>https://epiforecasts.io/posts/2019-08-21-dip/index.html</loc>
+    <lastmod>2026-11-18T21:52:40.270Z</lastmod>
+  </url>
+  <url>
+    <loc>https://epiforecasts.io/contact.html</loc>
+    <lastmod>2026-11-18T21:52:40.269Z</lastmod>
+  </url>
+  <url>
+    <loc>https://epiforecasts.io/blog.html</loc>
+    <lastmod>2026-11-18T21:52:40.269Z</lastmod>
+  </url>
+  <url>
+    <loc>https://epiforecasts.io/julia.html</loc>
+    <lastmod>2026-11-18T21:52:40.270Z</lastmod>
+  </url>
+  <url>
+    <loc>https://epiforecasts.io/posts/2025-03-19-stan-doc-guide/index.html</loc>
+    <lastmod>2026-11-18T21:52:40.273Z</lastmod>
+  </url>
+  <url>
+    <loc>https://epiforecasts.io/posts/2022-03-25-rt-reflections/index.html</loc>
+    <lastmod>2026-11-18T21:52:40.272Z</lastmod>
+  </url>
+  <url>
+    <loc>https://epiforecasts.io/community.html</loc>
+    <lastmod>2026-11-18T21:52:40.269Z</lastmod>
   </url>
   <url>
     <loc>https://epiforecasts.io/positions.html</loc>
-    <lastmod>2026-11-18T21:15:44.999Z</lastmod>
+    <lastmod>2026-11-18T21:52:40.270Z</lastmod>
   </url>
   <url>
     <loc>https://epiforecasts.io/software.html</loc>
-    <lastmod>2026-11-18T21:15:45.004Z</lastmod>
+    <lastmod>2026-11-18T21:52:40.275Z</lastmod>
   </url>
   <url>
     <loc>https://epiforecasts.io/pubs.html</loc>
-    <lastmod>2026-11-18T21:15:45.002Z</lastmod>
+    <lastmod>2026-11-18T21:52:40.273Z</lastmod>
   </url>
 </urlset>
