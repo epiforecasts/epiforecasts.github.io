@@ -1,0 +1,22 @@
+---
+title: "Collaborations and training"
+description: |
+  Work with the wider community
+---
+
+## Group manual
+
+Our [group manual](group-manual.qmd) describes how we work.
+
+## Collaborations
+
+* [CMMID](https://cmmid.lshtm.ac.uk/), the Centre for the Mathematical Modelling of Infectious Diseases at LSHTM, brings together people who work on or are interested in infectious disease modelling.
+* We work with [UKHSA](https://www.gov.uk/government/organisations/uk-health-security-agency) through the [NIHR Health Protection Research Unit in Health Analytics and Modelling](https://www.lshtm.ac.uk/research/centres-projects-groups/hpru-ham), a partnership between UKHSA and LSHTM that also involves the [MRC Centre for Global Infectious Disease Analysis](https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/) at [Imperial College London](https://www.imperial.ac.uk/).
+* [epinowcast](https://www.epinowcast.org/) is an open community developing tools and methods for real-time analysis of infectious disease data. It runs regular [seminars](https://www.epinowcast.org/seminars.html) and a [community forum](https://community.epinowcast.org/).
+* We set up and ran the [European COVID-19 Forecast and Scenario Hubs](https://github.com/european-modelling-hubs), which ECDC now continues as [RespiCast](https://respicast.ecdc.europa.eu/) and [RespiCompass](https://respicompass.ecdc.europa.eu/).
+* We work with the [hubverse](https://hubverse.io/), a set of open tools for building collaborative modelling hubs.
+
+## Training
+
+* [Model Fitting and Inference for Infectious Disease Dynamics (MFIIDD)](https://mfiidd.github.io/mfiidd/), a course on fitting dynamic models to infectious disease data.
+* [Nowcasting and Forecasting of Infectious Disease Dynamics (NFIDD)](https://nfidd.github.io/nfidd/), an open course on nowcasting and forecasting infectious disease dynamics.

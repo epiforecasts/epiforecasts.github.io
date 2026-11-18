@@ -15,8 +15,6 @@ website:
     left:
       - text: "People"
         href: people.qmd
-      - text: "Group manual"
-        href: group-manual.qmd
       - text: "Blog"
         href: blog.qmd
       - text: "Software"
@@ -27,6 +25,8 @@ website:
             href: julia.qmd
       - text: "Projects"
         href: projects.qmd
+      - text: "Community"
+        href: community.qmd
       - text: "Publications"
         href: pubs.qmd
       - text: "Join us"
