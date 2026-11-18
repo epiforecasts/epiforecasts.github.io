@@ -6,7 +6,7 @@ description: |
 
 ## Group manual
 
-Our [group manual](group-manual.qmd) describes how we work together.
+Our [group manual](group-manual.qmd) describes how we work.
 
 ## Collaborations
 
