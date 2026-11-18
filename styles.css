@@ -57,8 +57,7 @@
   color: var(--bs-secondary-color, #6c757d);
 }
 
-/* Open research marks under each paper, and the same marks in the key above
-   the list */
+/* Open research marks under each paper */
 .pub-open-row {
   margin-top: 0.35rem;
 }
@@ -76,11 +75,6 @@
 
 .publications-list .pub-open {
   text-decoration: none;
-}
-
-.pub-open-legend ul {
-  list-style: none;
-  padding-left: 0;
 }
 
 /* Package hex logos.
