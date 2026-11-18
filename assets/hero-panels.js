@@ -1,7 +1,9 @@
 // Homepage hero panels: four small figures of simulated data, one for each
-// strand of the group's work (nowcasting, transmission and control, contacts
-// and immunity, forecasting). They are static and unlabelled; each panel's
-// title and description are in the page and in its SVG's accessible label.
+// research theme, in the order an outbreak analysis runs from data to
+// decision (real-time estimation, forecasting, transmission and
+// interventions, modelling for decisions). They are static and unlabelled;
+// each panel's title and description are in the page and in its SVG's
+// accessible label.
 // Colours come from CSS custom properties, so the figures follow the
 // light/dark theme.
 (function () {
@@ -34,8 +36,11 @@
     return Math.sqrt(-2 * Math.log(u() + 1e-12)) * Math.cos(2 * Math.PI * u());
   }
 
+  // the figure is drawn above the caption the page gives each panel
   function svgIn(container, label) {
-    return el("svg", { viewBox: `0 0 ${W} ${H}`, class: "ef-panel-svg", role: "img", "aria-label": label }, container);
+    const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "ef-panel-svg", role: "img", "aria-label": label });
+    container.insertBefore(svg, container.firstChild);
+    return svg;
   }
 
   // Forecasting: observations up to now, a forecast fan from the recent
@@ -253,42 +258,45 @@
     });
   }
 
-  // Contacts and immunity: daily contacts between age groups, and the share
-  // immune in each age group against the level needed to prevent outbreaks
+  // Modelling in decision making: analyses reach decision makers through
+  // many forms of communication (advisory groups, individual advisers,
+  // reports), and decisions draw on other influences besides; widths show
+  // how much passes along each route
 
-  function contacts(container, label) {
+  function policy(container, label) {
     const svg = svgIn(container, label);
-    const n = 8;
-    const m = [];
-    for (let i = 0; i < n; i++) {
-      m.push([]);
-      for (let j = 0; j < n; j++) {
-        const d = i - j;
-        let v = 0.6 + 5.5 * Math.exp(-(d * d) / 1.2) * (i < 2 ? 1.6 : 1);
-        v += 1.6 * Math.exp(-((Math.abs(d) - 3) ** 2) / 0.6); // parents and children
-        m[i].push(v);
-      }
-    }
-    const vmax = Math.max(...m.flat());
-    const cell = 30, ox = 14, oy = 30;
-    for (let i = 0; i < n; i++) {
-      for (let j = 0; j < n; j++) {
-        el("rect", { x: ox + j * cell, y: oy + (n - 1 - i) * cell, width: cell - 2, height: cell - 2,
-          class: "ef-cell", "fill-opacity": (0.08 + (0.92 * m[i][j]) / vmax).toFixed(3) }, svg);
-      }
-    }
-    const imm = [0.78, 0.9, 0.86, 0.91, 0.95, 0.97, 0.98, 0.99];
-    const target = [0.9, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95, 0.95];
-    const bx = 268, bw = 118, row = cell;
-    const xs = (v) => bx + (bw * (v - 0.5)) / 0.5;
-    for (let i = 0; i < n; i++) {
-      const yy = oy + (n - 1 - i) * row + 5;
-      el("rect", { x: bx, y: yy, width: xs(imm[i]) - bx, height: row - 10, class: imm[i] < target[i] ? "ef-short" : "ef-bar" }, svg);
-      el("line", { x1: xs(target[i]), x2: xs(target[i]), y1: yy - 3, y2: yy + row - 7, class: "ef-target" }, svg);
-    }
+    const cols = [64, 200, 336];
+    const stages = [
+      ["analyses", [78, 122, 166], "ef-analysis"],
+      ["communication", [88, 140, 192], "ef-bar"],
+      ["decisions", [104, 168, 232], "ef-decision"],
+    ];
+    const other = { x: cols[0], y: 252 };
+    // [stage, from, to, width]
+    const flows = [
+      [0, 0, 0, 7], [0, 0, 1, 3], [0, 1, 1, 6], [0, 2, 2, 5], [0, 2, 1, 2],
+      [1, 0, 0, 6], [1, 1, 0, 3], [1, 1, 1, 5], [1, 2, 2, 4], [1, 2, 1, 2],
+    ];
+    const flow = (x1, y1, x2, y2, w, cls) => {
+      const mx = (x1 + x2) / 2;
+      el("path", { d: `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`, class: cls, "stroke-width": w * 1.8 }, svg);
+    };
+    flows.forEach(([c, i, j, w]) => {
+      flow(cols[c] + 9, stages[c][1][i], cols[c + 1] - 9, stages[c + 1][1][j], w, "ef-flow");
+    });
+    // other influences go straight to the decisions
+    [[0, 4], [1, 6], [2, 8]].forEach(([j, w]) => {
+      flow(other.x + 9, other.y, cols[2] - 9, stages[2][1][j], w, "ef-flow other");
+    });
+    stages.forEach(([name, ys, cls], c) => {
+      el("text", { x: cols[c], y: 44, class: "ef-row-label", "text-anchor": "middle" }, svg).textContent = name;
+      ys.forEach((y) => el("rect", { x: cols[c] - 9, y: y - 16, width: 18, height: 32, rx: 3, class: cls }, svg));
+    });
+    el("rect", { x: other.x - 9, y: other.y - 16, width: 18, height: 32, rx: 3, class: "ef-other" }, svg);
+    el("text", { x: other.x, y: other.y - 26, class: "ef-row-label", "text-anchor": "middle" }, svg).textContent = "other influences";
   }
 
-  const panels = { nowcast, transmission, contacts, forecast };
+  const panels = { nowcast, forecast, transmission, policy };
 
   document.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll("[data-hero-panel]").forEach((node) => {
