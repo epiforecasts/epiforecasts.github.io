@@ -30,6 +30,13 @@ jobs:
           gh_repository <- "${{ github.repository }}"
           source("snippets/update_publications.R")
         shell: Rscript {0}
+
+      # Replaces listed preprints that have been published and suggests code,
+      # preprint and peer review links for papers without them, for review in
+      # the same pull request
+      - name: Update published versions and open research links
+        run: source("snippets/update_paper_meta.R")
+        shell: Rscript {0}
       
       - uses: peter-evans/create-pull-request@v8
         id: cpr
@@ -40,7 +47,9 @@ jobs:
           author: epiforecasts-bot <epiforecasts-bot@users.noreply.github.com>
           branch: pubs
           branch-suffix: timestamp
-          add-paths: _data/papers.bib
+          add-paths: |
+            _data/papers.bib
+            _data/paper-open.yml
           title: Automated update of team publications
           delete-branch: true
       
