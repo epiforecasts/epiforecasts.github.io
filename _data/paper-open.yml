@@ -1,0 +1,120 @@
+# Open research markers for the papers in papers.bib, keyed by DOI.
+#   code: where the analysis code is, as stated in the paper
+#   preprint: the preprint of a published paper
+#   open_review: the reviews are published with the paper; true when they
+#     are on the page of the paper itself, otherwise the address of the
+#     page with the reviews
+#   registered: the study protocol registered before the work was done
+
+"10.1371/journal.pcbi.1006785":
+  code: https://doi.org/10.5281/zenodo.2547701
+"10.1186/s12916-019-1288-7":
+  open_review: https://link.springer.com/article/10.1186/s12916-019-1288-7/peer-review
+  preprint: https://doi.org/10.1101/388645
+"10.1016/s2214-109x(20)30074-7":
+  code: https://github.com/cmmid/ringbp
+  preprint: https://doi.org/10.1101/2020.02.08.20021162
+"10.12688/wellcomeopenres.16006.2":
+  code: https://github.com/epiforecasts/covid-rt-estimates
+  open_review: true
+"10.12688/wellcomeopenres.15718.1":
+  code: https://github.com/epiforecasts/WuhanSeedingVsTransmission
+  open_review: true
+"10.1038/s41467-021-22213-0":
+  code: https://github.com/jdmunday/SchoolHouseholdNetworksCOVID
+  preprint: https://doi.org/10.1101/2020.08.21.20167965
+  open_review: true
+"10.1098/rstb.2020.0283":
+  code: https://github.com/epiforecasts/rt-comparison-uk-public
+"10.12688/wellcomeopenres.15842.3":
+  code: https://github.com/akira-endo/COVID19_clustersize
+  open_review: true
+"10.12688/wellcomeopenres.16344.3":
+  code: https://github.com/akira-endo/COVID19_backwardtracing
+  preprint: https://doi.org/10.1101/2020.08.01.20166595
+  open_review: true
+"10.1038/s41467-021-25207-0":
+  code: https://github.com/KITmetricslab/analyses_de_pl
+  preprint: https://doi.org/10.1101/2020.12.24.20248826
+  open_review: true
+  registered: https://osf.io/k8d39
+"10.1126/science.abf9648":
+  code: https://doi.org/10.5281/zenodo.4570939
+  preprint: https://doi.org/10.1101/2020.12.02.20240648
+"10.7554/elife.70767":
+  code: https://github.com/will-s-hart/UK-generation-times
+  preprint: https://doi.org/10.1101/2021.05.27.21257936
+  open_review: true
+"10.1186/s12916-022-02271-x":
+  open_review: https://link.springer.com/article/10.1186/s12916-022-02271-x/peer-review
+  code: https://github.com/epiforecasts/covid19-hospital-activity
+  preprint: https://doi.org/10.1101/2021.10.18.21265046
+"10.1126/science.add4507":
+  code: https://github.com/akira-endo/monkeypox_heavytail
+  preprint: https://doi.org/10.1101/2022.06.13.22276353
+"10.1073/pnas.2203019119":
+  code: https://github.com/akira-endo/schooldynamics_FluMatsumoto14-15
+"10.1371/journal.pcbi.1010405":
+  code: https://github.com/epiforecasts/covid.german.forecasts
+  preprint: https://doi.org/10.1101/2021.12.01.21266598
+  open_review: true
+"10.7554/elife.81916":
+  code: https://github.com/covid19-forecast-hub-europe/euro-hub-ensemble
+  preprint: https://doi.org/10.1101/2022.06.16.22276024
+  open_review: true
+"10.1371/journal.pcbi.1011393":
+  code: https://github.com/epiforecasts/transformation-forecast-evaluation
+  preprint: https://doi.org/10.1101/2023.01.23.23284722
+  open_review: true
+"10.1371/journal.pcbi.1011453":
+  code: https://github.com/epiforecasts/CovidAgeGroupForecast
+  preprint: https://doi.org/10.1101/2022.12.02.22282935
+  open_review: true
+"10.12688/wellcomeopenres.19380.2":
+  code: https://github.com/epiforecasts/uk-crowd-forecasting-challenge
+  open_review: true
+"10.21105/joss.03290":
+  code: https://github.com/epiforecasts/covidregionaldata
+  open_review: true
+"10.12688/wellcomeopenres.19601.1":
+  preprint: http://dx.doi.org/10.1101/2023.06.12.544667
+  open_review: true
+"10.1371/journal.pgph.0004675":
+  preprint: https://doi.org/10.1101/2024.08.12.24311899
+  open_review: true
+"10.1016/j.idm.2025.04.005":
+  preprint: https://doi.org/10.1101/2024.11.05.24316774
+"10.1098/rsif.2020.0084":
+  code: https://github.com/alxsrobert/datapaperMO
+  preprint: https://doi.org/10.1101/2020.02.13.20020891
+"10.1016/j.epidem.2024.100765":
+  code: https://doi.org/10.5281/zenodo.10891377
+  preprint: https://doi.org/10.1101/2023.07.05.23292245
+"10.1371/journal.pgph.0005120":
+  preprint: https://doi.org/10.1101/2025.03.04.25323088
+  open_review: true
+  registered: https://osf.io/cd4qa
+"10.1098/rsfs.2025.0007":
+  preprint: https://doi.org/10.31219/osf.io/bhs9q_v1
+"10.12688/wellcomeopenres.25027.2":
+  code: https://github.com/epinowcast/baselinenowcast-paper
+  preprint: https://doi.org/10.1101/2025.08.14.25333653
+  open_review: true
+"10.7554/elife.98005.3":
+  code: https://github.com/epiforecasts/ebola-expert-elicitation
+  preprint: https://doi.org/10.1101/2024.03.14.24304285
+  open_review: true
+"10.1101/2022.01.08.22268920":
+  code: https://github.com/epiforecasts/omicron-sgtf-forecast
+"10.1101/2022.10.12.22280917":
+  code: https://github.com/epiforecasts/simplified-forecaster-evaluation
+"10.1101/2025.04.03.25325159":
+  code: https://github.com/ManuelStapper/FGSIM_Application
+"10.1101/2025.04.10.25325611":
+  code: https://github.com/epiforecasts/eval-by-method
+"10.1101/2025.08.01.25332807":
+  code: https://github.com/ManuelStapper/Baselines_Application
+"10.1371/journal.pcbi.1014908":
+  code: https://github.com/epiforecasts/eurohub-ensembles
+  preprint: https://doi.org/10.1101/2025.08.09.25331484
+  open_review: https://journals.plos.org/ploscompbiol/article/peerReview?id=10.1371/journal.pcbi.1014908
