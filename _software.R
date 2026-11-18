@@ -150,6 +150,41 @@ fetch_listed_packages <- function(path, team_by_github) {
   })
 }
 
+# The R packages on software.qmd: those our r-universe marks for the website,
+# and those listed in software-extras.yml
+r_packages <- function(team_by_github = load_team_by_github()) {
+  pkg_descriptions <- jsonlite::fromJSON("https://epiforecasts.r-universe.dev/api/packages")
+  extra_metadata <- jsonlite::read_json("https://github.com/epiforecasts/universe/raw/main/packages.json") %>%
+    dplyr::bind_rows() %>%
+    dplyr::mutate(
+      Package = package,
+      display_website = display_website & !is.na(display_website),
+      .keep = "unused"
+    )
+
+  universe_packages <- pkg_descriptions %>%
+    dplyr::left_join(extra_metadata, by = "Package") %>%
+    dplyr::filter(display_website) %>%
+    split(rownames(.)) %>%
+    purrr::map(unlist) %>%
+    purrr::map(function(e) {
+      repo <- paste0(e[["_owner"]], "/", e[["Package"]])
+      fetch_package_info(repo, team_by_github)
+    })
+
+  extra_packages <- fetch_listed_packages(
+    "_data/software-extras.yml", team_by_github
+  )
+
+  tidy_packages(c(universe_packages, extra_packages))
+}
+
+# The Julia packages on julia.qmd
+julia_packages <- function(team_by_github = load_team_by_github()) {
+  fetch_listed_packages("_data/julia-packages.yml", team_by_github) |>
+    tidy_packages()
+}
+
 # Drop stale packages and sort by stars
 tidy_packages <- function(packages) {
   packages %>%
