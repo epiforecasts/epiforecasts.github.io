@@ -21,32 +21,7 @@ source("_software.R")
 ```
 
 ```{r, results='asis'}
-team_by_github <- load_team_by_github()
-
-pkg_descriptions <- jsonlite::fromJSON("https://epiforecasts.r-universe.dev/api/packages")
-extra_metadata <- jsonlite::read_json("https://github.com/epiforecasts/universe/raw/main/packages.json") %>%
-  dplyr::bind_rows() %>%
-  dplyr::mutate(
-    Package = package,
-    display_website = display_website & !is.na(display_website),
-    .keep = "unused"
-  )
-
-universe_packages <- pkg_descriptions %>%
-  dplyr::left_join(extra_metadata, by = "Package") %>%
-  dplyr::filter(display_website) %>%
-  split(rownames(.)) %>%
-  purrr::map(unlist) %>%
-  purrr::map(function(e) {
-    repo <- paste0(e[["_owner"]], "/", e[["Package"]])
-    fetch_package_info(repo, team_by_github)
-  })
-
-extra_packages <- fetch_listed_packages(
-  "_data/software-extras.yml", team_by_github
-)
-
-packages <- tidy_packages(c(universe_packages, extra_packages))
+packages <- r_packages()
 hex_wall(packages)
 render_packages(packages, load_downloads())
 ```

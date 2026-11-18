@@ -73,3 +73,82 @@ organisations such as [Médecins Sans Frontières](https://www.msf.org/).
 </script>
 
 :::
+
+## Software
+
+We turn our methods into open-source packages, used by public health agencies and researchers to estimate, nowcast and forecast in real time.
+
+```{r featured-software, results='asis'}
+source("_software.R")
+team_by_github <- load_team_by_github()
+r <- r_packages(team_by_github)
+julia <- julia_packages(team_by_github)
+
+# The six most-starred packages on the software pages, with at least one in
+# each language: the most-starred package of a language left out takes the
+# sixth place
+by_stars <- function(p) p[order(purrr::map_dbl(p, "stars"), decreasing = TRUE)]
+urls <- function(p) purrr::map_chr(p, "github_url")
+featured <- head(by_stars(c(r, julia)), 6)
+for (language in list(r, julia)) {
+  if (length(language) > 0 && !any(urls(featured) %in% urls(language))) {
+    featured[[length(featured)]] <- by_stars(language)[[1]]
+  }
+}
+featured <- by_stars(featured)
+
+# Short captions for the cards; a package without one shows its GitHub
+# description
+captions <- c(
+  EpiNow2 = "Rt and forecasts from case counts",
+  scoringutils = "evaluating forecasts",
+  epinowcast = "nowcasting and Rt from delayed data",
+  socialmixr = "social contact matrices",
+  rbi = "Bayesian inference for state-space models",
+  ringbp = "outbreak control by contact tracing",
+  baselinenowcast = "baseline nowcasts",
+  epichains = "transmission chains",
+  EpiBranch.jl = "branching process models",
+  ForecastBaselines.jl = "baseline forecasts to compare against"
+)
+
+cards <- purrr::map_chr(featured, function(e) {
+  caption <- if (e$Package %in% names(captions)) captions[[e$Package]] else e$description
+  logo <- if (is.na(e$logo_url)) "" else {
+    logo_img(e, paste(e$Package, "logo"), ' loading="lazy"')
+  }
+  sprintf(
+    '<a class="ef-pkg" href="%s">%s<span class="ef-pkg-name">%s</span><span class="ef-pkg-what">%s</span></a>',
+    e$github_url, logo, e$Package, caption
+  )
+})
+cat('<div class="ef-pkgs">', paste(cards, collapse = ""), '</div>\n\n', sep = "")
+```
+
+[All R packages](software.qmd){.ef-more} [Julia packages](julia.qmd){.ef-more}
+
+## Recent publications
+
+```{r recent-papers, results='asis'}
+bib <- bibtex::read.bib("_data/papers.bib")
+bib <- purrr::keep(bib, ~ attr(.x, "bibtype") == "Article")
+# Most entries have no month, so within a year the order the entries were
+# added in stands in for date: the update script appends new papers.
+year <- purrr::map_dbl(bib, ~ as.numeric(.x$year %||% 0))
+recent <- bib[order(year, seq_along(bib), decreasing = TRUE)][1:4]
+items <- purrr::map_chr(recent, function(e) {
+  authors <- format(e$author, include = c("given", "family"))
+  first <- if (length(authors) > 1) paste(authors[1], "et al.") else authors[1]
+  sprintf(
+    '<li><a href="https://doi.org/%s">%s</a><span class="ef-pub-meta">%s · <em>%s</em> · %s</span></li>',
+    e$doi, gsub("[{}]", "", e$title), first, gsub("[{}]", "", e$journal), e$year
+  )
+})
+cat('<ul class="ef-pubs">', paste(items, collapse = ""), '</ul>\n\n', sep = "")
+```
+
+[All publications](pubs.qmd){.ef-more}
+
+::: {.ef-join}
+**Join us.** We hire at all levels when funding allows, and host visitors and fellows. [See how to get in touch](positions.qmd).
+:::
