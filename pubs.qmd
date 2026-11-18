@@ -9,6 +9,19 @@ library(magrittr)
 
 Below is a list of selected publications (sorted by year) illustrating the type of work conducted by our team. See also our [ongoing projects](projects.qmd) and [software](software.qmd).
 
+```{r open-research}
+open_research <- yaml::read_yaml("_data/paper-open.yml")
+```
+
+::: {.pub-open-legend}
+We aim to make our work open beyond the paper itself. Below each paper:
+
+- [Code]{.pub-open} links to the analysis code
+- [Open peer review]{.pub-open} marks a paper whose reviews are published alongside it
+- [Registered protocol]{.pub-open} links to the study protocol, registered before the work was done
+- [Preprint]{.pub-open} links to the version shared before peer review, or marks a paper not yet peer reviewed
+:::
+
 ```{r}
 bibfile <- "_data/papers.bib"
 ```
@@ -44,6 +57,36 @@ bib <- bibtex::read.bib(bibfile) %>%
 years <- purrr::map_chr(bib, ~ as.character(.x$year %||% "0"))
 bib <- bib[order(years, decreasing = TRUE)]
 
+# A preprint whose published version is also listed is shown as a link on
+# that version rather than as a paper of its own
+preprint_of_listed <- purrr::map_chr(open_research, ~ .x$preprint %||% NA_character_) |>
+  na.omit() |>
+  sub(pattern = "^https?://(dx\\.)?doi\\.org/", replacement = "") |>
+  tolower()
+bib <- purrr::discard(bib, ~ tolower(.x$doi %||% "") %in% preprint_of_listed)
+
+preprint_servers <- c("medRxiv", "bioRxiv", "arXiv", "OSF Preprints")
+
+# The open research marks under each paper. A paper listed from a preprint
+# server is itself the preprint.
+open_links <- function(doi, journal) {
+  o <- open_research[[tolower(doi)]] %||% list()
+  link <- function(url, label) sprintf('<a class="pub-open" href="%s">%s</a>', url, label)
+  preprint_url <- if (journal %in% preprint_servers) {
+    paste0("https://doi.org/", doi)
+  } else {
+    o$preprint
+  }
+  marks <- c(
+    if (!is.null(o$code)) link(o$code, "Code"),
+    if (isTRUE(o$open_review)) link(paste0("https://doi.org/", doi), "Open peer review"),
+    if (!is.null(o$registered)) link(o$registered, "Registered protocol"),
+    if (!is.null(preprint_url)) link(preprint_url, "Preprint")
+  )
+  if (length(marks) == 0) return("")
+  sprintf('<div class="pub-open-row">%s</div>', paste(marks, collapse = ""))
+}
+
 # Render each publication
 purrr::walk(bib, function(entry) {
   authors <- truncate_authors(entry$author)
@@ -61,8 +104,8 @@ purrr::walk(bib, function(entry) {
   }
 
   cat(sprintf(
-    '<div class="pub-item"><strong>%s</strong> (%s). %s. <em>%s</em>.</div>\n',
-    authors, year, title_html, journal
+    '<div class="pub-item"><strong>%s</strong> (%s). %s. <em>%s</em>.%s</div>\n',
+    authors, year, title_html, journal, open_links(doi, journal)
   ))
 })
 ```
