@@ -122,9 +122,6 @@
   code: https://github.com/epiforecasts/hospitalcatchment.utils
   preprint: https://doi.org/10.1101/2023.07.12.23292451
   open_review: https://link.springer.com/article/10.1186/s12916-024-03369-0/peer-review
-"10.1093/infdis/jiad254":
-  code: https://github.com/hiroaki-murayama/MPX_depletion_susceptibles
-  preprint: https://doi.org/10.1101/2022.11.14.22282286
 "10.1101/2022.06.13.22276321":
   code: https://github.com/epiforecasts/covid19_ct_pillar2
 "10.1101/2022.03.29.22273101":
