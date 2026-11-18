@@ -113,5 +113,6 @@
   code: https://github.com/epiforecasts/eval-by-method
 "10.1101/2025.08.01.25332807":
   code: https://github.com/ManuelStapper/Baselines_Application
-"10.1101/2025.08.09.25331484":
+"10.1371/journal.pcbi.1014908":
   code: https://github.com/epiforecasts/eurohub-ensembles
+  preprint: https://doi.org/10.1101/2025.08.09.25331484
