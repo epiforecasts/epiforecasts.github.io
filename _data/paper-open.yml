@@ -6,11 +6,6 @@
 #     page with the reviews
 #   registered: the study protocol registered before the work was done
 
-"10.1371/journal.pcbi.1006785":
-  code: https://doi.org/10.5281/zenodo.2547701
-"10.1186/s12916-019-1288-7":
-  open_review: https://link.springer.com/article/10.1186/s12916-019-1288-7/peer-review
-  preprint: https://doi.org/10.1101/388645
 "10.1016/s2214-109x(20)30074-7":
   code: https://github.com/cmmid/ringbp
   preprint: https://doi.org/10.1101/2020.02.08.20021162
@@ -33,18 +28,9 @@
   code: https://github.com/akira-endo/COVID19_backwardtracing
   preprint: https://doi.org/10.1101/2020.08.01.20166595
   open_review: true
-"10.1038/s41467-021-25207-0":
-  code: https://github.com/KITmetricslab/analyses_de_pl
-  preprint: https://doi.org/10.1101/2020.12.24.20248826
-  open_review: true
-  registered: https://osf.io/k8d39
 "10.1126/science.abf9648":
   code: https://doi.org/10.5281/zenodo.4570939
   preprint: https://doi.org/10.1101/2020.12.02.20240648
-"10.7554/elife.70767":
-  code: https://github.com/will-s-hart/UK-generation-times
-  preprint: https://doi.org/10.1101/2021.05.27.21257936
-  open_review: true
 "10.1186/s12916-022-02271-x":
   open_review: https://link.springer.com/article/10.1186/s12916-022-02271-x/peer-review
   code: https://github.com/epiforecasts/covid19-hospital-activity
@@ -118,3 +104,63 @@
   code: https://github.com/epiforecasts/eurohub-ensembles
   preprint: https://doi.org/10.1101/2025.08.09.25331484
   open_review: https://journals.plos.org/ploscompbiol/article/peerReview?id=10.1371/journal.pcbi.1014908
+"10.1371/journal.pcbi.1013987":
+  code: https://github.com/willgreen93/attenuated-renewal
+  open_review: true
+"10.1371/journal.pcbi.1012520":
+  preprint: https://arxiv.org/abs/2405.08841
+"10.1093/jtm/taae136":
+  code: https://github.com/toshiakiasakura/mpox1b_importation_risk
+  preprint: https://doi.org/10.1101/2024.09.09.24313259
+"10.1101/2024.01.12.24301247":
+  code: https://github.com/parksw3/epidist-paper
+"10.1186/s12879-024-08986-x":
+  preprint: https://doi.org/10.1101/2023.08.11.23293400
+  code: https://github.com/EU-ECDC/RShinyCovidApp
+  open_review: https://link.springer.com/article/10.1186/s12879-024-08986-x/peer-review
+"10.1186/s12916-024-03369-0":
+  code: https://github.com/epiforecasts/hospitalcatchment.utils
+  preprint: https://doi.org/10.1101/2023.07.12.23292451
+  open_review: https://link.springer.com/article/10.1186/s12916-024-03369-0/peer-review
+"10.1093/infdis/jiad254":
+  code: https://github.com/hiroaki-murayama/MPX_depletion_susceptibles
+  preprint: https://doi.org/10.1101/2022.11.14.22282286
+"10.1101/2022.06.13.22276321":
+  code: https://github.com/epiforecasts/covid19_ct_pillar2
+"10.1101/2022.03.29.22273101":
+  code: https://github.com/epiforecasts/inc2prev
+"10.48550/arxiv.2205.07090":
+  code: https://github.com/epiforecasts/scoringutils
+"10.1186/s12916-022-02277-5":
+  code: https://github.com/alxsrobert/measles-regional-transmission
+  preprint: https://doi.org/10.1101/2021.05.31.21257977
+  open_review: https://link.springer.com/article/10.1186/s12916-022-02277-5/peer-review
+"10.1186/s12916-021-02107-0":
+  code: https://github.com/jdmunday/CoMix_schools_reopening
+  preprint: https://doi.org/10.1101/2021.03.06.21252964
+  open_review: https://link.springer.com/article/10.1186/s12916-021-02107-0/peer-review
+"10.1101/2021.11.30.21267056":
+  code: https://github.com/epiforecasts/covid19.sgene.utla.rt
+"10.1073/pnas.2112605118":
+  code: https://github.com/akira-endo/schooldynamics_FluMatsumoto14-15
+  preprint: https://doi.org/10.1101/2021.07.08.21259917
+"10.12688/f1000research.28073.2":
+  code: https://github.com/alxsrobert/o2geosocial
+  open_review: true
+"10.1017/s0950268820002058":
+  code: https://github.com/akira-endo/TND-biascorrection
+  preprint: https://doi.org/10.1101/19002691
+"10.1101/2020.11.11.20220962":
+  code: https://github.com/epiforecasts/covid19.forecasts.uk
+"10.1371/journal.pcbi.1007589":
+  code: https://github.com/akira-endo/HHstudy_FluMatsumoto2014-15
+  preprint: https://doi.org/10.1101/527507
+  open_review: true
+"10.1101/19003434":
+  code: https://github.com/sbfnk/measles.katanga
+"10.64898/2026.09.21.26363521":
+  code: https://github.com/epiENGAGE/Within-host-time-delay-paper
+"10.64898/2026.02.23.26346887":
+  code: https://github.com/CDCgov/wastewater-informed-covid-forecasting
+"10.48550/arxiv.2606.07129":
+  code: https://github.com/epiforecasts/evalvariantnowcasthub
