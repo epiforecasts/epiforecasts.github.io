@@ -1,0 +1,1335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>epiforecasts</title>
+<link>https://epiforecasts.io/blog.html</link>
+<atom:link href="https://epiforecasts.io/blog.xml" rel="self" type="application/rss+xml"/>
+<description>epiforecasts team website</description>
+<generator>quarto-1.11.9</generator>
+<lastBuildDate>Wed, 19 Mar 2025 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>How we document stan functions</title>
+  <dc:creator>James Mba Azam</dc:creator>
+  <link>https://epiforecasts.io/posts/2025-03-19-stan-doc-guide/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.7.0/css/academicons.min.css" integrity="sha512-GGGNUPDhnG8LEAEDsjqYIQns+Gu8RBs4j5XGlxl7UfRaZBhCCm5jenJkeJL8uPuOXGqgl8/H1gjlWQDRjd3cUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></p>
+<p><a href="https://mc-stan.org/">Stan</a> is a probabilistic programming language widely used for Bayesian modelling and inference. While Stan excels at expressing complex statistical models, reading and understanding Stan code involves becoming familiar with the specific way models are written down, creating a barrier to using and contributing to models written in Stan. In our group we have used Stan extensively, for example in the <a href="https://epiforecasts.io/EpiNow2/">EpiNow2</a> package for modelling and forecasting infectious disease time series.</p>
+<p>Documenting Stan functions used in packages like EpiNow2 addresses several needs in collaborative research environments. First, it enables knowledge transfer when team members join or leave, ensuring that models remain accessible and maintainable. Second, well-documented functions reduce debugging time and prevent errors by clearly explaining parameter expectations, mathematical formulations, and edge cases. Third, comprehensive documentation facilitates code review processes, allowing colleagues to verify model implementations against theoretical foundations. Finally, public documentation of research code enhances reproducibility and enables the broader scientific community to build upon and validate epidemiological methods.</p>
+<p>This guide explains how we document Stan functions in EpiNow2 using <a href="https://doxygen.nl/">Doxygen</a>. It covers both the technical setup and our documentation approach.</p>
+<section id="documentation-setup" class="level2">
+<h2 class="anchored" data-anchor-id="documentation-setup">Documentation Setup</h2>
+<section id="tools-and-installation" class="level3">
+<h3 class="anchored" data-anchor-id="tools-and-installation">Tools and Installation</h3>
+<p>We use <a href="https://www.doxygen.nl/manual/install.html">Doxygen</a> to generate documentation from our Stan functions. Doxygen requires:</p>
+<ul>
+<li><a href="https://cmake.org/">CMake</a></li>
+<li>A C++ compiler</li>
+</ul>
+<p>Note: For Mac OS Sonoma users, see installation notes <a href="https://github.com/epinowcast/epinowcast/pull/500#issuecomment-2293776407">here</a>.</p>
+</section>
+<section id="directory-structure-and-configuration" class="level3">
+<h3 class="anchored" data-anchor-id="directory-structure-and-configuration">Directory Structure and Configuration</h3>
+<p>Our Stan documentation lives in <code>inst/stan/docs/</code> and consists of:</p>
+<ul>
+<li><code>Doxyfile</code>: Main configuration file that:
+<ul>
+<li>Treats Stan as C++ code via <code>EXTENSION_MAPPING=stan=C++</code></li>
+<li>Points to <code>mainpage.md</code> as the landing page</li>
+<li>Uses <code>DoxygenLayout.xml</code> for custom layout</li>
+</ul></li>
+</ul>
+<p>Generate the <code>Doxyfile</code> using the following command:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">doxygen</span> <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">-g</span></span></code></pre></div></div>
+<p>Alternatively, you can use the <a href="https://www.doxygen.nl/manual/doxywizard_usage.html">doxywizard GUI</a> to generate the <code>Doxyfile</code>.</p>
+<p>You can then edit the <code>Doxyfile</code> to change the configuration.</p>
+</section>
+</section>
+<section id="documentation-organization" class="level2">
+<h2 class="anchored" data-anchor-id="documentation-organization">Documentation Organization</h2>
+<p>The documentation is organized into the following files:</p>
+<ul>
+<li><code>common_docs.stan</code>: Defines function groups</li>
+<li><code>DoxygenLayout.xml</code>: Customizes navigation structure</li>
+<li><code>mainpage.md</code>: Landing page content</li>
+</ul>
+<section id="function-groups" class="level3">
+<h3 class="anchored" data-anchor-id="function-groups">Function Groups</h3>
+<p>We organize functions into logical groups that reflect EpiNow2’s core capabilities:</p>
+<ol type="1">
+<li>Estimation functions:
+<ul>
+<li><code>infections_estimation</code>: Infection trajectory estimation</li>
+<li><code>rt_estimation</code>: Reproduction number estimation</li>
+<li><code>secondary_reports_estimation</code>: Secondary epidemiological reports</li>
+</ul></li>
+<li>Model components and helpers:
+<ul>
+<li><code>observation_model</code>: Observation process functions</li>
+<li><code>estimates_smoothing</code>: Gaussian process smoothing</li>
+<li><code>handlers_and_helpers</code>: Utility functions and parameter handlers</li>
+</ul></li>
+</ol>
+</section>
+</section>
+<section id="license" class="level1">
+<h1>License</h1>
+<p>We also link the license so that potential re-use and attribution are treated in an appropriate manner .</p>
+<section id="navigation-structure" class="level3">
+<h3 class="anchored" data-anchor-id="navigation-structure">Navigation Structure</h3>
+<p>We simplified Doxygen’s default navigation using:</p>
+<ol type="1">
+<li>Custom layout in <code>DoxygenLayout.xml</code>:
+<ul>
+<li>Main overview page</li>
+<li>Function groups organized by purpose</li>
+</ul></li>
+<li>Group definitions in <code>common_docs.stan</code>:
+<ul>
+<li>Groups defined with <code>@defgroup</code></li>
+<li>Functions linked via <code>@ingroup</code></li>
+</ul></li>
+</ol>
+</section>
+<section id="groupings" class="level3">
+<h3 class="anchored" data-anchor-id="groupings">Groupings</h3>
+<ol type="1">
+<li>The estimation functions are grouped by purpose and treated as the main groups.</li>
+<li>The observation model functions are linked to all main groups since they are used in all estimation groups.</li>
+<li>The helper functions are grouped under handlers_and_helpers and are used in all estimation groups since they are not specific to a single estimation group.</li>
+</ol>
+</section>
+<section id="doxygen-tags" class="level2">
+<h2 class="anchored" data-anchor-id="doxygen-tags">Doxygen tags</h2>
+<p>doxygen has a <a href="https://www.doxygen.nl/manual/commands.html">comprehensive list of tags/commands</a> for documenting code.</p>
+<section id="key-doxygen-tags" class="level3">
+<h3 class="anchored" data-anchor-id="key-doxygen-tags">Key doxygen tags</h3>
+<p>Every function uses the following doxygen tags:</p>
+<ul>
+<li><span class="citation" data-cites="brief">@brief</span> to provide a short one-line description</li>
+<li><span class="citation" data-cites="param">@param</span> to provide a description of the function’s parameters</li>
+<li><span class="citation" data-cites="return">@return</span> to provide a description of the function’s return value</li>
+<li><span class="citation" data-cites="ingroup">@ingroup</span> to provide the group that the function belongs to</li>
+<li><span class="citation" data-cites="see">@see</span> to provide a link to a related function</li>
+<li><span class="citation" data-cites="example">@example</span> to provide an example of the function</li>
+</ul>
+<p>Used in a function file as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode stan code-with-copy"><code class="sourceCode stan"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">/**</span></span>
+<span id="cb2-2"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> * @brief Short one-line description</span></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> *</span></span>
+<span id="cb2-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> * Detailed description of the function's purpose and behavior.</span></span>
+<span id="cb2-5"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> * Include mathematical formulas if relevant.</span></span>
+<span id="cb2-6"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> *</span></span>
+<span id="cb2-7"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> * </span><span class="an" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">@param</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> x Input parameter description</span></span>
+<span id="cb2-8"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> * </span><span class="an" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">@return</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> Description of return value</span></span>
+<span id="cb2-9"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> * @ingroup group_name</span></span>
+<span id="cb2-10"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> */</span></span></code></pre></div></div>
+</section>
+</section>
+<section id="webpage-themes" class="level2">
+<h2 class="anchored" data-anchor-id="webpage-themes">Webpage Themes</h2>
+<p>We use the awesome <a href="https://jothepro.github.io/doxygen-awesome-css/index.html">doxygen-awesome</a> theme to override the default doxygen theme and prettify it. In short, we:</p>
+<ul>
+<li>Download the relevant files, i.e., all files beginning with <code>doxygen-awesome-</code>, from the root directory of the doxygen-awesome <a href="https://github.com/jothepro/doxygen-awesome-css">github repository</a> and place them in the <code>./inst/stan/docs</code> directory.</li>
+<li>Link the theme file (<code>doxygen-awesome.css</code>) to the <code>./inst/stan/docs/doxyfile</code> by passing the path to the <code>doxygen-awesome.css</code> file to the <code>doxyfile</code> tag <code>HTML_EXTRA_STYLESHEET</code>.<br>
+The default doxygen-awesome theme can be modified by modifying the css and javascript file and there are great examples <a href="https://github.com/jothepro/doxygen-awesome-css/discussions/13">here</a>.</li>
+</ul>
+</section>
+<section id="building-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="building-documentation">Building Documentation</h2>
+<section id="manually" class="level3">
+<h3 class="anchored" data-anchor-id="manually">Manually</h3>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Navigate to the directory with the Doxyfile</span></span>
+<span id="cb3-2"><span class="bu" style="color: null;
+background-color: null;
+font-style: inherit;">cd</span> inst/stan/docs</span>
+<span id="cb3-3"></span>
+<span id="cb3-4"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># Generate the documentation</span></span>
+<span id="cb3-5"><span class="ex" style="color: null;
+background-color: null;
+font-style: inherit;">doxygen</span> Doxyfile</span></code></pre></div></div>
+</section>
+</section>
+<section id="automatically-with-github-actions" class="level2">
+<h2 class="anchored" data-anchor-id="automatically-with-github-actions">Automatically with GitHub Actions</h2>
+<p>Documentation can be automatically built and deployed to github pages as part of the release process. This is triggered when a pull request is merged into main. See the workflow we use <a href="https://github.com/mattnotmitt/doxygen-action">here</a>.</p>
+</section>
+<section id="viewing-the-documentation" class="level2">
+<h2 class="anchored" data-anchor-id="viewing-the-documentation">Viewing the Documentation</h2>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://epiforecasts.io/posts/2025-03-19-stan-doc-guide/epinow2_stan_reference.png" class="img-fluid figure-img"></p>
+<figcaption>EpiNow2’s stan reference</figcaption>
+</figure>
+</div>
+<section id="local-access" class="level3">
+<h3 class="anchored" data-anchor-id="local-access">Local Access</h3>
+<p>Open <code>inst/stan/docs/html/index.html</code> in your browser</p>
+</section>
+<section id="online-access" class="level3">
+<h3 class="anchored" data-anchor-id="online-access">Online Access</h3>
+<p>Visit <a href="https://epiforecasts.github.io/EpiNow2/stan/" class="uri">https://epiforecasts.github.io/EpiNow2/stan/</a></p>
+<p>Note that this is only possible when it has been merged into the <code>main</code> branch and hence, rendered by the workflow.</p>
+</section>
+<section id="navigation" class="level3">
+<h3 class="anchored" data-anchor-id="navigation">Navigation</h3>
+<p>The documentation provides:</p>
+<ul>
+<li>Function index</li>
+<li>Group listings</li>
+<li>Search functionality</li>
+<li>Cross-referenced source code</li>
+<li>Call and caller graphs showing the relationship between functions.</li>
+</ul>
+</section>
+</section>
+<section id="challenges-with-doxygen" class="level2">
+<h2 class="anchored" data-anchor-id="challenges-with-doxygen">Challenges with Doxygen</h2>
+<p>One of the neat features of R’s <a href="https://roxygen2.r-lib.org/index.html">Roxygen2</a> package is the ability to intelligently deduplicate documentation. For example, if you have a function that is a simple wrapper around another function, you can use the <code>@inheritparams</code> tag to inherit the documentation from the original function. Doxygen does not have this feature. It has the <code>@copydoc</code> tag which can be used to copy the documentation from another function but this does not allow for intelligent deduplication. Doxygen’s <code>@copydoc</code> allows you to use shared parameter documentation but is not as smart as the Roxygen2 <code>@inheritparams</code> to order parameter names according to the function signature and to remove unused parameters. If you want the arguments in the order that they appear in the function signature, you end up with two “Parameter” headings, one coming from the documentation of specific params using <span class="citation" data-cites="param">@param</span> and another coming from <code>@copydoc</code>. Unfortunately, there is no way to configure <code>@copydoc</code> to at least drop its section title. You can get one heading if you document the other parameters after the <code>@copydoc</code> call but that means the parameters are not in the order in which they appear in the function signature.</p>
+</section>
+<section id="resources" class="level2">
+<h2 class="anchored" data-anchor-id="resources">Resources</h2>
+<p>Doxygen documention:</p>
+<ul>
+<li><a href="https://www.doxygen.nl/manual/index.html">Doxygen manual</a></li>
+<li><a href="https://github.com/doxygen/doxygen">Doxygen gitHub</a></li>
+</ul>
+<p>Style guides:</p>
+<ul>
+<li><a href="https://micro-os-plus.github.io/develop/doxygen-style-guide/">Doxygen style guide</a></li>
+<li><a href="https://openocd.org/doc-release/doxygen/styledoxygen.html">OpenOCD Doxygen Style Guide</a></li>
+<li><a href="https://www.cs.cmu.edu/~410/doc/doxygen.html">Carnegie Mellon Department of Computer Science Coding Style and Doxygen Documentation</a></li>
+<li><a href="https://mesos.apache.org/documentation/latest/doxygen-style-guide/">Apache Mesos Doxygen Style Guide</a></li>
+</ul>
+<p>Doxygen in action:</p>
+<ul>
+<li><a href="https://www.doxygen.nl/examples.html">Doxygen in action</a></li>
+<li><a href="https://github.com/doxygen/doxygen/tree/master/examples">Doxygen command examples</a></li>
+<li><a href="https://spinkney.github.io/helpful_stan_functions/">Helpful stan functions</a></li>
+</ul>
+
+
+</section>
+</section>
+
+<script data-goatcounter="https://epiforecasts.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{mba_azam2025,
+  author = {Mba Azam, James},
+  title = {How We Document Stan Functions},
+  date = {2025-03-19},
+  url = {https://epiforecasts.io/posts/2025-03-19-stan-doc-guide/},
+  doi = {10.59350/rf7qp-vy339},
+  langid = {en}
+}
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-mba_azam2025" class="csl-entry quarto-appendix-citeas">
+Mba Azam, James. 2025. <span>“How We Document Stan Functions.”</span>
+March 19. <a href="https://doi.org/10.59350/rf7qp-vy339">https://doi.org/10.59350/rf7qp-vy339</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://epiforecasts.io/posts/2025-03-19-stan-doc-guide/</guid>
+  <pubDate>Wed, 19 Mar 2025 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Dealing with flaky GitHub Actions</title>
+  <dc:creator>Hugo Gruson</dc:creator>
+  <link>https://epiforecasts.io/posts/2022-04-11-robust-actions/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.7.0/css/academicons.min.css" integrity="sha512-GGGNUPDhnG8LEAEDsjqYIQns+Gu8RBs4j5XGlxl7UfRaZBhCCm5jenJkeJL8uPuOXGqgl8/H1gjlWQDRjd3cUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></p>
+<p><a href="../../people.html">Our team</a>’s work relies a lot on <a href="https://hugogruson.fr/slides/2022-03-17_github-actions/">GitHub Actions</a>. Besides the usual workflows to check our code for errors after each push <sup>1</sup>, we also have many workflows set up to run on a schedule.</p>
+<p>For example, we have scheduled workflow to:</p>
+<ul>
+<li><a href="https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/ba4df04e0f0454655ec1d0bd803c456cb3cf3a6d/.github/workflows/ensemble.yml">automatically build an ensemble forecast from weekly forecast contributed by teams in the European Covid-19 Forecast Hub</a></li>
+<li><a href="https://github.com/epiforecasts/eval-germany-sp-nowcasting/blob/836fd9a8c71a085d4dd8ef1dd09168bddecef1f4/.github/workflows/build-and-publish-documentation.yaml">automatically build nowcasts of COVID-19 Hospital Admissions in Germany and the related documentation</a></li>
+<li><a href="https://github.com/epiforecasts/covidregionaldata/tree/master/.github/workflows">check that data streams in covidregionaldata are still up and running</a></li>
+<li><a href="https://github.com/epiforecasts/covid19.lfd.england/blob/5883ddd026d00b8f7ad066738852cac63678fad4/.github/workflows/lfd.yaml">download and process weekly LFD testing data in England</a></li>
+<li>etc.</li>
+</ul>
+<p>However, with time, we became frustrated because these workflows were unreliable and <a href="https://en.wiktionary.org/wiki/flaky"><em>flaky</em></a>: they were valid workflows but were failing from time to time for seemingly random reasons. Most of the time, just re-running them fixed the issue. In this blog post, I detail how to limit the number of false-positive failures in your GitHub Action workflows.</p>
+<p>For demonstration purposes, let’s look at a simple workflow we might have used before reading this blog post:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">on</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">schedule</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cron</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0 12 * * *"</span></span>
+<span id="cb1-4"></span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">jobs</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scheduled-job</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runs-on</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ubuntu-20.04</span></span>
+<span id="cb1-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">steps</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb1-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> actions/checkout@v2</span></span>
+<span id="cb1-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span></span>
+<span id="cb1-11"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> r-lib/actions/setup-r@v2</span></span>
+<span id="cb1-12"></span>
+<span id="cb1-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Install R dependencies</span></span>
+<span id="cb1-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">run</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Rscript -e 'install.packages("tidyverse")'</span></span>
+<span id="cb1-15"></span>
+<span id="cb1-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">run</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Rscript 'script.R'</span></span>
+<span id="cb1-17"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span></span>
+<span id="cb1-18"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Commit files</span></span>
+<span id="cb1-19"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">      run</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">: </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">|</span></span>
+<span id="cb1-20">        git config user.email "action@github.com"</span>
+<span id="cb1-21">        git config user.name "GitHub Actions"</span>
+<span id="cb1-22">        git add --all</span>
+<span id="cb1-23">        git commit -m "New results"</span>
+<span id="cb1-24">        git push </span></code></pre></div></div>
+<section id="dealing-with-failing-workflows-in-the-moment" class="level1">
+<h1>Dealing with failing workflows in the moment</h1>
+<section id="notify-the-whole-team-when-a-scheduled-workflow-fails" class="level2">
+<h2 class="anchored" data-anchor-id="notify-the-whole-team-when-a-scheduled-workflow-fails">Notify the whole team when a scheduled workflow fails</h2>
+<p>While workflows set up to run on pushes or pull requests will notify the user who committed the changes, scheduled workflows will notify the latest user who modified this workflow, as indicated in <a href="https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#schedule">the official documentation</a>:</p>
+<blockquote class="blockquote">
+<p>Notifications for scheduled workflows are sent to the user who last modified the cron syntax in the workflow file. For more information, see “<a href="https://docs.github.com/en/actions/guides/about-continuous-integration#notifications-for-workflow-runs">Notifications for workflow runs</a>”.</p>
+</blockquote>
+<p>This behaviour is often not desirable when working collaboratively as a team on a project. In this situation, you would like every member of team to be notified. So that everybody can contribute to fix the issue.</p>
+<p>There are many ways to circumvent this behaviour, such as adding a step to notify failures on a mailing list or a slack channel <sup>2</sup>. In the Epiforecasts team, we decided to keep everything in the open and automatically open an issue when one of our scheduled workflow is failing. This is achieved by <a href="https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/blob/c65b2b0514303834e3f072df08e44e1a03bfca9e/.github/action-issue-template.md">creating a file named <code>action-issue-template.md</code> in your <code>.github</code> folder with the following content</a>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode md code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb2-2"><span class="an" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">title:</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"> "{{ env.GITHUB_WORKFLOW }} GitHub Action is failing"</span></span>
+<span id="cb2-3"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">---</span></span>
+<span id="cb2-4"></span>
+<span id="cb2-5">See <span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">[</span><span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">the action log</span><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">](https://github.com/{{ env.GITHUB_ACTION_REPOSITORY }}/actions/runs/{{ env.GITHUB_RUN_ID }})</span> </span>
+<span id="cb2-6">for more details.</span></code></pre></div></div>
+<p>and then appending the following instruction at the end of all your workflows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb3-1"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Create issue about failure</span></span>
+<span id="cb3-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> failure()</span></span>
+<span id="cb3-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> JasonEtco/create-an-issue@v2.5.0</span></span>
+<span id="cb3-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">env</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb3-5"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">GITHUB_TOKEN</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb3-6"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">with</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb3-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filename</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> .github/action-issue-template.md</span></span></code></pre></div></div>
+<p>You can see an example of this used in the wild with <a href="https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe/issues/1476">this issue</a>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>I recommend that you always specify the reason for the failure (and the fix if it’s not a spurious failure as detailed below) when closing the issue. It will serve as a log and with time, it will help you identify which parts of your workflows should be improved.</p>
+</div>
+</div>
+</section>
+<section id="running-workflows-manually" class="level2">
+<h2 class="anchored" data-anchor-id="running-workflows-manually">Re-running workflows manually</h2>
+<p>When your workflows fail, you might want to re-run them. You have two options here:</p>
+<ul>
+<li><p><a href="https://docs.github.com/en/actions/managing-workflow-runs/re-running-workflows-and-jobs">re-rerunning the workflow via GitHub dedicated re-run feature</a>. <a href="https://github.blog/2022-03-16-save-time-partial-re-runs-github-actions/">Since March 2022, you can even re-run failing jobs only</a>. No need to re-run all jobs every time!</p></li>
+<li><p>adding an extra trigger to be able to start workflows manually in addition to the scheduled run:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">on</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">workflow_dispatch</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">schedule</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb4-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cron</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0 12 * * *"</span></span></code></pre></div></div></li>
+</ul>
+</section>
+</section>
+<section id="dealing-with-flaky-workflows-at-the-root-possible-sources-of-flakiness-and-how-to-fix-them" class="level1">
+<h1>Dealing with flaky workflows at the root: possible sources of flakiness and how to fix them</h1>
+<section id="failure-during-initial-set-up" class="level2">
+<h2 class="anchored" data-anchor-id="failure-during-initial-set-up">Failure during initial set up</h2>
+<section id="r-installation" class="level3">
+<h3 class="anchored" data-anchor-id="r-installation">R installation</h3>
+<p>By default, <code>r-lib/actions/setup-r@v2</code> <a href="https://github.com/r-lib/actions/blob/cb37ed856450354e2e1d5b4a85275fb8755eff49/setup-r/lib/installer.js#L556-L635">installs R from various sources depending on the exact version and operating system</a>:</p>
+<ul>
+<li><a href="https://mac.r-project.org/" class="uri">https://mac.r-project.org/</a></li>
+<li><a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a></li>
+<li><a href="https://cdn.rstudio.com/" class="uri">https://cdn.rstudio.com/</a></li>
+<li><a href="https://api.r-hub.io/" class="uri">https://api.r-hub.io/</a></li>
+<li>etc.</li>
+</ul>
+<p>Any of these URLs can fail for any reason and cause your R installation, and therefore your whole action to fail.</p>
+<p>It is possible to reduce this possible source of breakage, at the expense of some flexibility (you cannot install the R version of your choice). Setting the <code>install-r</code> to <code>false</code> will use the R version provided in the GitHub Actions container and not try to install it from external sources:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb5-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> r-lib/actions/setup-r@v1</span></span>
+<span id="cb5-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">with</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb5-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install-r</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">false</span></span></code></pre></div></div>
+<p>But this alone is not enough to remove all calls to external resources. Even when <code>install-r</code> is set to <code>false</code>, the <code>setup-r</code> action checks if the requested version matches the installed version. And, unless specified otherwise, the R version requested by default is <code>'release'</code>, which means an call to an external resource (in this case <code>api.r-hub.io</code>) is required to convert this version ‘number’ into an actual number such as R 4.2.0. If you want to avoid all external calls, you then also have to specify a numeric version number such as:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb6-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> r-lib/actions/setup-r@v1</span></span>
+<span id="cb6-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">with</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb6-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install-r</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">false</span></span>
+<span id="cb6-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">r-version</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span></span></code></pre></div></div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can specify a more precise version number but it might be good to only specify the major version number to limit the breakages due to mismatches during the requested and available version. R is very stable within major versions so you’re not likely to have failure due to API changes even if you specify the minor or patch version number.</p>
+</div>
+</div>
+</section>
+<section id="r-packages-installation" class="level3">
+<h3 class="anchored" data-anchor-id="r-packages-installation">R packages installation</h3>
+<p>R packages installation is a common source of failures. This can be caused by an incompatibility between package new versions or by intermittent failure while trying to reach the CRAN-like server.</p>
+<p>A good solution to both source of issues if to pin the exact version number and install/load packages from a local cache. This is easily achieved thanks to the <a href="https://rstudio.github.io/renv/">renv package</a>.</p>
+<p>In practice, rather than manually installing package or using the <a href="https://github.com/r-lib/actions/tree/v2-branch/setup-r-dependencies"><code>r-lib/actions/setup-r-dependencies</code> action</a>, you should create a lockfile <sup>3</sup> and use the <a href="https://github.com/r-lib/actions/tree/v2-branch/setup-renv"><code>r-lib/actions/setup-renv</code> action</a>:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb7-1"><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> r-lib/actions/setup-renv@v2</span></span></code></pre></div></div>
+</section>
+</section>
+<section id="unaccessible-http-resources" class="level2">
+<h2 class="anchored" data-anchor-id="unaccessible-http-resources">Unaccessible HTTP resources</h2>
+<p>In addition to the R install &amp; cran-like servers, you might use some internet resources in your script. And these resources might be unavailable for a number of reasons. In this case, it is good practice to retry your request. But in a polite way! The web server might be unavailable because it’s already overloaded with requests. Repeatedly retrying would just make the situation worse in this case.</p>
+<p>The polite way to retry HTTP requests is to use exponential back off. Each time you one of your request fails, you increase the waiting time until you make a new one.</p>
+<p>Fortunately, you do not have to code the retry feature &amp; the exponential back off yourself as it is already implemented in common R packages, such as <a href="https://httr2.r-lib.org/">httr2</a>, via the <code>req_retry()</code> function:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(httr2)</span>
+<span id="cb8-2"></span>
+<span id="cb8-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">request</span>(<span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"https://httpbin.org/status/500"</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb8-4">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">req_verbose</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">|&gt;</span></span>
+<span id="cb8-5">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">req_retry</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">max_tries =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">3</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">%&gt;%</span></span>
+<span id="cb8-6">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">req_perform</span>()</span></code></pre></div></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>-&gt; GET /status/500 HTTP/2
+-&gt; Host: httpbin.org
+-&gt; User-Agent: httr2/1.2.2 r-curl/7.1.0 libcurl/8.18.0
+-&gt; Accept: */*
+-&gt; Accept-Encoding: deflate, gzip, br, zstd
+-&gt; 
+&lt;- HTTP/2 500 
+&lt;- access-control-allow-credentials: true
+&lt;- access-control-allow-origin: *
+&lt;- access-control-expose-headers: Retry-After, RateLimit, RateLimit-Policy, WWW-Authenticate
+&lt;- content-length: 0
+&lt;- content-type: text/html; charset=utf-8
+&lt;- x-content-type-options: nosniff
+&lt;- date: Wed, 18 Nov 2026 23:06:04 GMT
+&lt;- </code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in `req_perform()`:
+! HTTP 500 Internal Server Error.</code></pre>
+</div>
+</div>
+</section>
+<section id="git-repository-out-of-sync" class="level2">
+<h2 class="anchored" data-anchor-id="git-repository-out-of-sync"><code>git</code> repository out of sync</h2>
+<p>If your workflow takes a long time to run, you might get the following message when you try to commit your results:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode html code-with-copy"><code class="sourceCode html"><span id="cb11-1">To https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe !</span>
+<span id="cb11-2">[rejected] main -&gt; main (fetch first)</span>
+<span id="cb11-3">error: failed to push some refs to 'https://github.com/covid19-forecast-hub-europe/covid19-forecast-hub-europe'</span>
+<span id="cb11-4">hint: Updates were rejected because the remote contains work that you do </span>
+<span id="cb11-5">hint: not have locally. This is usually caused by another repository pushing</span>
+<span id="cb11-6">hint: to the same ref. You may want to first integrate the remote changes</span>
+<span id="cb11-7">hint: (e.g., 'git pull ...') before pushing again.</span>
+<span id="cb11-8">hint: See the 'Note about fast-forwards' in 'git push --help' for details.</span>
+<span id="cb11-9">Error: Process completed with exit code 1.</span></code></pre></div></div>
+<p>As helpfully mentioned in the error message, you need to run <code>git pull ...</code> before pushing to make sure your local git copy is up-to-date. However, if you do this while you have local commits, the default git set-up will create an ugly merge commit. To avoid the merge commit, instead of running a simple <code>git pull ...</code>, you should run <code>git pull --rebase ...</code>. Just note that this will not save you if you have merge conflicts.</p>
+</section>
+<section id="github-itself-is-out-of-service" class="level2">
+<h2 class="anchored" data-anchor-id="github-itself-is-out-of-service">GitHub itself is out of service</h2>
+<p>One last option is that GitHub itself, or at least one of its services, is down. You can check this by visiting the dedicated status page: <a href="https://www.githubstatus.com/" class="uri">https://www.githubstatus.com/</a> or even be proactive by subscribing to GitHub status alerts.</p>
+<p>This situation should be exceptional and your best bet is probably to wait until everything is back to normal and re-run your failing workflows. If the scheduled job is time sensitive, you can also run it locally.</p>
+<p>If this kind of service interruption happens too frequently for your taste but you still like the GitHub Actions syntax, you might want to try <a href="https://docs.github.com/en/actions/hosting-your-own-runners/about-self-hosted-runners">spinning your own self-hosted runner</a>.</p>
+</section>
+</section>
+<section id="final-summary-the-new-and-improved-workflow" class="level1">
+<h1>Final summary: the new and improved workflow</h1>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode yaml code-with-copy"><code class="sourceCode yaml"><span id="cb12-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">on</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-2"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">workflow_dispatch</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-3"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">schedule</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-4"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">cron</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"0 12 * * *"</span></span>
+<span id="cb12-5"></span>
+<span id="cb12-6"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">jobs</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-7"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">  </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scheduled-job</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-8"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runs-on</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ubuntu-20.04</span></span>
+<span id="cb12-9"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">steps</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-10"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> actions/checkout@v2</span></span>
+<span id="cb12-11"></span>
+<span id="cb12-12"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> r-lib/actions/setup-r@v2</span></span>
+<span id="cb12-13"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">with</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-14"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">install-r</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">false</span></span>
+<span id="cb12-15"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">r-version</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4</span></span>
+<span id="cb12-16"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">use-public-rspm</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">true</span></span>
+<span id="cb12-17"></span>
+<span id="cb12-18"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> r-lib/actions/setup-renv@v2</span></span>
+<span id="cb12-19"></span>
+<span id="cb12-20"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">run</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Rscript 'script.R'</span></span>
+<span id="cb12-21"></span>
+<span id="cb12-22"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Commit files</span></span>
+<span id="cb12-23"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">      run</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">: </span><span class="ch" style="color: #20794D;
+background-color: null;
+font-style: inherit;">|</span></span>
+<span id="cb12-24">        git config user.email "action@github.com"</span>
+<span id="cb12-25">        git config user.name "GitHub Actions"</span>
+<span id="cb12-26">        git add --all</span>
+<span id="cb12-27">        git commit -m "New results" || echo "No changes to commit"</span>
+<span id="cb12-28">        git pull --rebase origin main</span>
+<span id="cb12-29">        git push</span>
+<span id="cb12-30"></span>
+<span id="cb12-31"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">    </span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">-</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">name</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> Create issue about failure</span></span>
+<span id="cb12-32"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">if</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> failure() &amp;&amp; github.event_name != 'workflow_dispatch'</span></span>
+<span id="cb12-33"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">uses</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> JasonEtco/create-an-issue@v2.5.0</span></span>
+<span id="cb12-34"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">env</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-35"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">GITHUB_TOKEN</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb12-36"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">      </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">with</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span></span>
+<span id="cb12-37"><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">        </span><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">filename</span><span class="kw" style="color: #003B4F;
+background-color: null;
+font-weight: bold;
+font-style: inherit;">:</span><span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;"> .github/action-issue-template.md</span></span></code></pre></div></div>
+
+
+</section>
+
+
+<script data-goatcounter="https://epiforecasts.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>You can visit <a href="https://github.com/r-lib/actions" class="uri">https://github.com/r-lib/actions</a> for a great list of such actions.↩︎</p></li>
+<li id="fn2"><p>Another good approach is implemented in the <a href="https://github.com/r-hub/cransays/blob/ed7a844f562e84857eb2d5e72ffbaab569b502ad/.github/workflows/render-dashboard.yml#L71-L80">cransays repository</a>.↩︎</p></li>
+<li id="fn3"><p>You can use renv directly (e.g., by calling <code>renv::init()</code>), or other derived packages such as <a href="https://github.com/MilesMcBain/capsule">capsule</a>↩︎</p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{gruson2022,
+  author = {Gruson, Hugo},
+  title = {Dealing with Flaky {GitHub} {Actions}},
+  date = {2022-04-11},
+  url = {https://epiforecasts.io/posts/2022-04-11-robust-actions/},
+  doi = {10.59350/fn684-kz311},
+  langid = {en}
+}
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-gruson2022" class="csl-entry quarto-appendix-citeas">
+Gruson, Hugo. 2022. <span>“Dealing with Flaky GitHub Actions.”</span>
+April 11. <a href="https://doi.org/10.59350/fn684-kz311">https://doi.org/10.59350/fn684-kz311</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://epiforecasts.io/posts/2022-04-11-robust-actions/</guid>
+  <pubDate>Mon, 11 Apr 2022 00:00:00 GMT</pubDate>
+</item>
+<item>
+  <title>Reflections on two years estimating effective reproduction numbers</title>
+  <dc:creator>Sam Abbott</dc:creator>
+  <dc:creator>Sebastian Funk</dc:creator>
+  <link>https://epiforecasts.io/posts/2022-03-25-rt-reflections/</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.7.0/css/academicons.min.css" integrity="sha512-GGGNUPDhnG8LEAEDsjqYIQns+Gu8RBs4j5XGlxl7UfRaZBhCCm5jenJkeJL8uPuOXGqgl8/H1gjlWQDRjd3cUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></p>
+<p>31 March, in just under a weeks time, will mark the last day we are producing global national and subnational Rt estimates and nowcasts at https://epiforecasts.io/covid/posts/global/ - more than 2 years after we published the first set of estimates. This is a good opportunity to reflect on what we have learned from this, what went well and what went wrong, and what we would aim to do better next time.</p>
+<section id="an-attempt-to-design-a-useful-resource-for-situational-awareness" class="level2">
+<h2 class="anchored" data-anchor-id="an-attempt-to-design-a-useful-resource-for-situational-awareness">An attempt to design a useful resource for situational awareness</h2>
+<p>We started this with the aim to provide both decision makers and the general public with real-time information on how the epidemic was progressing, initially in China, then in a small subset of countries, and ultimately in different parts of the world across different geographic scales. We felt at the time that the most useful quantity to estimate was the time-varying effective reproduction number (Rt), as it characterises the exponential behaviour of transmission, captures some of the known epidemiology of infectious diseases, can be linked to when infections occur in a meaningful way, and can be used to quantify the scale of the effort required to turn over an epidemic.</p>
+<p>In order to estimate this from the surveillance case data being published by countries around the world and collated by <a href="https://coronavirus.jhu.edu/data">Johns Hopkins University</a>, we had to develop methods <span class="citation" data-cites="rtwebsite-1 rtwebsite-2">(S. Abbott et al. 2020; Sam Abbott, Hellewell, Thompson, et al. 2020)</span> that account for reporting artefacts and delays whilst taking into account emerging insights on the epidemiology of SARS-CoV-2, especially incubation and generation times. Our initial methodology was developed in the first few months of the pandemic (released in the <code>EpiNow</code> R package<sup>1</sup> <span class="citation" data-cites="epinow">(Sam Abbott, Hellewell, Munday, et al. 2020)</span>), with our updated approach (released in the <code>EpiNow2</code> R package<sup>2</sup> <span class="citation" data-cites="epinow2">(Sam Abbott, Hellewell, Sherratt, et al. 2020)</span>) being developed after discussions with colleagues on the limitations of our original implementation <span class="citation" data-cites="Gostic2020-vw">(Gostic et al. 2020)</span>. These packages ended up being the workhorses behind the web site and were used to provide daily updates of the estimates for almost all countries of the world, as well as several subnational geographies that we added over time, and in both our research group and in independent research groups for other projects.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://epiforecasts.io/posts/2022-03-25-rt-reflections/example-rt.png" class="img-fluid figure-img" width="1800"></p>
+<figcaption>An example figure showing effective reproduction number estimates over time from a subset of countries.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="assessing-utility" class="level2">
+<h2 class="anchored" data-anchor-id="assessing-utility">Assessing utility</h2>
+<p>So was it useful? Hard to tell. The website where we presented our estimates has had just over 500 thousand unique users since April 2020 with 1.2 million page views (with 800 thousand of these being for our US estimates, 120 thousand for our global estimates, and only 20 thousand for our methods - similar to the number of page view for our Swedish estimates). Usage has reduced over time but 8 thousand unique users still accessed the site in the last month.</p>
+<p>The estimates themselves were processed regularly by various national international organisations such as the World Health Organization (WHO), especially in the early parts of the epidemic. That said, we don’t know whether any of this gave any policy maker any useful information that helped them make better decisions or helped inform members of the public about their individual risk. Even if our estimates did help inform decision makers it is also not clear how much the evidence from our estimates improved on that available from other sources.</p>
+<p>In its current and now final form, the web site still provides a somewhat unique resource for tracking the epidemic as we are not aware of another dashboard that collates both national and subnational Rt estimates from across the globe. That said, other websites like <a href="https://ourworldindata.org/coronavirus">ourworldindata</a> or the <a href="https://coronavirus.data.gov.uk/">UK dashboard</a> present more comprehensive raw surveillance information in a more interactive way, arguably rendering large parts of our public facing work obsolete.</p>
+</section>
+<section id="feeding-into-analysis-pipelines" class="level2">
+<h2 class="anchored" data-anchor-id="feeding-into-analysis-pipelines">Feeding into analysis pipelines</h2>
+<p>A perhaps more valuable contribution of our work was the publication of the estimates in numerical form that we provided on <a href="https://github.com/epiforecasts/covid-rt-estimates">GitHub</a> alongside the visualisations on the web site. These were used in <a href="https://scholar.google.co.uk/scholar?oi=bibs&amp;hl=en&amp;cites=101206636044215432,8611489539131682391&amp;as_sdt=5">numerous publications</a>, including some by researchers that did not interact with us, making it hard for us to assess whether they were fully aware of the limitations underlying the estimates which are outlined in our companion paper <span class="citation" data-cites="rtwebsite-2">(Sam Abbott, Hellewell, Thompson, et al. 2020)</span>.</p>
+<p>We used the estimates ourselves in various downstream analyses, e.g.&nbsp;to monitor or local variation<sup>3</sup>, to investigate surveillance bias <span class="citation" data-cites="Sherratt2021-ko">(Sherratt et al. 2021)</span>, to estimate transmission advantage of new variants (for Alpha <span class="citation" data-cites="Davies2021-gz">(Davies et al. 2021)</span>, and for Delta <span class="citation" data-cites="Abbott2021-df">(Abbott et al. 2021)</span>) or to estimate severity of infection<sup>4</sup> over the course of the epidemic which was used in other work <span class="citation" data-cites="Vohringer2021-ib">(Vöhringer et al. 2021)</span> on the emergence and spread of the Alpha variant. Using routinely generated outputs of models as inputs to other models in such pipelines can be useful for multiple reasons. Primarily, this approach allows for rapid development when novel additions are needed in real-time with each step in the process dealing with some subset of the problem. It can also allow for access to novel methodology to be democratised in a way that is difficult with a complex model as the output can be used with potentially only a limited understanding of the implementation. Of course this can cause issues if the limitations of the method are poorly communicated. We have also observed our estimates being used by researchers from a range of backgrounds, with a range of tools at their disposal, that would be difficult to apply directly to the raw data prior to our domain knowledge based processing. Lastly, for complex problems chaining a series of models into a pipeline can reduce the computational burden and hence make analysis tractable when computational resources are limited. However, this approach may introduce bias to downstream results, potentially in ways that are difficult to diagnose or predict, as it can be difficult to fully incorporate uncertainty from all steps of the analysis pipeline into subsequent steps.</p>
+</section>
+<section id="unanticipated-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="unanticipated-challenges">Unanticipated challenges</h2>
+<p>Our desire to provide a resource that was up-to-date, accurate and comprehensive posed some practical challenges. First of all, any epidemiological estimate is only ever as good as the data and method that is used to produce it. While our method was able to adjust for weekly effects, it hit its limits when e.g.&nbsp;reporting patterns changed or included unprecedented spikes on individual days. Additionally, estimating unobserved infections requires a good quantification of the incubation period, reporting delays, and generation time. These quantities can vary over time and by location, and are complex to estimate. For many regions and time periods specific estimates were not available and so we had to make additional assumptions to account for this. Most problematically, the quality, reliability and meaning of the data from different countries varies, and we did not have the capacity to manually curate or interpret the estimates we generated with respect to this underlying variation.</p>
+<p>Throughout the pandemic we attempted to link with local stakeholders to address some of these issues but this proved to be diffcult. We approached this in two ways. Firstly, by approaching other researchers and trying to link with them to jointly manage estimates for a particular geography related to their interests. We also released our backend data cleaning code as an open source R package, <code>covidregionaldata</code><sup>5</sup> <span class="citation" data-cites="covidregionaldata">(Palmer et al. 2021)</span>, for use by others. This allowed several datasets to be contributed by others and these could then be processed using our tooling to produce estimates with no further involvement from those maintaining access to the data itself. Of these approaches, the second approach where we maintained the front-end and estimation pipeline whilst making it easy to contribute data (and providing a useful service, i.e data cleaning, whilst doing so) was the more successful but ultimately this was a very challenging aspect of the project and we were largely unable to manage these collaborations effectively enough for this to lead to lasting collaborations. Because we did not have the capacity to manually inspect the data and estimates on a daily basis we sometimes published nonsensical estimates. Lack of capacity also meant that we struggled to explain how these came about and this caused some consternation<sup>6</sup> at times amongst visitors to the web site. This was a particular issue for subnational estimates in countries without a unified surveillance framework, such as the USA, where reporting patterns and practices changed state by state throughout the pandemic.</p>
+<p>Other challenges were of more technical nature. Running a model daily on thousands of national and sub national data sets takes a huge amount of computation when an appropriately complex model is used. We benefited from a very generous grant from <a href="https://www.microsoft.com/en-us/ai/ai-for-health">Microsoft AI for Health</a> that enabled us to do this (and Microsoft, too, used our estimates in their own visualisations<sup>7</sup>), and it is the end of that grant that is prompting us to conclude this work. We also received a large amount of technical help from the UK Met Office in making our set up for distributed computing<sup>8</sup> more sustainable which required a skillset that is difficult to acquire or sustain in academia.</p>
+<p>Finally, as for many research groups responding to the pandemic, we have been working significantly over capacity since January 2020. Producing and maintaining these estimates, and the infrastructure that supports them required a significant number of person hours, particularly prior to extensive automation and improvements in the robustness of processes, often out of hours over a prolonged period. This workload often led to more traditional academic work not being done and was likely exacerbated by a lack of the skills required to run complex models in production environments. A particular, and initially surprising, demand on time was responding to feedback from users which could often be complex, linked to public health policy in their region of interest, and sometimes abrupt, aggressive, or extremely negative.</p>
+</section>
+<section id="back-to-2020would-we-do-it-again" class="level2">
+<h2 class="anchored" data-anchor-id="back-to-2020would-we-do-it-again">Back to 2020…would we do it again?</h2>
+<p>With all of this in mind we have been reflecting on whether we would do this again given the situation we were facing in early 2020 and, if yes, what we would do differently. Many of the challenges mentioned above were pretty much insurmountable, particularly around data quality and curation. Probably our most useful contributions from this work were in the UK where we knew the data and its limitations particularly well and interacted directly and frequently with policy makers.</p>
+<p>That said, it would have been difficult to predict where the focus of our work would be when producing the initial estimates for China. In a perfect world we would have had methodologically robust, well evaluated, and production ready tools available to generate epidemiological estimates, and those trained to use them, in advance of a pandemic, such that these could be readily used by ourselves as well as teams everywhere in interaction with local policy makers and with a full understanding of the underlying data and its idiosyncrasies. It is great to see that there are now initiatives towards developing production ready tools for this purpose<sup>9</sup>, and we can only hope that these will be continued to put analytics of future epidemics on a more sustainable and reliable footing.</p>
+<p>However, we have not yet seen similar progress being made on initiatives to improve the methodological basis for these tools, evaluating their performance in different scenarios (especially low resource settings), and ensuring that there exists a pool of researchers with the right skills to make use of them in real-time and who can also communicate directly with local policy makers. Maintaining, and growing, a pool of skilled researchers able to deploy tools for situational awareness, which requires a different skill set to traditional research, is a particular hurdle as it is poorly supported by current funding models. Without sufficient support some of the progress that has been made developing researchers with these skill sets during the pandemic will almost certainly be lost.</p>
+<p>Ultimately, initiatives of this scale, whether worthwhile or not, are likely to be conducted again and used to inform public health decisions if another epidemic/pandemic occurs. It is in the best interest of the public health community, and the public more generally, that these are as good as possible and not limited by the ability of those implementing them, the availability of computational and personal resources, weaknesses in surveillance systems, or weaknesses in the underlying methodology.</p>
+</section>
+<section id="addendum-1362022" class="level2">
+<h2 class="anchored" data-anchor-id="addendum-1362022">Addendum 13/6/2022</h2>
+<p>Since we first published this blog post in March 2022 a few members of public health organisations and the general public have got in touch to let us know that they had found the estimates useful. We would like to thank those that contacted us, as this was great to hear. We were particularly pleased to be contacted by a colleague at the WHO to let us know that “The Rt estimates generated by the EpiForecasts team were used extensively by the WHO COVID-19 Analytics unit. They formed a core part of two routine analysis pipelines, namely variant transmissibility monitoring and risk assessments of national epidemiological trajectories, and were used in numerous ad-hoc analyses, including country deep-dives and impact evaluations of public health and social measures. These analyses were regularly presented to the incident management structure at WHO headquarters, including senior management, as well as regional and national WHO offices.” We have since restarted our analysis pipeline to produce estimates at the national level once a week, published on the <a href="https://github.com/epiforecasts/covid-rt-estimates">GitHub repository</a> but no longer featured on the EpiForecasts website.</p>
+</section>
+
+
+
+<script data-goatcounter="https://epiforecasts.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><div id="quarto-appendix" class="default"><section id="acknowledgments" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Acknowledgments</h2><div class="quarto-appendix-contents">
+
+<p>We would like to thank Microsoft AI for Health for their generous computational support and the Met Office for providing technical assistance. We would also like to thank all those recording and aggregating surveillance data on which this work relies. Lastly, we would like to thank all co-authors and members of the CMMID COVID-19 working group for their contributions to this work.</p>
+
+
+
+</div></section><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-epinow" class="csl-entry">
+Abbott, Sam, Joel Hellewell, James Munday, Robin Thompson, and Sebastian Funk. 2020. <em>EpiNow: Estimate Realtime Case Counts and Time-Varying Epidemiological Parameters</em>. <a href="https://doi.org/10.5281/zenodo.3746392">https://doi.org/10.5281/zenodo.3746392</a>.
+</div>
+<div id="ref-epinow2" class="csl-entry">
+Abbott, Sam, Joel Hellewell, Katharine Sherratt, et al. 2020. <em>EpiNow2: Estimate Real-Time Case Counts and Time-Varying Epidemiological Parameters</em>. <a href="https://doi.org/10.5281/zenodo.3957489">https://doi.org/10.5281/zenodo.3957489</a>.
+</div>
+<div id="ref-rtwebsite-2" class="csl-entry">
+Abbott, Sam, Joel Hellewell, Robin N Thompson, et al. 2020. <span>“Estimating the Time-Varying Reproduction Number of <span>SARS-CoV-2</span> Using National and Subnational Case Counts.”</span> <em>Wellcome Open Res.</em> 5 (December): 112. <a href="https://doi.org/10.12688/wellcomeopenres.16006.2">https://doi.org/10.12688/wellcomeopenres.16006.2</a>.
+</div>
+<div id="ref-Abbott2021-df" class="csl-entry">
+Abbott, Sam, Adam J Kucharski, Sebastian Funk, and CMMID COVID-19 Working Group. 2021. <span>“Estimating the Increase in Reproduction Number Associated with the Delta Variant Using Local Area Dynamics in England.”</span> <em>bioRxiv</em>, ahead of print, December. <a href="https://doi.org/10.1101/2021.11.30.21267056">https://doi.org/10.1101/2021.11.30.21267056</a>.
+</div>
+<div id="ref-rtwebsite-1" class="csl-entry">
+Abbott, S, J Hellewell, RN Thompson, et al. 2020. <span>“Estimating the Time-Varying Reproduction Number of SARS-CoV-2 Using National and Subnational Case Counts (Version 1).”</span> <em>Wellcome Open Research</em> 5 (112). <a href="https://doi.org/10.12688/wellcomeopenres.16006.1">https://doi.org/10.12688/wellcomeopenres.16006.1</a>.
+</div>
+<div id="ref-Davies2021-gz" class="csl-entry">
+Davies, Nicholas G, Sam Abbott, Rosanna C Barnard, et al. 2021. <span>“Estimated Transmissibility and Impact of <span>SARS-CoV-2</span> Lineage b.1.1.7 in England.”</span> <em>Science</em> 372 (6538). <a href="https://doi.org/10.1126/science.abg3055">https://doi.org/10.1126/science.abg3055</a>.
+</div>
+<div id="ref-Gostic2020-vw" class="csl-entry">
+Gostic, Katelyn M, Lauren McGough, Edward B Baskerville, et al. 2020. <span>“Practical Considerations for Measuring the Effective Reproductive Number, Rt.”</span> <em>PLoS Comput. Biol.</em> 16 (12): e1008409. <a href="https://doi.org/10.1371/journal.pcbi.1008409">https://doi.org/10.1371/journal.pcbi.1008409</a>.
+</div>
+<div id="ref-covidregionaldata" class="csl-entry">
+Palmer, Joseph, Katharine Sherratt, Richard Martin-Nielsen, et al. 2021. <span>“Covidregionaldata: Subnational Data for COVID-19 Epidemiology.”</span> <em>Journal of Open Source Software</em> 6 (63): 3290. <a href="https://doi.org/10.21105/joss.03290">https://doi.org/10.21105/joss.03290</a>.
+</div>
+<div id="ref-Sherratt2021-ko" class="csl-entry">
+Sherratt, Katharine, Sam Abbott, Sophie R Meakin, et al. 2021. <span>“Exploring Surveillance Data Biases When Estimating the Reproduction Number: With Insights into Subpopulation Transmission of <span>COVID-19</span> in England.”</span> <em>Philos. Trans. R. Soc. Lond. B Biol. Sci.</em> 376 (1829): 20200283. <a href="https://doi.org/10.1098/rstb.2020.0283">https://doi.org/10.1098/rstb.2020.0283</a>.
+</div>
+<div id="ref-Vohringer2021-ib" class="csl-entry">
+Vöhringer, Harald S, Theo Sanderson, Matthew Sinnott, et al. 2021. <span>“Genomic Reconstruction of the <span>SARS-CoV-2</span> Epidemic in England.”</span> <em>Nature</em> 600 (7889): 506–11. <a href="https://doi.org/10.1038/s41586-021-04069-y">https://doi.org/10.1038/s41586-021-04069-y</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Documentation here:<a href="https://epiforecasts.io/EpiNow" class="uri">https://epiforecasts.io/EpiNow</a>↩︎</p></li>
+<li id="fn2"><p>Documentation here:<a href="https://epiforecasts.io/EpiNow2" class="uri">https://epiforecasts.io/EpiNow2</a>↩︎</p></li>
+<li id="fn3"><p>For example in this simple report:<a href="https://github.com/epiforecasts/covid19_uk_local" class="uri">https://github.com/epiforecasts/covid19_uk_local</a>↩︎</p></li>
+<li id="fn4"><p>GitHub report and code to estimate reporting rates, infection-hospitalisation ratios, and infection-fatality ratios over time:<a href="https://github.com/epiforecasts/ons_severity_estimates" class="uri">https://github.com/epiforecasts/ons_severity_estimates</a>↩︎</p></li>
+<li id="fn5"><p>Documentation here:<a href="https://epiforecasts.io/covidregionaldata" class="uri">https://epiforecasts.io/covidregionaldata</a>↩︎</p></li>
+<li id="fn6"><p>This GitHub issue is a good example of the consternation caused by some of the more extreme data issues:<a href="https://github.com/epiforecasts/covid/issues/171" class="uri">https://github.com/epiforecasts/covid/issues/171</a>↩︎</p></li>
+<li id="fn7"><p>Microsoft AI COVID Dashboard which integrated our estimates:<a href="https://www.microsoft.com/en-us/ai/ai-for-health-covid-data" class="uri">https://www.microsoft.com/en-us/ai/ai-for-health-covid-data</a>↩︎</p></li>
+<li id="fn8"><p>See their code contributions here: https://github.com/epiforecasts/covid-rt-estimates and here:<a href="https://github.com/epiforecasts/covid-rt-estimates-batch" class="uri">https://github.com/epiforecasts/covid-rt-estimates-batch</a>↩︎</p></li>
+<li id="fn9"><p>For example the <code>epiverse</code>:<a href="https://data.org/initiatives/epiverse/" class="uri">https://data.org/initiatives/epiverse/</a>↩︎</p></li>
+</ol>
+</section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{abbott2022,
+  author = {Abbott, Sam and Funk, Sebastian},
+  title = {Reflections on Two Years Estimating Effective Reproduction
+    Numbers},
+  date = {2022-03-25},
+  url = {https://epiforecasts.io/posts/2022-03-25-rt-reflections/},
+  doi = {10.59350/8apn9-8h048},
+  langid = {en}
+}
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-abbott2022" class="csl-entry quarto-appendix-citeas">
+Abbott, Sam, and Sebastian Funk. 2022. <span>“Reflections on Two Years
+Estimating Effective Reproduction Numbers.”</span> March 25. <a href="https://doi.org/10.59350/8apn9-8h048">https://doi.org/10.59350/8apn9-8h048</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://epiforecasts.io/posts/2022-03-25-rt-reflections/</guid>
+  <pubDate>Fri, 25 Mar 2022 00:00:00 GMT</pubDate>
+  <media:content url="https://epiforecasts.io/posts/2022-03-25-rt-reflections/example-rt.png" medium="image" type="image/png" height="144" width="144"/>
+</item>
+<item>
+  <title>Using real-time modelling to inform the response to a diphtheria outbreak</title>
+  <dc:creator>Flavio Finger</dc:creator>
+  <dc:creator>Adam Kucharski</dc:creator>
+  <link>https://epiforecasts.io/posts/2019-08-21-dip/</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/academicons/1.7.0/css/academicons.min.css" integrity="sha512-GGGNUPDhnG8LEAEDsjqYIQns+Gu8RBs4j5XGlxl7UfRaZBhCCm5jenJkeJL8uPuOXGqgl8/H1gjlWQDRjd3cUQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></p><p>On 10th November, 2017, a suspected case of diphtheria was reported at a Médecins Sans Frontières (MSF) clinic in Cox’s Bazar district, Bangladesh <span class="citation" data-cites="Finger2019-iw">(Finger et al. 2019)</span>. A bacterial infection, diphtheria was a major cause of childhood illness and death in the early 20th Century, before a vaccine was developed in the 1920s, then included in the WHO’s Expanded Programme on Immunization in the 1970s. In the following decades cases dropped dramatically, to the point where the disease was rarely seen in many countries. Between 2004 and 2017, there were only two diphtheria cases in the United States.</p>
+<p>Unfortunately, diphtheria outbreaks can still occur in places that have conditions like low vaccination coverage, reduced access to healthcare, limited access to water and sanitation, and high population density. In late 2017, one such place was a cluster of several large refugee camps in Cox’s Bazar district at the southeastern tip of Bangladesh. Between August and December 2017, over 625,000 ethnic Rohingya had fled into the area from neighbouring Myanmar, settling in makeshift camps.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs12916-019-1288-7/MediaObjects/12916_2019_1288_Fig1_HTML.png" class="img-fluid figure-img"></p>
+<figcaption>Outbreak analysis timeline with respect to the epidemic curve (black line). Green lines show the timing of events relevant to analysis: reporting of the first case, involvement of modellers at LSHTM, MSF decision on bed numbers required and MSF handover of the treatment centre. Blue lines show the date on which each of the four LSHTM forecasts was communicated to MSF. <a href="https://doi.org/10.1186/s12916-019-1288-7">For details see the article published in BMC Medicine</a></figcaption>
+</figure>
+</div>
+<p>The site would become the world’s largest refugee camp, with evidence that there had been a long-term lack of healthcare access among these individuals. According to one survey performed by MSF in November 2017, less than a quarter of the children in the camps aged between 6 months and 5 years had been vaccinated against measles.</p>
+<p>MSF had previously worked with quantitative researchers at the London School of Hygiene &amp; Tropical Medicine (LSHTM) during other infectious disease outbreaks, including Ebola and cholera. When the diphtheria outbreak in Cox’s Bazar started to grow in scale, our two organisations collaborated to analyse the situation and develop analytical tools and mathematical models that could forecast how the outbreak might unfold. Our forecasts helped to inform MSF’s outbreak response plans – for example in terms of staffing and supply of diphtheria antitoxin used to treat severe cases – and to advocate for control measures with partners.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs12916-019-1288-7/MediaObjects/12916_2019_1288_Fig3_HTML.png" class="img-fluid figure-img"></p>
+<figcaption>Total incidence over all age groups and locations (a–d) and bed need as forecasted by the model. Black lines show data as reported by 12 January 2018, red dots the adjusted incidence and blue lines and shaded areas the median and 2.5% and 97.5% percentiles according to 1000 model runs forecasting from 12 December (a), 20 December (b), 26 December (c) and 30 December (d). Forecasts of bed need issued on the same dates (e). The horizontal line shows the number of beds provided as of a decision taken on 14 December. <a href="https://doi.org/10.1186/s12916-019-1288-7">For details see the article published in BMC Medicine</a></figcaption>
+</figure>
+</div>
+<p>When we evaluated the performance of our models in the aftermath of the outbreak, we found that the first forecast overestimated the outbreak size, but forecasts improved dramatically in late December, when the epidemic started to slow down. This is a common challenge when forecasting disease outbreaks, and our analysis highlighted several factors that could be improved in future – such as the speed of model development and the type of model used – as well as other issues, like data quality, that are always a challenge in emergency situations like this.</p>
+<p>Besides these technical insights, our work showed that to maximise the benefits of real-time modelling for future outbreaks, we should encourage long-term, sustainable collaborations between epidemiological modellers and the organizations working on the outbreak response. For mathematical models to realise their full potential – and to prevent analysis that is disconnected from the field-reality – communication between outbreak responders and modellers is key. This can enable modellers to appreciate the context and operational challenges involved, and help responders to understand capabilities and limitations of models.</p>
+<p>Our study is a good example of why epidemiological analysis and modelling should be routinely incorporated in outbreak response, and for modellers to be involved at all stages, ranging from data collection, curation and analysis to intervention design and evaluation.</p>
+<p>Building on this work, Flavio Finger spent several weeks in Bangladesh in early 2018 assisting partners with on-the-ground data analysis. He was struck by the complexity of the situation there and the sheer scale of the humanitarian crisis, but also by how relatively simple analysis of available data can help improve understanding of ongoing outbreaks – and guide the resulting response.</p>
+
+
+<script data-goatcounter="https://epiforecasts.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script><div id="quarto-appendix" class="default"><section id="note" class="level2 appendix"><h2 class="anchored quarto-appendix-heading">Note</h2><div class="quarto-appendix-contents">
+
+<p>Our article <a href="https://doi.org/10.1186/s12916-019-1288-7">Real-time analysis of the diphtheria outbreak in forcibly displaced Myanmar nationals in Bangladesh</a> published in BMC Medicine.</p>
+<p>This blog post has also been published in the BMC Blog “<a href="https://blogs.biomedcentral.com/on-medicine/2019/03/12/using-real-time-modeling-to-inform-the-response-to-a-diphtheria-outbreak/">On Medicine</a>”.</p>
+
+
+
+</div></section><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Finger2019-iw" class="csl-entry">
+Finger, Flavio, Sebastian Funk, Kate White, M Ruby Siddiqui, W John Edmunds, and Adam J Kucharski. 2019. <span>“Real-Time Analysis of the Diphtheria Outbreak in Forcibly Displaced Myanmar Nationals in Bangladesh.”</span> <em>BMC Medicine</em> 17 (1): 58.
+</div>
+</div></section><section class="quarto-appendix-contents" id="quarto-reuse"><h2 class="anchored quarto-appendix-heading">Reuse</h2><div class="quarto-appendix-contents"><div><a rel="license" href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a></div></div></section><section class="quarto-appendix-contents" id="quarto-citation"><h2 class="anchored quarto-appendix-heading">Citation</h2><div><div class="quarto-appendix-secondary-label">BibTeX citation:</div><div class="code-copy-outer-scaffold"><pre class="sourceCode quarto-appendix-bibtex code-with-copy"><code class="sourceCode bibtex">@online{finger2019,
+  author = {Finger, Flavio and Kucharski, Adam},
+  title = {Using Real-Time Modelling to Inform the Response to a
+    Diphtheria Outbreak},
+  date = {2019-08-21},
+  url = {https://epiforecasts.io/posts/2019-08-21-dip/},
+  doi = {10.59350/h07jp-s9s54},
+  langid = {en}
+}
+</code></pre></div><div class="quarto-appendix-secondary-label">For attribution, please cite this work as:</div><div id="ref-finger2019" class="csl-entry quarto-appendix-citeas">
+Finger, Flavio, and Adam Kucharski. 2019. <span>“Using Real-Time
+Modelling to Inform the Response to a Diphtheria Outbreak.”</span>
+August 21. <a href="https://doi.org/10.59350/h07jp-s9s54">https://doi.org/10.59350/h07jp-s9s54</a>.
+</div></div></section></div> ]]></description>
+  <guid>https://epiforecasts.io/posts/2019-08-21-dip/</guid>
+  <pubDate>Wed, 21 Aug 2019 00:00:00 GMT</pubDate>
+  <media:content url="https://media.springernature.com/full/springer-static/image/art%3A10.1186%2Fs12916-019-1288-7/MediaObjects/12916_2019_1288_Fig3_HTML.png" medium="image" type="image/png"/>
+</item>
+</channel>
+</rss>

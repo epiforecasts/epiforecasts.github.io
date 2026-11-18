@@ -1,0 +1,267 @@
+/* Homepage hero: introduction and four small figures, one per strand of the
+   group's work. The colours match the site theme and switch with Quarto's
+   dark mode. */
+
+:root {
+  --ef-surface: #ffffff;
+  --ef-teal-bright: #17a398;
+  --ef-coral: #e4572e;
+  --ef-muted: #5c6b7a;
+  --ef-rule: #e3e1da;
+  --ef-fit: #14213d;
+  --ef-band-inner: rgba(228, 87, 46, 0.30);
+  --ef-band-outer: rgba(228, 87, 46, 0.13);
+  --ef-card-shadow: 0 1px 2px rgba(20, 33, 61, 0.06), 0 6px 20px rgba(20, 33, 61, 0.06);
+}
+
+body.quarto-dark {
+  --ef-surface: #161f30;
+  --ef-teal-bright: #3dd6c4;
+  --ef-coral: #ff7a59;
+  --ef-muted: #9aa7b6;
+  --ef-rule: #263247;
+  --ef-fit: #e3e8ef;
+  --ef-band-inner: rgba(255, 122, 89, 0.34);
+  --ef-band-outer: rgba(255, 122, 89, 0.14);
+  --ef-card-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+/* The hero carries the page's heading, so Quarto's title block is not shown;
+   the title still names the page in the browser tab */
+#title-block-header {
+  display: none;
+}
+
+.ef-wrap {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Hero */
+
+.ef-hero {
+  background: transparent;
+  border-bottom: 1px solid var(--ef-rule);
+  padding: 1.75rem 0 2.5rem;
+  margin-bottom: 2.5rem;
+}
+
+.ef-hero-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.ef-hero h1 {
+  font-size: clamp(2rem, 4.2vw, 3.1rem);
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  font-weight: 700;
+  margin: 0 0 1.1rem;
+}
+
+.ef-lead {
+  font-size: 1.12rem;
+  color: var(--ef-muted);
+  max-width: 34rem;
+}
+
+/* Four panels in a 2 by 2 grid; each title is on hover and its description
+   is the figure's accessible label */
+.ef-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.9rem;
+}
+
+.ef-panel {
+  margin: 0;
+  padding: 0.4rem;
+  background: var(--ef-surface);
+  border: 1px solid var(--ef-rule);
+  border-radius: 12px;
+  box-shadow: var(--ef-card-shadow);
+}
+
+.ef-panel-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.ef-axis {
+  stroke: var(--ef-rule);
+  stroke-width: 1.5;
+}
+
+.ef-now,
+.ef-ref {
+  stroke: var(--ef-muted);
+  stroke-width: 1.3;
+  stroke-dasharray: 4 5;
+}
+
+.ef-fit {
+  fill: none;
+  stroke: var(--ef-fit);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.85;
+}
+
+.ef-band-outer {
+  fill: var(--ef-band-outer);
+}
+
+.ef-band-inner {
+  fill: var(--ef-band-inner);
+}
+
+.ef-median {
+  fill: none;
+  stroke: var(--ef-coral);
+  stroke-width: 2.2;
+  stroke-dasharray: 6 5;
+}
+
+.ef-obs.past,
+.ef-case {
+  fill: var(--ef-fit);
+}
+
+.ef-obs.inside {
+  fill: var(--ef-teal-bright);
+  stroke: var(--ef-surface);
+  stroke-width: 1.2;
+}
+
+.ef-obs.outside {
+  fill: var(--ef-surface);
+  stroke: var(--ef-coral);
+  stroke-width: 2;
+}
+
+.ef-bar {
+  fill: var(--ef-fit);
+  opacity: 0.8;
+}
+
+.ef-edge {
+  fill: none;
+  stroke: var(--ef-muted);
+  stroke-width: 1.2;
+  opacity: 0.7;
+}
+
+.ef-traced {
+  fill: var(--ef-surface);
+  stroke: var(--ef-teal-bright);
+  stroke-width: 2;
+}
+
+.ef-cell {
+  fill: var(--ef-teal-bright);
+}
+
+.ef-short {
+  fill: var(--ef-coral);
+}
+
+.ef-target {
+  stroke: var(--ef-fit);
+  stroke-width: 2.5;
+}
+
+@media (max-width: 991px) {
+  .ef-hero-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Homepage sections below the introduction */
+
+.ef-pkgs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin: 1rem 0 0.75rem;
+}
+
+.ef-pkg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 0.9rem 0.6rem;
+  background: var(--ef-surface);
+  border: 1px solid var(--ef-rule);
+  border-radius: 12px;
+  box-shadow: var(--ef-card-shadow);
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.15s ease;
+}
+
+.ef-pkg:hover {
+  transform: translateY(-2px);
+}
+
+.ef-pkg img {
+  height: 92px;
+  width: auto;
+  margin-bottom: 0.5rem;
+}
+
+.ef-pkg-name {
+  font-weight: 600;
+}
+
+.ef-pkg-what {
+  font-size: 0.85rem;
+  color: var(--ef-muted);
+  line-height: 1.3;
+}
+
+.ef-more {
+  display: inline-block;
+  margin-right: 1.25rem;
+  font-weight: 600;
+}
+
+.ef-more::after {
+  content: " →";
+}
+
+.ef-pubs {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0.75rem;
+}
+
+.ef-pubs li {
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--ef-rule);
+}
+
+.ef-pubs li a {
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.ef-pub-meta {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--ef-muted);
+}
+
+.ef-join {
+  margin: 2.5rem 0 1rem;
+  padding: 1.1rem 1.3rem;
+  border-left: 4px solid var(--ef-teal-bright);
+  background: var(--ef-surface);
+  border-radius: 0 12px 12px 0;
+  box-shadow: var(--ef-card-shadow);
+}
