@@ -116,7 +116,7 @@
   code: https://github.com/parksw3/epidist-paper
 "10.1186/s12879-024-08986-x":
   preprint: https://doi.org/10.1101/2023.08.11.23293400
-  code: https://github.com/EU-ECDC/RShinyCovidApp
+  code: https://github.com/EU-ECDC/BackendCovidApp
   open_review: https://link.springer.com/article/10.1186/s12879-024-08986-x/peer-review
 "10.1186/s12916-024-03369-0":
   code: https://github.com/epiforecasts/hospitalcatchment.utils
