@@ -163,3 +163,10 @@
   code: https://github.com/epiforecasts/evalvariantnowcasthub
 "10.1098/rspb.2020.1405":
   preprint: https://arxiv.org/abs/2006.13012
+"10.1093/infdis/jiad254":
+  code: https://github.com/hiroaki-murayama/MPX_depletion_susceptibles
+  preprint: https://doi.org/10.1101/2022.11.14.22282286
+"10.1101/2024.04.17.24305832":
+  code: https://github.com/toshiakiasakura/projection_of_mpox_in_Asia
+"10.1098/rsif.2020.1014":
+  preprint: https://doi.org/10.1101/2020.11.06.20226969
