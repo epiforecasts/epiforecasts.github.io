@@ -6,10 +6,10 @@ description: |
 
 ## Collaborations
 
-* [CMMID](https://cmmid.lshtm.ac.uk/), the Centre for the Mathematical Modelling of Infectious Diseases at LSHTM, brings together a wider group of people who work on or are interested in infectious disease modelling.
+* [CMMID](https://cmmid.lshtm.ac.uk/), the Centre for the Mathematical Modelling of Infectious Diseases at LSHTM, brings together people who work on or are interested in infectious disease modelling.
 * [epinowcast](https://www.epinowcast.org/) is an open community developing tools and methods for real-time analysis of infectious disease data. It runs regular [seminars](https://www.epinowcast.org/seminars.html) and a [community forum](https://community.epinowcast.org/).
 * We set up and ran the [European COVID-19 Forecast and Scenario Hubs](https://github.com/european-modelling-hubs), which ECDC now continues as [RespiCast](https://respicast.ecdc.europa.eu/) and [RespiCompass](https://respicompass.ecdc.europa.eu/).
-* We work with the [hubverse](https://hubverse.io/), which provides open tools for building collaborative modelling hubs.
+* We work with the [hubverse](https://hubverse.io/), a set of open tools for building collaborative modelling hubs.
 
 ## Training
 
