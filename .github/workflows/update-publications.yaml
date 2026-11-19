@@ -52,6 +52,9 @@ jobs:
     needs: update-bibtex
     if: always()
     runs-on: ubuntu-latest
+    env:
+      # reads the open weekly publications pull requests
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v7
 

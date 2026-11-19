@@ -31,6 +31,26 @@ replaced_entry <- function(doi, found, unlisted) {
   NA_character_
 }
 
+## DOIs in the papers.bib of the open pull requests the weekly publications
+## job opens, on branches named pubs-<timestamp>. Outside GitHub Actions there
+## is no repository to ask, and none are returned.
+dois_in_weekly_pull_requests <- function(repo = Sys.getenv("GITHUB_REPOSITORY")) {
+  if (!nzchar(repo)) return(character(0))
+  pulls <- gh::gh("/repos/{repo}/pulls", repo = repo, state = "open", per_page = 100)
+  branches <- purrr::map_chr(pulls, ~ .x$head$ref)
+  branches <- branches[startsWith(branches, "pubs")]
+  unlist(lapply(branches, function(branch) {
+    bib <- gh::gh(
+      "/repos/{repo}/contents/_data/papers.bib", repo = repo, ref = branch,
+      .accept = "application/vnd.github.raw"
+    )
+    ## the raw media type comes back as bytes
+    text <- if (is.raw(bib)) rawToChar(bib) else paste(unlist(bib), collapse = "")
+    tolower(sub(".*\\{(.*)\\}.*", "\\1",
+      regmatches(text, gregexpr("DOI\\s*=\\s*\\{[^}]+\\}", text, ignore.case = TRUE))[[1]]))
+  }))
+}
+
 update_paper_meta <- function(bib_file, meta_file) {
   n_before <- length(bibtex::read.bib(bib_file))
   bib <- bib2df::bib2df(bib_file) |>
@@ -49,6 +69,14 @@ update_paper_meta <- function(bib_file, meta_file) {
   ## on the preprint's entry keeps it listed as it is
   declined <- vapply(names(published), function(d) isTRUE(meta[[d]]$not_published), TRUE)
   published <- published[!declined]
+  ## a published version already in an open weekly publications pull request
+  ## is left to that pull request, which adds it and drops the preprint by
+  ## title; swapping it here as well would make the two conflict
+  in_weekly <- published %in% dois_in_weekly_pull_requests()
+  if (any(in_weekly)) {
+    message("Left to the weekly pull request: ", paste(published[in_weekly], collapse = ", "))
+  }
+  published <- published[!in_weekly]
 
   ## The published entry takes the place of its preprint in the file, so this
   ## pull request changes the middle of papers.bib while the weekly one adds
