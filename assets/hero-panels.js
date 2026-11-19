@@ -284,9 +284,12 @@
     flows.forEach(([c, i, j, w]) => {
       flow(cols[c] + 9, stages[c][1][i], cols[c + 1] - 9, stages[c + 1][1][j], w, "ef-flow");
     });
-    // other influences go straight to the decisions
+    // other influences go straight to the decisions, kept low until they are
+    // past the communication column so they do not appear to pass through it
     [[0, 4], [1, 6], [2, 8]].forEach(([j, w]) => {
-      flow(other.x + 9, other.y, cols[2] - 9, stages[2][1][j], w, "ef-flow other");
+      const x1 = other.x + 9, x2 = cols[2] - 9, y2 = stages[2][1][j];
+      el("path", { d: `M${x1},${other.y} L${cols[1] + 20},${other.y} C${x2 - 30},${other.y} ${x2 - 50},${y2} ${x2},${y2}`,
+        class: "ef-flow other", "stroke-width": w * 1.8 }, svg);
     });
     stages.forEach(([name, ys, cls], c) => {
       el("text", { x: cols[c], y: 44, class: "ef-row-label", "text-anchor": "middle" }, svg).textContent = name;
