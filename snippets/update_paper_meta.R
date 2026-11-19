@@ -16,6 +16,23 @@ meta_path <- "_data/paper-open.yml"
 
 preprint_journals <- c("medRxiv", "bioRxiv", "arXiv", "OSF Preprints")
 
+## Versioned journals give each version its own DOI, ending in the version
+## number
+versioned <- "^10\\.12688/(wellcomeopenres|f1000research|gatesopenres)\\."
+version_base <- function(doi) ifelse(grepl(versioned, doi), sub("\\.[0-9]+$", "", doi), doi)
+
+## The entry, among those no longer listed, that a newly listed paper
+## replaces: an earlier version of it, or the preprint it was published from
+replaced_entry <- function(doi, found, unlisted) {
+  same_work <- unlisted[version_base(unlisted) == version_base(doi) & unlisted != doi]
+  if (length(same_work) > 0) return(same_work[1])
+  if (!is.null(found$preprint)) {
+    preprint <- tolower(sub("^https?://(dx\\.)?doi\\.org/", "", found$preprint))
+    if (preprint %in% unlisted) return(preprint)
+  }
+  NA_character_
+}
+
 update_paper_meta <- function(bib_file, meta_file) {
   n_before <- length(bibtex::read.bib(bib_file))
   bib <- bib2df::bib2df(bib_file) |>
@@ -81,11 +98,18 @@ update_paper_meta <- function(bib_file, meta_file) {
     found <- suggest_paper_meta(doi)
     if (is.null(found)) next
     recorded <- meta[[doi]] %||% list()
+    ## a paper that update_publications.R put in place of another, a newer
+    ## version or the published version of a listed preprint, takes over the
+    ## links recorded for the one it replaced
+    replaced <- replaced_entry(doi, found, setdiff(names(meta), dois))
+    if (!is.na(replaced)) {
+      message("Moving links from ", replaced, " to ", doi)
+      recorded <- utils::modifyList(meta[[replaced]], recorded)
+      meta[[replaced]] <- NULL
+    }
     recorded$pending <- NULL
     meta[[doi]] <- utils::modifyList(found, recorded)
   }
-  ## a paper that has left the list takes its links with it
-  meta <- meta[names(meta) %in% dois]
 
   write_paper_meta(meta, meta_file)
 }
