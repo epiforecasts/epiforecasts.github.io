@@ -1,5 +1,0 @@
----
-title: Contact
----
-
-To contact us, email sebastian.funk [AT] lshtm.ac.uk
