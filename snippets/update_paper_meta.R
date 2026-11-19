@@ -71,11 +71,18 @@ update_paper_meta <- function(bib_file, meta_file) {
          n_before - length(published))
   }
 
-  ## Suggestions for papers that have no entry yet. A paper with nothing to
-  ## suggest is still recorded, so it is not looked up again every week.
-  for (doi in setdiff(dois, names(meta))) {
+  ## Suggestions for papers that have no entry yet, and again for those still
+  ## pending because their full text was not available. A paper whose lookup
+  ## fails is tried again next week. Links already recorded, whether found
+  ## earlier or edited by hand, are kept over new suggestions.
+  pending <- names(meta)[vapply(meta, function(m) isTRUE(m$pending), TRUE)]
+  for (doi in union(setdiff(dois, names(meta)), intersect(pending, dois))) {
     message("Suggesting links for ", doi)
-    meta[[doi]] <- suggest_paper_meta(doi)
+    found <- suggest_paper_meta(doi)
+    if (is.null(found)) next
+    recorded <- meta[[doi]] %||% list()
+    recorded$pending <- NULL
+    meta[[doi]] <- utils::modifyList(found, recorded)
   }
   ## a paper that has left the list takes its links with it
   meta <- meta[names(meta) %in% dois]

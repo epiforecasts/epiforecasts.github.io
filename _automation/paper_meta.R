@@ -136,10 +136,13 @@ registered_link <- function(x) {
 }
 
 ## Suggested links for one paper, as the fields of its entry in
-## _data/paper-open.yml
+## _data/paper-open.yml, or NULL if the paper could not be looked up at all.
+## Without the full text the code, protocol and review checks cannot run, so
+## the entry is marked pending and the paper is looked up again later.
 suggest_paper_meta <- function(doi) {
   doi <- tolower(doi)
   work <- get_json(paste0("https://api.openalex.org/works/doi:", doi))
+  if (is.null(work)) return(NULL)
   journal <- work$primary_location$source$display_name %||% ""
   is_preprint <- identical(work$type, "preprint") || is_rxiv(doi) ||
     grepl("^10\\.48550/", doi)
@@ -165,7 +168,8 @@ suggest_paper_meta <- function(doi) {
     code = if (!is.na(code)) code,
     preprint = preprint,
     open_review = if (open_review) TRUE,
-    registered = if (!is.na(registered)) registered
+    registered = if (!is.na(registered)) registered,
+    pending = if (is.null(x)) TRUE
   )
   Filter(Negate(is.null), meta)
 }
