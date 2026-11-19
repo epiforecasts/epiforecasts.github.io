@@ -50,20 +50,29 @@ update_paper_meta <- function(bib_file, meta_file) {
   declined <- vapply(names(published), function(d) isTRUE(meta[[d]]$not_published), TRUE)
   published <- published[!declined]
 
-  new_entries <- character(0)
+  ## The published entry takes the place of its preprint in the file, so this
+  ## pull request changes the middle of papers.bib while the weekly one adds
+  ## papers at the end, and the two can be merged in either order
   for (preprint in names(published)) {
     paper <- published[[preprint]]
     message("Preprint ", preprint, " was published as ", paper)
-    if (!(paper %in% bib$DOI)) {
+    at <- which(bib$DOI == preprint)[1]
+    if (paper %in% bib$DOI) {
+      bib <- bib[-at, ]
+    } else {
       refs <- cr_works_retry(dois = paper)
       if (nrow(refs) == 0) next
-      new_entries <- c(new_entries, vapply(
+      entry_file <- tempfile(fileext = ".bib")
+      writeLines(vapply(
         create_bibentries(refs),
         function(b) paste(format(b, style = "Bibtex"), collapse = "\n"),
         ""
-      ))
+      ), entry_file)
+      entry <- bib2df::bib2df(entry_file) |>
+        dplyr::select(-dplyr::matches("^(N|ID|N_PP)(\\.\\d+)?$")) |>
+        dplyr::mutate(DOI = tolower(DOI))
+      bib <- dplyr::bind_rows(bib[seq_len(at - 1), ], entry, bib[-seq_len(at), ])
     }
-    bib <- bib[bib$DOI != preprint, ]
     fields <- utils::modifyList(meta[[preprint]] %||% list(), meta[[paper]] %||% list())
     fields$preprint <- fields$preprint %||% paste0("https://doi.org/", preprint)
     ## the published paper can have links its preprint lacks, open peer
@@ -73,24 +82,20 @@ update_paper_meta <- function(bib_file, meta_file) {
     meta[[preprint]] <- NULL
   }
 
+  ## the weekly pull request and this one can each add the same paper; keep
+  ## the first
+  duplicated_doi <- !is.na(bib$DOI) & duplicated(bib$DOI)
+  if (any(duplicated_doi)) message("Dropping repeated ", paste(bib$DOI[duplicated_doi], collapse = ", "))
+  bib <- bib[!duplicated_doi, ]
+
   bib2df::df2bib(bib, file = bib_file)
-  if (length(new_entries) > 0) {
-    ## read in full before writing: write() and df2bib() open the file, and
-    ## so empty it, before they evaluate what they are given
-    current <- readLines(bib_file)
-    write(c(current, new_entries), bib_file)
-    ## the same normalisation update_publications.R applies
-    normalised <- bib2df::bib2df(bib_file) |>
-      dplyr::select(-dplyr::matches("^(N|ID|N_PP)(\\.\\d+)?$"))
-    bib2df::df2bib(normalised, file = bib_file)
-  }
 
   dois <- tolower(vapply(bibtex::read.bib(bib_file), function(e) e$doi, ""))
   ## each swap replaces one entry with one, or drops a duplicate, so a bigger
   ## loss means the file was damaged
-  if (length(dois) < n_before - length(published)) {
-    stop("papers.bib has ", length(dois), " entries, expected at least ",
-         n_before - length(published))
+  expected <- n_before - length(published) - sum(duplicated_doi)
+  if (length(dois) < expected) {
+    stop("papers.bib has ", length(dois), " entries, expected at least ", expected)
   }
 
   ## Suggestions for papers that have no entry yet, and again for those still
