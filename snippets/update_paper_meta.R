@@ -72,7 +72,8 @@ update_paper_meta <- function(bib_file, meta_file) {
   ## a published version already in an open weekly publications pull request
   ## is left to that pull request, which adds it and drops the preprint by
   ## title; swapping it here as well would make the two conflict
-  in_weekly <- published %in% dois_in_weekly_pull_requests()
+  ## only what those pull requests add counts: their files also hold main
+  in_weekly <- published %in% setdiff(dois_in_weekly_pull_requests(), bib$DOI)
   if (any(in_weekly)) {
     message("Left to the weekly pull request: ", paste(published[in_weekly], collapse = ", "))
   }
