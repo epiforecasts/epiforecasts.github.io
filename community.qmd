@@ -1,12 +1,12 @@
 ---
-title: "Collaborations and training"
+title: "Community"
 description: |
   Work with the wider community
 ---
 
-## Group manual
+## How we work
 
-Our [group manual](group-manual.qmd) describes how we work.
+Our [group manual](group-manual.qmd) sets out how we work together.
 
 ## Collaborations
 
