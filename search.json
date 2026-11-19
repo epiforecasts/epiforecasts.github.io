@@ -46,7 +46,7 @@
     "href": "index.html",
     "title": "epiforecasts",
     "section": "",
-    "text": "We are a research group based at the Centre for Mathematical Modelling of Infectious Diseases of the London School of Hygiene & Tropical Medicine developing methodology and tools for real-time modelling and forecasting of infectious disease outbreaks. We systematically assess these methods by their predictive ability and apply them in order to improve decision making. Ultimately, our goal is to develop and use robust methodology that makes the most of available resources to provide insights useful for outbreak response, control and prevention, and to make them available as tools to others.  We often work in collaboration with a number of other research groups, public health agencies such as the UK Health Security Agency, the European Centre for Disease Control and Prevention and the World Health Organization, and non-governmental organisations such as Médecins Sans Frontières."
+    "text": "We are part of the Centre for Mathematical Modelling of Infectious Diseases at LSHTM, and we often work with other research groups, with public health agencies such as the UK Health Security Agency, the European Centre for Disease Prevention and Control and the World Health Organization, and with non-governmental organisations such as Médecins Sans Frontières."
   },
   {
     "objectID": "index.html#software",
@@ -130,7 +130,7 @@
     "href": "posts/2022-04-11-robust-actions/index.html#unaccessible-http-resources",
     "title": "Dealing with flaky GitHub Actions",
     "section": "Unaccessible HTTP resources",
-    "text": "Unaccessible HTTP resources\nIn addition to the R install & cran-like servers, you might use some internet resources in your script. And these resources might be unavailable for a number of reasons. In this case, it is good practice to retry your request. But in a polite way! The web server might be unavailable because it’s already overloaded with requests. Repeatedly retrying would just make the situation worse in this case.\nThe polite way to retry HTTP requests is to use exponential back off. Each time you one of your request fails, you increase the waiting time until you make a new one.\nFortunately, you do not have to code the retry feature & the exponential back off yourself as it is already implemented in common R packages, such as httr2, via the req_retry() function:\n\nlibrary(httr2)\n\nrequest(\"https://httpbin.org/status/500\") |&gt;\n  req_verbose() |&gt;\n  req_retry(max_tries = 3) %&gt;%\n  req_perform()\n\n-&gt; GET /status/500 HTTP/2\n-&gt; Host: httpbin.org\n-&gt; User-Agent: httr2/1.2.2 r-curl/7.1.0 libcurl/8.18.0\n-&gt; Accept: */*\n-&gt; Accept-Encoding: deflate, gzip, br, zstd\n-&gt; \n&lt;- HTTP/2 500 \n&lt;- access-control-allow-credentials: true\n&lt;- access-control-allow-origin: *\n&lt;- access-control-expose-headers: Retry-After, RateLimit, RateLimit-Policy, WWW-Authenticate\n&lt;- content-length: 0\n&lt;- content-type: text/html; charset=utf-8\n&lt;- x-content-type-options: nosniff\n&lt;- date: Thu, 19 Nov 2026 13:12:49 GMT\n&lt;- \n\n\nError in `req_perform()`:\n! HTTP 500 Internal Server Error."
+    "text": "Unaccessible HTTP resources\nIn addition to the R install & cran-like servers, you might use some internet resources in your script. And these resources might be unavailable for a number of reasons. In this case, it is good practice to retry your request. But in a polite way! The web server might be unavailable because it’s already overloaded with requests. Repeatedly retrying would just make the situation worse in this case.\nThe polite way to retry HTTP requests is to use exponential back off. Each time you one of your request fails, you increase the waiting time until you make a new one.\nFortunately, you do not have to code the retry feature & the exponential back off yourself as it is already implemented in common R packages, such as httr2, via the req_retry() function:\n\nlibrary(httr2)\n\nrequest(\"https://httpbin.org/status/500\") |&gt;\n  req_verbose() |&gt;\n  req_retry(max_tries = 3) %&gt;%\n  req_perform()\n\n-&gt; GET /status/500 HTTP/2\n-&gt; Host: httpbin.org\n-&gt; User-Agent: httr2/1.2.2 r-curl/7.1.0 libcurl/8.18.0\n-&gt; Accept: */*\n-&gt; Accept-Encoding: deflate, gzip, br, zstd\n-&gt; \n&lt;- HTTP/2 500 \n&lt;- access-control-allow-credentials: true\n&lt;- access-control-allow-origin: *\n&lt;- access-control-expose-headers: Retry-After, RateLimit, RateLimit-Policy, WWW-Authenticate\n&lt;- content-length: 0\n&lt;- content-type: text/html; charset=utf-8\n&lt;- x-content-type-options: nosniff\n&lt;- date: Thu, 19 Nov 2026 13:37:23 GMT\n&lt;- \n\n\nError in `req_perform()`:\n! HTTP 500 Internal Server Error."
   },
   {
     "objectID": "posts/2022-04-11-robust-actions/index.html#git-repository-out-of-sync",
@@ -168,11 +168,11 @@
     "text": "Note\n\nOur article Real-time analysis of the diphtheria outbreak in forcibly displaced Myanmar nationals in Bangladesh published in BMC Medicine.\nThis blog post has also been published in the BMC Blog “On Medicine”."
   },
   {
-    "objectID": "contact.html",
-    "href": "contact.html",
-    "title": "Contact",
+    "objectID": "julia.html",
+    "href": "julia.html",
+    "title": "Julia packages",
     "section": "",
-    "text": "To contact us, email sebastian.funk [AT] lshtm.ac.uk"
+    "text": "Julia packages developed by the group, some of them as part of EpiAware. We also write R packages. See also our ongoing projects and publications.\nPackages in the Julia General registry install by name. The rest install from GitHub:\nusing Pkg\nPkg.add(\"PackageName\")\nPkg.add(url = \"https://github.com/owner/PackageName.jl\")\n\n\n\n\n\n\nEpiBranch.jl\n\n\n\n\n\n\n\nBranching process models for infectious disease epidemiology\n\nJulia · Updated Nov 2026 · Documentation\n\n\n\n\n\n\n\n\n\n\nForecastBaselines.jl\n\n\n\n\nBaseline forecasting methods for time series, with a consistent interface and prediction intervals\n\nJulia · Updated Nov 2026\n\n\n\n\n\n \n\n\n\n\nForecastEnsembles.jl\n\n\n\n\n\n\n\nCombining probabilistic forecasts in Julia (with an R wrapper)\n\nJulia · Updated Nov 2026 · Documentation\n\n\n\n\n\n\n\n\n\n\nScoringRules.jl\n\n\n\n\n\n\n\nProper scoring rules for evaluating probabilistic forecasts in Julia\n\nJulia · Updated Nov 2026 · Documentation\n\n\nPart of EpiAware"
   },
   {
     "objectID": "blog.html",
@@ -180,13 +180,6 @@
     "title": "epiforecasts blog",
     "section": "",
     "text": "Subscribe to new updates via RSS.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nHow we document stan functions\n\n\nAn example with EpiNow2\n\n\n\n\n\n\n\n\n\n\nMar 19, 2025\n\n\nJames Mba Azam\n\n\n\n\n\n\n\n\n\n\n\n\nDealing with flaky GitHub Actions\n\n\n\n\n\n\n\n\n\n\nApr 11, 2022\n\n\nHugo Gruson\n\n\n\n\n\n\n\n\n\n\n\n\nReflections on two years estimating effective reproduction numbers\n\n\n\nOver the last two years we have estimated reproduction numbers daily for several thousand locations, presented these estimates as a curated data set and visualised them at epiforecasts.io/covid. In this post we reflect on this project, summarising its utility, its integration with other projects, unanticipated challenges, and finally whether we would do it again.\n\n\n\n\n\n\nMar 25, 2022\n\n\nSam Abbott, Sebastian Funk\n\n\n\n\n\n\n\n\n\n\n\n\nUsing real-time modelling to inform the response to a diphtheria outbreak\n\n\n\nModelling the 2018/19 diphtheria outbreak in Cox’s Bazar, Bangladesh.\n\n\n\n\n\n\nAug 21, 2019\n\n\nFlavio Finger, Adam Kucharski\n\n\n\n\n\nNo matching items"
-  },
-  {
-    "objectID": "julia.html",
-    "href": "julia.html",
-    "title": "Julia packages",
-    "section": "",
-    "text": "Julia packages developed by the group, some of them as part of EpiAware. We also write R packages. See also our ongoing projects and publications.\nPackages in the Julia General registry install by name. The rest install from GitHub:\nusing Pkg\nPkg.add(\"PackageName\")\nPkg.add(url = \"https://github.com/owner/PackageName.jl\")\n\n\n\n\n\n\nEpiBranch.jl\n\n\n\n\n\n\n\nBranching process models for infectious disease epidemiology\n\nJulia · Updated Nov 2026 · Documentation\n\n\n\n\n\n\n\n\n\n\nForecastBaselines.jl\n\n\n\n\nBaseline forecasting methods for time series, with a consistent interface and prediction intervals\n\nJulia · Updated Nov 2026\n\n\n\n\n\n \n\n\n\n\nForecastEnsembles.jl\n\n\n\n\n\n\n\nCombining probabilistic forecasts in Julia (with an R wrapper)\n\nJulia · Updated Nov 2026 · Documentation\n\n\n\n\n\n\n\n\n\n\nScoringRules.jl\n\n\n\n\n\n\n\nProper scoring rules for evaluating probabilistic forecasts in Julia\n\nJulia · Updated Nov 2026 · Documentation\n\n\nPart of EpiAware"
   },
   {
     "objectID": "posts/2025-03-19-stan-doc-guide/index.html",
@@ -348,6 +341,13 @@
     "title": "Join us",
     "section": "",
     "text": "We occasionally have job openings at various levels, usually related to new grant funding. These are posted on the LSHTM jobs site and iddjobs. Even when there are no jobs advertised it is worth contacting us if you are interested in joining the group, as we may have things coming up or in the pipeline.\nWe also enjoy hosting visitors for individual projects and fellowships for longer ones. If you are interested in visiting us for any amount of time, please get in touch."
+  },
+  {
+    "objectID": "positions.html#contact",
+    "href": "positions.html#contact",
+    "title": "Join us",
+    "section": "Contact",
+    "text": "Contact\nTo contact us, email sebastian.funk [AT] lshtm.ac.uk"
   },
   {
     "objectID": "software.html",
