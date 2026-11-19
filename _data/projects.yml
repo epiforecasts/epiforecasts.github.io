@@ -6,7 +6,6 @@
 - repo: epiforecasts/llm-epi-composition
 - repo: epiforecasts/eval-by-method
 - repo: epiforecasts/evalwwforecasts
-- repo: EpiAware/ComposableTuringIDModels.jl
 - repo: epiforecasts/evalvariantnowcasthub
 - repo: epiforecasts/mme-review
 - repo: toshiakiasakura/sc_model_comparison
