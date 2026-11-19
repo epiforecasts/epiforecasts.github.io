@@ -47,6 +47,10 @@ update_paper_meta <- function(bib_file, meta_file) {
     purrr::map_chr(preprints, published_version), preprints
   )
   published <- published[!is.na(published)]
+  ## a match the reviewer has rejected stays rejected: `not_published: true`
+  ## on the preprint's entry keeps it listed as it is
+  declined <- vapply(names(published), function(d) isTRUE(meta[[d]]$not_published), TRUE)
+  published <- published[!declined]
 
   new_entries <- character(0)
   for (preprint in names(published)) {
