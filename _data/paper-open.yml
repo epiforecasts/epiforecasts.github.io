@@ -5,6 +5,10 @@
 #     are on the page of the paper itself, otherwise the address of the
 #     page with the reviews
 #   registered: the study protocol registered before the work was done
+#   pending: set by the weekly update when the full text could not be
+#     read yet, so the paper is looked up again
+#   not_published: true on a preprint whose suggested published version is
+#     wrong, so the weekly update leaves it listed as a preprint
 
 "10.1016/s2214-109x(20)30074-7":
   code: https://github.com/cmmid/ringbp
