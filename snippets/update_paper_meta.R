@@ -1,12 +1,10 @@
-## Keep _data/papers.bib and _data/paper-open.yml up to date between the
-## weekly publication updates: replace listed preprints that have since been
-## published, and suggest open research links for papers that have none yet.
-## Everything this changes goes into the weekly pull request for review.
+## Keep _data/papers.bib and _data/paper-open.yml up to date: replace listed
+## preprints that have since been published, and suggest open research links
+## for papers that have none yet. The weekly publications workflow runs this
+## and puts what it changes into a pull request for review.
 ##
-## The step before this one has already added the week's papers to
-## papers.bib and closed their issue, so this step must never fail the run:
-## it works on copies, writes the real files only once every check has
-## passed, and on any error leaves both files as they were.
+## It works on copies and writes the real files only once every check has
+## passed, so an error leaves both files as they were.
 
 source("_automation/get_new_papers.R")
 source("_automation/paper_meta.R")

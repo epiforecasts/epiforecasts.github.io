@@ -30,13 +30,6 @@ jobs:
           gh_repository <- "${{ github.repository }}"
           source("snippets/update_publications.R")
         shell: Rscript {0}
-
-      # Replaces listed preprints that have been published and suggests code,
-      # preprint and peer review links for papers without them, for review in
-      # the same pull request
-      - name: Update published versions and open research links
-        run: source("snippets/update_paper_meta.R")
-        shell: Rscript {0}
       
       - uses: peter-evans/create-pull-request@v8
         id: cpr
@@ -47,12 +40,50 @@ jobs:
           author: epiforecasts-bot <epiforecasts-bot@users.noreply.github.com>
           branch: pubs
           branch-suffix: timestamp
-          add-paths: |
-            _data/papers.bib
-            _data/paper-open.yml
+          add-paths: _data/papers.bib
           title: Automated update of team publications
           delete-branch: true
       
+  # Replaces listed preprints that have been published and suggests code,
+  # preprint and peer review links for papers without them. Its changes are
+  # worked out from main each week, so they go to one pull request on a fixed
+  # branch that each run updates, apart from the papers added from issues.
+  update-paper-links:
+    needs: update-bibtex
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - uses: r-lib/actions/setup-r@v2
+        with:
+          install-r: true
+          use-public-rspm: true
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install libcurl4-openssl-dev
+
+      - uses: r-lib/actions/setup-renv@v2
+
+      - name: Update published versions and open research links
+        run: source("snippets/update_paper_meta.R")
+        shell: Rscript {0}
+
+      - uses: peter-evans/create-pull-request@v8
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Update published versions and open research links
+          committer: epiforecasts-bot <epiforecasts-bot@users.noreply.github.com>
+          author: epiforecasts-bot <epiforecasts-bot@users.noreply.github.com>
+          branch: paper-links
+          add-paths: |
+            _data/papers.bib
+            _data/paper-open.yml
+          title: Update published versions and open research links
+          delete-branch: true
+
   fetch-new-papers:
     needs: update-bibtex
     if: always()
