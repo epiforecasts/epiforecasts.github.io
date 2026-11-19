@@ -64,6 +64,9 @@ update_paper_meta <- function(bib_file, meta_file) {
     bib <- bib[bib$DOI != preprint, ]
     fields <- utils::modifyList(meta[[preprint]] %||% list(), meta[[paper]] %||% list())
     fields$preprint <- fields$preprint %||% paste0("https://doi.org/", preprint)
+    ## the published paper can have links its preprint lacks, open peer
+    ## review above all, so look it up below like a new paper
+    fields$pending <- TRUE
     meta[[paper]] <- fields
     meta[[preprint]] <- NULL
   }
