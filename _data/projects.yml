@@ -6,14 +6,13 @@
 - repo: epiforecasts/llm-epi-composition
 - repo: epiforecasts/eval-by-method
 - repo: epiforecasts/evalwwforecasts
-- repo: EpiAware/ComposableProbabilisticIDModels
 - repo: epiforecasts/evalvariantnowcasthub
 - repo: epiforecasts/mme-review
 - repo: toshiakiasakura/sc_model_comparison
 - repo: toshiakiasakura/sc_heavy_tail_mean
-- repo: willgreen93/attenuated-renewal
 - repo: epiforecasts/evalbehtransmission
 - repo: ch-holt/UDEs_recovering_functional_forms
 - repo: epiforecasts/andv-linelist-analysis
 - repo: epiforecasts/bdbv-linelist-analysis
 - repo: epiforecasts/BVDOutbreakSize
+- repo: epiforecasts/yardstick
