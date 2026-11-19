@@ -162,17 +162,41 @@ body.quarto-dark {
   stroke-width: 2;
 }
 
-.ef-cell {
+.ef-flow {
+  fill: none;
+  stroke: var(--ef-muted);
+  stroke-opacity: 0.45;
+}
+
+.ef-flow.other {
+  stroke-opacity: 0.2;
+}
+
+.ef-other {
+  fill: var(--ef-surface);
+  stroke: var(--ef-muted);
+  stroke-width: 2;
+}
+
+.ef-analysis {
   fill: var(--ef-teal-bright);
 }
 
-.ef-short {
+.ef-decision {
   fill: var(--ef-coral);
 }
 
-.ef-target {
-  stroke: var(--ef-fit);
-  stroke-width: 2.5;
+.ef-row-label {
+  fill: var(--ef-muted);
+  font-size: 15px;
+}
+
+/* The theme each panel stands for */
+.ef-panel figcaption {
+  padding: 0.15rem 0.3rem 0.1rem;
+  font-size: 0.82rem;
+  color: var(--ef-muted);
+  text-align: center;
 }
 
 @media (max-width: 991px) {
