@@ -31,11 +31,27 @@ website:
         href: pubs.qmd
       - text: "Join us"
         href: positions.qmd
-      - text: "Contact"
-        href: contact.qmd
     right:
       - icon: github
         href: https://github.com/epiforecasts/
+  page-footer:
+    left:
+      - text: "CMMID"
+        href: https://cmmid.lshtm.ac.uk/
+      - text: "LSHTM"
+        href: https://www.lshtm.ac.uk/
+      - text: "Group manual"
+        href: group-manual.qmd
+    right:
+      - icon: envelope
+        href: /positions.qmd#contact
+        aria-label: Contact
+      - icon: github
+        href: https://github.com/epiforecasts/
+        aria-label: GitHub
+      - icon: bluesky
+        href: https://bsky.app/profile/epiforecasts.io
+        aria-label: Bluesky
 
 format:
   html:
