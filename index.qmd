@@ -122,7 +122,7 @@ cards <- purrr::map_chr(featured, function(e) {
 cat('<div class="ef-pkgs">', paste(cards, collapse = ""), '</div>\n\n', sep = "")
 ```
 
-[All R packages](software.qmd){.ef-more} [Julia packages](julia.qmd){.ef-more}
+[All R packages](software.qmd){.ef-more} [All Julia packages](julia.qmd){.ef-more}
 
 ## Recent publications
 
