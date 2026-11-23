@@ -82,6 +82,7 @@
   preprint: https://doi.org/10.1101/2023.07.05.23292245
 "10.1371/journal.pgph.0005120":
   preprint: https://doi.org/10.1101/2025.03.04.25323088
+  pending: true
   open_review: true
   registered: https://osf.io/cd4qa
 "10.1098/rsfs.2025.0007":
@@ -176,3 +177,5 @@
   preprint: https://doi.org/10.1101/2020.11.06.20226969
 "10.1038/s44528-026-00009-2":
   open_review: https://www.nature.com/articles/s44528-026-00009-2/peer-review
+"10.1111/rssa.12974":
+  pending: true
