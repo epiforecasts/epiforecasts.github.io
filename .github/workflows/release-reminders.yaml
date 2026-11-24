@@ -32,6 +32,22 @@ jobs:
           for repo in $REPOS; do
             echo "Checking $repo..."
 
+            # Detect package type
+            HAS_DESCRIPTION=$(gh api "repos/$repo/contents/DESCRIPTION" --jq '.name' 2>/dev/null || echo "")
+            HAS_PROJECT_TOML=$(gh api "repos/$repo/contents/Project.toml" --jq '.name' 2>/dev/null || echo "")
+
+            # Files whose changes make a release worthwhile. DESCRIPTION and
+            # Project.toml are left out so the version bump after a release
+            # does not count; other languages fall back to anything outside
+            # CI configuration and Markdown.
+            if [ -n "$HAS_DESCRIPTION" ]; then
+              CODE_RE='^(R|src|inst|data)/|^NAMESPACE$'
+            elif [ -n "$HAS_PROJECT_TOML" ]; then
+              CODE_RE='^(src|ext)/'
+            else
+              CODE_RE='^(?!\.github/|.*\.md$)'
+            fi
+
             # Get last release info
             RELEASE_INFO=$(gh release view --repo "$repo" --json tagName,publishedAt 2>/dev/null || echo '{}')
             LAST_TAG=$(echo "$RELEASE_INFO" | jq -r '.tagName // empty')
@@ -47,22 +63,31 @@ jobs:
                 fi
               fi
 
-              # Check commits since last release (need >1 because version bump after release counts as 1)
-              # Filter out dependabot commits and their merge commits - only count real changes
+              # Count commits since the last release that change package code,
+              # ignoring bot authors, dependency bumps and merge commits (the
+              # merged commits are counted themselves)
               COMMITS_DATA=$(gh api "repos/$repo/compare/$LAST_TAG...HEAD" 2>/dev/null || echo '{"ahead_by":0,"commits":[]}')
               COMMITS=$(echo "$COMMITS_DATA" | jq '.ahead_by')
-              REAL_COMMITS=$(echo "$COMMITS_DATA" | jq '[.commits[] | select(
-                .author.login != "dependabot[bot]" and
-                (.commit.message | test("^Bump "; "i") | not) and
-                (.commit.message | test("dependabot"; "i") | not)
-              )] | length')
-              if [ "$REAL_COMMITS" -lt 2 ]; then
-                echo "  Only $REAL_COMMITS non-bot commit(s) since last release (${COMMITS} total), skipping"
+              CANDIDATES=$(echo "$COMMITS_DATA" | jq -r '.commits[] | select(
+                (.author.login // "" | endswith("[bot]") | not) and
+                (.parents | length) == 1 and
+                (.commit.message | test("^Bump "; "i") | not)
+              ) | .sha')
+              REAL_COMMITS=0
+              for sha in $CANDIDATES; do
+                CHANGES_CODE=$(gh api "repos/$repo/commits/$sha" 2>/dev/null \
+                  | jq --arg re "$CODE_RE" 'any(.files[].filename; test($re))')
+                if [ "$CHANGES_CODE" = "true" ]; then
+                  REAL_COMMITS=$((REAL_COMMITS + 1))
+                fi
+              done
+              if [ "$REAL_COMMITS" -lt 1 ]; then
+                echo "  No package code changes since last release (${COMMITS} commits in total), skipping"
                 continue
               fi
 
               RELEASE_LINE="**Last release:** $LAST_TAG ($DAYS_SINCE days ago)"
-              COMMITS_LINE="**Commits since:** $REAL_COMMITS (excl. bot commits) ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))"
+              COMMITS_LINE="**Commits since:** $REAL_COMMITS changing package code ([view diff](https://github.com/$repo/compare/$LAST_TAG...HEAD))"
             else
               # No releases yet - check if repo has any commits at all
               COMMITS=$(gh api "repos/$repo" --jq '.size' 2>/dev/null || echo "0")
@@ -95,10 +120,6 @@ jobs:
             if [ -z "$PRS" ]; then
               PRS="None"
             fi
-
-            # Detect package type
-            HAS_DESCRIPTION=$(gh api "repos/$repo/contents/DESCRIPTION" --jq '.name' 2>/dev/null || echo "")
-            HAS_PROJECT_TOML=$(gh api "repos/$repo/contents/Project.toml" --jq '.name' 2>/dev/null || echo "")
 
             # Create reminder issue
             echo "  Creating reminder for $repo"
