@@ -101,11 +101,14 @@ jobs:
               DAYS_SINCE="N/A"
             fi
 
-            # Skip if there's already an open release reminder issue
+            # Skip if a reminder is open, or one was opened in the last 60 days
+            # and closed, which means the maintainers are not releasing yet
             MONTH=$(date +'%B %Y')
-            EXISTING=$(gh issue list --repo "$repo" --state open --json title --jq '[.[] | select(.title | test("Release reminder"))] | length' 2>/dev/null || echo "0")
+            CUTOFF=$(date -d '60 days ago' +%Y-%m-%d)
+            EXISTING=$(gh issue list --repo "$repo" --state all --search 'in:title "Release reminder"' --json title,state,createdAt \
+              --jq "[.[] | select((.title | test(\"Release reminder\")) and (.state == \"OPEN\" or .createdAt >= \"$CUTOFF\"))] | length" 2>/dev/null || echo "0")
             if [ "$EXISTING" != "0" ]; then
-              echo "  Open release reminder already exists, skipping"
+              echo "  Release reminder open or recently closed, skipping"
               continue
             fi
 
