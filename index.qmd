@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = FALSE)
 <section class="ef-hero">
   <div class="ef-wrap ef-hero-grid">
     <div class="ef-hero-text">
-      <h1>Real-time infectious disease modelling</h1>
+      <h1>epiforecasts</h1>
       <p class="ef-lead">We are a research group at the London School of Hygiene &amp; Tropical Medicine. We develop, use and critically evaluate computational, statistical and mathematical techniques to improve our understanding of infectious disease outbreaks in real time, often in collaboration with public-health decision makers.</p>
     </div>
     <div class="ef-panels">
