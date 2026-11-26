@@ -164,7 +164,7 @@ We acknowledge the potential impact of push notifications on productivity and me
 
 ### Onboarding
 
-When someone new joins the group, their supervisor introduces them to current projects, tools and communication channels. The group's [projects page](https://epiforecasts.io/projects) provides an overview of current work with links to repositories.
+When someone new joins the group, their supervisor introduces them to current projects, tools and communication channels. The group's [projects page](https://epiforecasts.io/projects) provides an overview of current work with links to repositories. New members add themselves to the [people page](https://epiforecasts.io/people) by opening a pull request that adds a short profile file, as described in [Adding yourself as a team member](https://github.com/epiforecasts/epiforecasts.github.io#adding-yourself-as-a-team-member).
 
 ### Web site
 
